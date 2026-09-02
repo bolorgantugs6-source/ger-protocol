@@ -1,3 +1,1687 @@
+Conversation with Gemini
+Chats are reviewed and used to improve Google AI. Gemini is AI and can make mistakes, including about people. You can manage your activityOpens in a new window, including info about your location. Learn more about your choicesOpens in a new window
+
+can you see
+Yes, I can see your screen! You are right on the New File page on GitHub.
+
+Here is what to do next to finish creating the file:
+
+Name the file: In the input box highlighted in blue (where it says Name your file...), type exactly:
+
+Plaintext
+index.html
+Paste your code: Click inside the main black box below (where line 1 says Enter file contents here) and paste the entire HTML code block we created.
+
+Save it: Click the green Commit changes... button in the upper right corner, then confirm by clicking Commit changes again in the pop-up window.
+
+Once you hit commit, your code will be officially saved in the root of your repository and ready to deploy on Vercel!
+
+where's the code did claude give me
+Claude wrote the code inside an Artifact (a standalone code block window) in your chat with it.
+
+In your open Claude tab on the left, click on the Artifacts tab in the sidebar or look for the code file card inside your chat with Claude—it created a file right above the "Deployment: Vercel + custom domain" message.
+
+However, you don't need to switch back and copy it from there! You can paste the production-ready code right into your GitHub index.html editor:
+
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ger Protocol | Cultural Field Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
+          colors: { steppe: { 900: '#121110', 800: '#1C1A17', 700: '#2A2723', 100: '#E6E2DD' }, amberAccent: { 500: '#D97706', 400: '#F59E0B' } }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-steppe-900 text-steppe-100 min-h-screen flex flex-col justify-between items-center p-4 font-sans selection:bg-amberAccent-500">
+
+  <div class="w-full max-w-md my-auto">
+    <!-- Co-Branded Header (URL param: ?partner=Juulchin) -->
+    <header class="flex justify-between items-center mb-5 px-1">
+      <div>
+        <span class="text-[10px] uppercase font-bold tracking-widest text-amberAccent-500">Official Field Protocol</span>
+        <h1 class="text-xs text-stone-400 font-medium">In Partnership with <span id="partner-label" class="text-stone-200 font-semibold">Juulchin Travel</span></h1>
+      </div>
+      <div class="w-8 h-8 rounded-full bg-amberAccent-500/10 border border-amberAccent-500/30 flex items-center justify-center text-xs font-serif text-amberAccent-400">🇲🇳</div>
+    </header>
+
+    <!-- Main Card -->
+    <main class="bg-stone-900/90 border border-stone-800 rounded-3xl shadow-2xl p-6 relative overflow-hidden backdrop-blur-md">
+      <!-- Progress Bar -->
+      <div class="w-full bg-stone-800 h-1.5 rounded-full mb-6 overflow-hidden">
+        <div id="progress" class="bg-amberAccent-500 h-full w-1/5 transition-all duration-300"></div>
+      </div>
+
+      <!-- Step Content -->
+      <div id="step-content" class="min-h-[360px] flex flex-col justify-between"></div>
+
+      <!-- Navigation -->
+      <div id="nav-controls" class="flex justify-between items-center mt-6 pt-4 border-t border-stone-800">
+        <button id="prev-btn" onclick="prevStep()" class="px-4 py-2 text-xs font-semibold text-stone-400 hover:text-white disabled:opacity-20">← Back</button>
+        <button id="next-btn" onclick="nextStep()" class="px-6 py-2.5 bg-amberAccent-500 text-white font-medium text-xs rounded-xl shadow-lg shadow-amberAccent-500/20">Next →</button>
+      </div>
+    </main>
+
+    <footer class="text-center mt-6">
+      <p class="text-[11px] text-stone-500">The Ger Protocol &copy; 2026 &bull; Cultural Heritage Initiative</p>
+    </footer>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const partnerName = urlParams.get('partner') || 'Juulchin Travel';
+    document.getElementById('partner-label').innerText = partnerName;
+
+    const steps = [
+      {
+        badge: "01 / Entry Etiquette",
+        title: "Mind the Threshold",
+        term: "Bosgo",
+        icon: "🚪",
+        rule: "NEVER step directly on the bottom wooden door frame.",
+        why: "The bosgo represents household stability and the head of the home.",
+        action: "Duck your head and step OVER cleanly using your RIGHT foot first."
+      },
+      {
+        badge: "02 / Interior Path",
+        title: "Clockwise & Mind Pillars",
+        term: "Jov Zov & Bagana",
+        icon: "🔄",
+        rule: "Walk clockwise and NEVER pass between the two center posts.",
+        why: "Movement mirrors the sun (jov zov). Pillars (bagana) connect Earth to Sky.",
+        action: "Turn left upon entering and walk along the circular outer perimeter."
+      },
+      {
+        badge: "03 / Interactive Map",
+        title: "Tap a Zone to Explore Seating",
+        term: "Khoimor",
+        icon: "🪑",
+        interactive: true,
+        rule: "West (Left) is for guests/men. East (Right) is for family/women.",
+        why: "Tap below to learn where elders, guests, and hosts sit.",
+        action: "Never sit in the back north area (Khoimor) unless invited by an elder."
+      },
+      {
+        badge: "04 / Sacred Hearth",
+        title: "Respect the Fire",
+        term: "Golomt",
+        icon: "🔥",
+        rule: "Never throw trash into the stove or point shoe soles at the flame.",
+        why: "Fire houses the ancestral spirit and lineage of the family.",
+        action: "Keep feet tucked away when seated and treat the stove as sacred."
+      },
+      {
+        badge: "05 / Receiving Hospitality",
+        title: "Accepting Food & Milk Tea",
+        term: "Zoochlokh",
+        icon: "🍵",
+        rule: "Accept offerings with your RIGHT hand supported at the elbow.",
+        why: "Using two hands shows open intent and genuine gratitude.",
+        action: "Take at least a small sip or bite before resting the cup down."
+      }
+    ];
+
+    let currentStep = 0;
+
+    function playAudioPrompt(term) {
+      alert(`🔊 Pronunciation guide for '${term}': Speak clearly with a soft accent.`);
+    }
+
+    function selectZone(zone) {
+      const details = {
+        west: "West (Left): Reserved for guests, visitors, and men.",
+        east: "East (Right): Reserved for family members, cooking, and women.",
+        north: "North (Khoimor): Sacred rear area reserved for elders and altars."
+      };
+      document.getElementById('zone-desc').innerText = details[zone];
+    }
+
+    function renderStep() {
+      const container = document.getElementById("step-content");
+      
+      if (currentStep < steps.length) {
+        const step = steps[currentStep];
+        
+        let extraHTML = '';
+        if (step.interactive) {
+          extraHTML = `
+            <div class="my-3 grid grid-cols-3 gap-2 text-center text-[10px]">
+              <button onclick="selectZone('west')" class="p-2 bg-stone-800 border border-stone-700 rounded-lg hover:border-amberAccent-500">👈 West (Guests)</button>
+              <button onclick="selectZone('north')" class="p-2 bg-stone-800 border border-stone-700 rounded-lg hover:border-amberAccent-500">👆 North (Elders)</button>
+              <button onclick="selectZone('east')" class="p-2 bg-stone-800 border border-stone-700 rounded-lg hover:border-amberAccent-500">👉 East (Family)</button>
+            </div>
+            <p id="zone-desc" class="text-amberAccent-400 text-xs italic mb-2">Tap a zone button above to inspect seating rules.</p>
+          `;
+        }
+
+        container.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="px-2 py-0.5 bg-amberAccent-500/10 text-amberAccent-400 text-[10px] font-bold uppercase rounded-full border border-amberAccent-500/20">${step.badge}</span>
+              <button onclick="playAudioPrompt('${step.term}')" class="text-xs bg-stone-800 px-2 py-1 rounded-md border border-stone-700 text-stone-300 hover:text-white">🔊 Speak (${step.term})</button>
+            </div>
+            
+            <h2 class="text-lg font-serif text-white mb-2">${step.title}</h2>
+            
+            <div class="bg-stone-950 p-3 rounded-xl border border-amberAccent-500/30 mb-3">
+              <p class="text-amberAccent-400 font-semibold text-xs">⚠️ ${step.rule}</p>
+            </div>
+            
+            ${extraHTML}
+
+            <div class="space-y-1 text-xs text-stone-300">
+              <p><strong>Why:</strong> ${step.why}</p>
+              <p><strong>Action:</strong> ${step.action}</p>
+            </div>
+          </div>
+        `;
+
+        document.getElementById("nav-controls").style.display = "flex";
+        document.getElementById("prev-btn").disabled = currentStep === 0;
+        document.getElementById("next-btn").innerText = currentStep === steps.length - 1 ? "Verify Visit →" : "Next →";
+      } else {
+        const now = new Date();
+        const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        container.innerHTML = `
+          <div class="flex flex-col items-center text-center py-2">
+            <div class="w-12 h-12 bg-amberAccent-500/20 rounded-full flex items-center justify-center text-xl mb-3 border border-amberAccent-500">✓</div>
+            <h2 class="text-xl font-serif text-white mb-1">Protocol Completed</h2>
+            <p class="text-xs text-stone-400 mb-4">Show this verified pass to your tour guide upon entry.</p>
+
+            <div class="w-full bg-stone-950 p-4 rounded-xl border border-dashed border-amberAccent-500/50 text-left space-y-1 text-xs">
+              <p class="text-amberAccent-400 font-bold uppercase tracking-wider text-[10px]">Verified Cultural Pass</p>
+              <p class="text-stone-200 font-medium">Partner: <span class="text-white">${partnerName}</span></p>
+              <p class="text-stone-400">Timestamp: <span class="text-stone-200">${timestamp}</span></p>
+              <p class="text-stone-400">Status: <span class="text-emerald-400 font-semibold">Ready for Entry</span></p>
+            </div>
+          </div>
+        `;
+        document.getElementById("nav-controls").style.display = "none";
+      }
+
+      document.getElementById("progress").style.width = `${Math.min(((currentStep + 1) / steps.length) * 100, 100)}%`;
+    }
+
+    function nextStep() { currentStep++; renderStep(); }
+    function prevStep() { if (currentStep > 0) { currentStep--; renderStep(); } }
+
+    renderStep();
+  </script>
+</body>
+</html>
+Next Steps:
+Copy the code block above.
+
+Click inside the GitHub editor on line 1 (where it says Enter file contents here).
+
+Paste the code, then click the green Commit changes... button in the top right to save!
+
+HTML icon
+here
+Perfect! That is the full updated code.
+
+Here is how to paste it into GitHub and save it:
+
+On your open GitHub tab, click inside the code box on line 1.
+
+Paste the code you provided above.
+
+In the top-right corner of the editor, click the green Commit changes... button.
+
+Click Commit changes again in the confirmation pop-up.
+
+Your index.html file will now be saved in the root of your repository and ready for deployment on Vercel!
+
+
+see
+Yes! You are right at the final step.
+
+Just click the green "Commit changes" button at the bottom right of that pop-up window.   
+
+Once you click that, your code will be officially saved to GitHub!
+
+okay done
+Awesome! I see your ger-protocol repository updated, and index.html is now saved in the root directory.   
+
+Next Step: Deploy on Vercel
+Go to vercel.com and log in (or sign up using your GitHub account).
+
+Click "Add New..." → "Project".
+
+Select your GitHub account and import the ger-protocol repository.
+
+Keep the default settings and click "Deploy".
+
+In less than a minute, Vercel will give you a live URL (e.g., ger-protocol.vercel.app) that you can share or test!
+
+okay done
+🎉 Congratulations! You did it!
+
+Your project ger-protocol is now officially live on Vercel!   
+
+Here is what to do next:
+
+Click the white "Continue to Dashboard" button at the bottom of your screen.   
+
+On your Vercel project dashboard, you will see your live URL (ending in .vercel.app) under the Domains section. Click it to view your live interactive field guide!
+
+You can now share that live link with anyone or send it directly to tour guides!
+
+wth is jov zov 
+Zub zov (or jöv zöv, written in Mongolian Cyrillic as зөв зөв) translates literally to "right-right" or "correct".
+
+In the context of entering and moving inside a ger, it refers to the customary rule of moving clockwise.   
+
+Here is why that term and movement matter:
+
+Clockwise Direction: In Mongolian tradition, movement inside a ger follows the path of the sun (sunwise/clockwise), which brings good fortune, order, and harmony.
+
+The Rule: When you step inside a ger, you always turn to your left and walk clockwise around the center hearth (golomt).   
+
+The Spelling: "Jov Zov" is a phonetic rendering of zöv zöv. You might also hear locals say zöv tiish (meaning "in the correct/clockwise direction").
+
+it aint jov zov broni james it is nar zuv 
+Fair point—nar zöv (нар зөв) is definitely the far more natural and common phrase for "sunwise" / clockwise in Mongolian!
+
+"Jov zov" was a bit of a clunky transliteration for zöv zöv (right/correct direction). Nar zöv literally translates to "with the sun," which captures the exact cultural meaning much better.
+
+If you want to update it in your index.html on GitHub so your app displays Nar Zöv instead:
+
+Open your code on GitHub and find line 166:
+
+HTML
+<h2 class="font-display italic text-[26px] mb-1">Jov Zov</h2>
+Change "Jov Zov" to "Nar Zöv" (or "Nar Zov").
+
+Click Commit changes, and Vercel will automatically redeploy the updated version in a few seconds!
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>The Ger Protocol — Field Guide</title>
+<meta name="description" content="A 30-second interactive field guide to Mongolian ger etiquette.">
+
+<!-- Tailwind CSS via CDN (no build step) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts: Fraunces (display/serif, used for headlines & Mongolian terms) + Manrope (UI/body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  // ------------------------------------------------------------------
+  // Tailwind theme extension — maps our custom design tokens (see the
+  // CSS variables below) into Tailwind utility classes like bg-ink,
+  // text-amber, font-display, etc. Edit hex values in :root, not here.
+  // ------------------------------------------------------------------
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#1B1815',
+          stone:    '#26221E',
+          stone2:   '#312B25',
+          felt:     '#EFE7D8',
+          feltdim:  '#B9AF9C',
+          wood:     '#6B4226',
+          amber:    '#CB8A3E',
+          amberdeep:'#9C5F24',
+          teal:     '#4C7B72',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body: ['"Manrope"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#1B1815;
+    --stone:#26221E;
+    --line: rgba(239,231,216,0.10);
+    --line-strong: rgba(239,231,216,0.18);
+  }
+
+  * { -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--ink);
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: #EFE7D8;
+  }
+
+  .font-display { font-family: 'Fraunces', serif; }
+
+  /* Subtle woven/felt paper grain, layered over the ink background so
+     large flat areas don't feel like plain digital black. Cheap, no
+     image assets required. */
+  .grain-bg{
+    background-color: var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(203,138,62,0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(76,123,114,0.05), transparent 45%);
+  }
+
+  /* Lattice pattern used as a faint card border texture, echoing the
+     khana (collapsible wooden wall lattice) of a ger. */
+  .lattice-frame{
+    border: 1px solid var(--line-strong);
+    background-image:
+      linear-gradient(var(--stone), var(--stone)),
+      repeating-linear-gradient(45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px),
+      repeating-linear-gradient(-45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px);
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+  }
+
+  /* ---- Step transition: one deliberate, orchestrated motion per
+     step change, not per-element scroll animation. ---- */
+  .screen{
+    transition: opacity 320ms ease, transform 320ms ease;
+  }
+  .screen[data-state="enter"]{ opacity: 0; transform: translateX(24px); }
+  .screen[data-state="enter-back"]{ opacity: 0; transform: translateX(-24px); }
+  .screen[data-state="active"]{ opacity: 1; transform: translateX(0); }
+  .screen[data-state="exit"]{ opacity: 0; transform: translateX(-24px); position:absolute; }
+  .screen[data-state="exit-back"]{ opacity: 0; transform: translateX(24px); position:absolute; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen{ transition: opacity 120ms linear !important; transform: none !important; }
+    .screen[data-state="enter"], .screen[data-state="enter-back"],
+    .screen[data-state="exit"], .screen[data-state="exit-back"]{ transform:none; }
+  }
+
+  /* Lattice-slat progress bar: 5 slats echoing the wall lattice,
+     filling in amber as steps complete. */
+  .slat{
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(239,231,216,0.14);
+    overflow: hidden;
+    position: relative;
+  }
+  .slat > span{
+    display:block;
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, var(--tw-amberdeep,#9C5F24), var(--tw-amber,#CB8A3E));
+    transition: width 420ms ease;
+  }
+  .slat.filled > span{ width:100%; }
+  .slat.current > span{ width:50%; }
+
+  /* Focus visibility (keyboard access) */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #CB8A3E;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .btn-primary{
+    background: linear-gradient(180deg, #D7994B, #B97A34);
+    color: #1B1815;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 6px 16px rgba(203,138,62,0.18);
+  }
+  .btn-primary:active{ transform: translateY(1px); }
+  .btn-primary:disabled{ opacity: 0.4; box-shadow:none; }
+
+  .btn-ghost{
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: #EFE7D8;
+  }
+  .btn-ghost:active{ transform: translateY(1px); }
+
+  .why-box{
+    border-left: 2px solid #CB8A3E;
+    background: rgba(203,138,62,0.08);
+  }
+
+  /* Seating diagram arcs (Step 3 icon) */
+  .arc-west{ stroke:#CB8A3E; }
+  .arc-east{ stroke:#4C7B72; }
+  .arc-north{ stroke:#EFE7D8; }
+
+  /* Completion badge subtle pulse-in (single orchestrated reveal only) */
+  @keyframes seal-in{
+    0%{ transform: scale(0.85) rotate(-4deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+  .seal{ animation: seal-in 520ms cubic-bezier(.2,.8,.2,1) both; }
+  @media (prefers-reduced-motion: reduce){ .seal{ animation:none; } }
+</style>
+</head>
+
+<body class="grain-bg min-h-screen w-full flex justify-center">
+
+<!-- App shell — capped to a mobile-app-like max width even on wider
+     screens, since this is designed to be scanned & used on a phone. -->
+<div id="app" class="relative w-full max-w-md min-h-screen flex flex-col">
+
+  <!-- ============== CO-BRANDED HEADER ============== -->
+  <header class="px-5 pt-6 pb-4">
+    <div class="flex items-center gap-3">
+      <!-- Toono mark: a simplified rendering of the ger's roof crown /
+           skylight, used as the brand mark throughout the app. -->
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <circle cx="17" cy="17" r="15.5" stroke="#CB8A3E" stroke-width="1.3"/>
+        <circle cx="17" cy="17" r="6" stroke="#CB8A3E" stroke-width="1.3"/>
+        <line x1="17" y1="1.5" x2="17" y2="11" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="17" y1="23" x2="17" y2="32.5" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="1.5" y1="17" x2="11" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="23" y1="17" x2="32.5" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="6.2" y1="6.2" x2="12.8" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="21.2" y1="21.2" x2="27.8" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="27.8" y1="6.2" x2="21.2" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="12.8" y1="21.2" x2="6.2" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+      </svg>
+      <div class="leading-tight">
+        <p class="font-display text-[17px] tracking-tight" style="font-variant: small-caps;">The Ger Protocol</p>
+        <p class="text-[11.5px] text-feltdim" id="partnerLine">Official Field Protocol · In partnership with <span id="partnerName">Juulchin Travel</span></p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============== PROGRESS BAR (5 steps) ============== -->
+  <!-- Hidden on the welcome & completion screens via JS toggling the
+       'invisible' class on #progressWrap. -->
+  <div id="progressWrap" class="px-5 pb-5">
+    <div class="flex gap-1.5" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressBar">
+      <div class="slat" data-slat="1"><span></span></div>
+      <div class="slat" data-slat="2"><span></span></div>
+      <div class="slat" data-slat="3"><span></span></div>
+      <div class="slat" data-slat="4"><span></span></div>
+      <div class="slat" data-slat="5"><span></span></div>
+    </div>
+    <p class="text-[11px] text-feltdim mt-2" id="progressLabel" aria-live="polite">Step 1 of 5</p>
+  </div>
+
+  <!-- ============== SCREENS ============== -->
+  <main class="relative flex-1 px-5 pb-32 overflow-hidden">
+
+    <!-- ---------- WELCOME SCREEN ---------- -->
+    <section class="screen" data-screen="welcome" data-state="active">
+      <div class="flex flex-col items-center text-center pt-6">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true" class="mb-6">
+          <circle cx="60" cy="60" r="52" stroke="#3A332C" stroke-width="1.5"/>
+          <circle cx="60" cy="60" r="20" stroke="#CB8A3E" stroke-width="1.5"/>
+          <g stroke="#6B4226" stroke-width="1.2">
+            <line x1="60" y1="8" x2="60" y2="40"/>
+            <line x1="60" y1="80" x2="60" y2="112"/>
+            <line x1="8" y1="60" x2="40" y2="60"/>
+            <line x1="80" y1="60" x2="112" y2="60"/>
+            <line x1="21.7" y1="21.7" x2="45.7" y2="45.7"/>
+            <line x1="74.3" y1="74.3" x2="98.3" y2="98.3"/>
+            <line x1="98.3" y1="21.7" x2="74.3" y2="45.7"/>
+            <line x1="45.7" y1="74.3" x2="21.7" y2="98.3"/>
+          </g>
+        </svg>
+        <h1 class="font-display text-[30px] leading-[1.15] mb-3">Before you<br>step inside</h1>
+        <p class="text-[15px] text-feltdim max-w-[300px] leading-relaxed mb-8">
+          A 30-second field guide to the customs of a Mongolian ger — five simple rules,
+          one respectful visit.
+        </p>
+        <button id="beginBtn" class="btn-primary font-body font-bold text-[15px] w-full py-4 rounded-xl">
+          Begin the walkthrough
+        </button>
+        <p class="text-[11px] text-feltdim mt-4">5 steps · about 30 seconds</p>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 1: Entry & Threshold (Bosgo) ---------- -->
+    <section class="screen" data-screen="step" data-step="1" data-state="enter">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">1</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="14" y="10" width="44" height="52" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <rect x="12" y="54" width="48" height="8" rx="1.5" fill="#6B4226"/>
+            <path d="M22 40 C 30 24, 40 24, 46 34" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M46 34 l -6 -2 M46 34 l -1 -6" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <ellipse cx="24" cy="46" rx="7" ry="4" fill="#EFE7D8" opacity="0.9"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 1 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Bosgo</h2>
+          <p class="text-[14px] text-feltdim mb-5">The Threshold</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            The wooden beam at the base of the door frame is the <em>bosgo</em> —
+            the threshold. Step over it, never on it, and lead with your
+            <strong class="text-felt">right foot</strong>.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the threshold is believed to hold the household's stability.
+              Stepping on it is considered a bad omen for the family inside.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 2: Interior Navigation (jov zov / bagana) ---------- -->
+    <section class="screen" data-screen="step" data-step="2" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">2</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle cx="36" cy="36" r="26" stroke="#3A332C" stroke-width="1.5"/>
+            <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <rect x="30" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <rect x="38" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <line x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 2 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Jov Zov</h2>
+          <p class="text-[14px] text-feltdim mb-5">Moving Clockwise</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Once inside, move to your left and travel <strong class="text-felt">clockwise</strong>
+            around the interior. Never cut through the space between the two central
+            support pillars, the <em>bagana</em> — that path is reserved.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the line between the pillars is a sacred axis connecting hearth
+              to sky. Crossing it is seen as cutting through the family's fortune.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 3: Seating Hierarchy ---------- -->
+    <section class="screen" data-screen="step" data-step="3" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">3</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              class="arc-west" stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              class="arc-east" stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              class="arc-north" stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke="#1B1815" stroke-width="6" stroke-dasharray="1 190" stroke-dashoffset="0"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 3 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Seating Order</h2>
+          <p class="text-[14px] text-feltdim mb-5">Guests, Family, Elders</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            The <strong style="color:#CB8A3E">west side (left of the door)</strong> is for guests and men.
+            The <strong style="color:#4C7B72">east side (right)</strong> is for family and women.
+            The back, or <em>khoimor</em>, is reserved for elders and sacred objects — wait
+            to be shown your seat.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              seating maps the family's own order. Sitting unguided, especially
+              in the khoimor, is read as claiming a status that isn't yours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 4: The Hearth (Golomt) ---------- -->
+    <section class="screen" data-screen="step" data-step="4" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">4</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="26" y="38" width="20" height="14" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <path d="M32 38 c 0 -6 4 -6 3 -11 c 3 2 4 6 1 9 c 2 -1 3 -3 3 -5 c 2 3 1 6 -1 7" stroke="#CB8A3E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M14 58 q 8 -4 16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M58 58 q -8 -4 -16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <line x1="18" y1="54" x2="24" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="54" y1="54" x2="48" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 4 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Golomt</h2>
+          <p class="text-[14px] text-feltdim mb-5">The Hearth</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Sit with your feet tucked back and soles pointed away from the
+            stove and from any elder. Never pass anything over the hearth, and
+            never put waste into it.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the golomt is the family's fire spirit and its literal source of
+              warmth and food. Disrespecting it is considered a serious offense.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 5: Receiving Hospitality ---------- -->
+    <section class="screen" data-screen="step" data-step="5" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">5</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <path d="M26 32 h20 l -2 14 a 8 8 0 0 1 -16 0 Z" stroke="#3A332C" stroke-width="1.5" fill="none"/>
+            <path d="M20 46 q 8 4 14 1" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M34 46 q 8 -6 16 -2" stroke="#8A6A4E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <circle cx="20" cy="46" r="1.6" fill="#CB8A3E"/>
+            <circle cx="50" cy="44" r="1.6" fill="#8A6A4E"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 5 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Receiving</h2>
+          <p class="text-[14px] text-feltdim mb-5">Tea, Snuff & Food</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Accept whatever is offered with your <strong class="text-felt">right hand</strong>,
+            elbow supported by your left. If you can't finish it, take a small
+            symbolic sip or bite — an outright refusal is considered impolite.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              offering food to a guest is a point of pride for the host family.
+              Two hands, and a gesture of acceptance, return that respect.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- COMPLETION SCREEN ---------- -->
+    <section class="screen" data-screen="complete" data-state="exit">
+      <div class="flex flex-col items-center text-center pt-6">
+        <div class="seal relative w-[104px] h-[104px] mb-6">
+          <svg viewBox="0 0 104 104" width="104" height="104" aria-hidden="true">
+            <circle cx="52" cy="52" r="48" stroke="#CB8A3E" stroke-width="1.3"/>
+            <circle cx="52" cy="52" r="40" stroke="#CB8A3E" stroke-width="1" stroke-dasharray="2 4"/>
+            <path d="M36 53 l11 11 l22 -24" stroke="#CB8A3E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="font-display text-[26px] leading-tight mb-2">Protocol complete</h1>
+        <p class="text-[14px] text-feltdim max-w-[280px] leading-relaxed mb-7">
+          You're ready to step inside. A quick reminder of what you learned:
+        </p>
+
+        <ul class="w-full text-left space-y-3 mb-8">
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">1</span>
+            <span class="text-[13.5px] text-feltdim">Step over the <span class="text-felt">bosgo</span>, right foot first — never on it.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">2</span>
+            <span class="text-[13.5px] text-feltdim">Move clockwise; never cross between the two <span class="text-felt">bagana</span> pillars.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">3</span>
+            <span class="text-[13.5px] text-feltdim">Sit only where shown — west for guests, east for family, khoimor for elders.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">4</span>
+            <span class="text-[13.5px] text-feltdim">Keep your feet tucked away from the <span class="text-felt">golomt</span> hearth.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">5</span>
+            <span class="text-[13.5px] text-feltdim">Receive tea or food right-handed, left hand supporting your elbow.</span>
+          </li>
+        </ul>
+
+        <button id="restartBtn" class="btn-ghost text-[13.5px] font-semibold px-5 py-3 rounded-xl w-full mb-8">
+          Review again
+        </button>
+
+        <div class="w-full border-t border-[color:var(--line)] pt-5">
+          <p class="text-[12px] text-feltdim mb-1">Presented by <span id="partnerNameFooter" class="text-felt font-semibold">Juulchin Travel</span></p>
+          <p class="text-[11.5px] text-feltdim">Questions about local custom? <a href="#" id="contactLink" class="text-amber underline underline-offset-2">Ask your guide</a></p>
+          <p class="text-[10.5px] text-feltdim/70 mt-4">The Ger Protocol · Field edition</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============== BOTTOM NAVIGATION (fixed) ============== -->
+  <!-- Hidden on the welcome & completion screens via JS. -->
+  <nav id="bottomNav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 pb-6 pt-4 bg-gradient-to-t from-[#1B1815] via-[#1B1815] to-transparent">
+    <div class="flex gap-3">
+      <button id="backBtn" class="btn-ghost rounded-xl px-5 py-4 font-semibold text-[14px] min-w-[92px]">
+        Back
+      </button>
+      <button id="nextBtn" class="btn-primary rounded-xl px-5 py-4 font-bold text-[14px] flex-1">
+        Next
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<script>
+/*
+ * =============================================================
+ *  GER PROTOCOL — CONFIG
+ *  Edit this block to re-brand the app for a new partner without
+ *  touching any other code. All partner-facing strings pull from here.
+ * =============================================================
+ */
+const CONFIG = {
+  partnerName: "Juulchin Travel",     // shown in header + completion footer
+  contactLabel: "Ask your guide",     // completion screen CTA text
+  contactHref: "#",                   // e.g. "tel:+97611000000" or a website
+};
+
+// Apply CONFIG to the DOM once on load — this is the only place that
+// needs to change for a co-branded / white-label deploy.
+document.getElementById('partnerName').textContent = CONFIG.partnerName;
+document.getElementById('partnerNameFooter').textContent = CONFIG.partnerName;
+const contactLinkEl = document.getElementById('contactLink');
+contactLinkEl.textContent = CONFIG.contactLabel;
+contactLinkEl.href = CONFIG.contactHref;
+
+/*
+ * =============================================================
+ *  NAVIGATION STATE
+ *  screenOrder: the sequence of logical screens. "welcome" and
+ *  "complete" sit outside the 1-5 step count shown on the progress bar.
+ * =============================================================
+ */
+const screenOrder = ['welcome', 1, 2, 3, 4, 5, 'complete'];
+let current = 0; // index into screenOrder
+
+const welcomeEl   = document.querySelector('[data-screen="welcome"]');
+const completeEl  = document.querySelector('[data-screen="complete"]');
+const stepEls     = Array.from(document.querySelectorAll('[data-screen="step"]'));
+const allScreens  = [welcomeEl, ...stepEls, completeEl];
+
+const progressWrap  = document.getElementById('progressWrap');
+const progressLabel = document.getElementById('progressLabel');
+const progressBar   = document.getElementById('progressBar');
+const bottomNav      = document.getElementById('bottomNav');
+const backBtn        = document.getElementById('backBtn');
+const nextBtn        = document.getElementById('nextBtn');
+const slats           = Array.from(document.querySelectorAll('.slat'));
+
+function screenElFor(key){
+  if (key === 'welcome') return welcomeEl;
+  if (key === 'complete') return completeEl;
+  return stepEls.find(el => Number(el.dataset.step) === key);
+}
+
+function render(direction){ // direction: 'forward' | 'back'
+  const key = screenOrder[current];
+  const isStep = typeof key === 'number';
+
+  // Toggle progress bar + bottom nav visibility for non-step screens.
+  progressWrap.classList.toggle('hidden', !isStep);
+  bottomNav.classList.toggle('hidden', key === 'welcome' || key === 'complete');
+
+  if (isStep){
+    progressLabel.textContent = `Step ${key} of 5`;
+    progressBar.setAttribute('aria-valuenow', key);
+    slats.forEach(s => {
+      const n = Number(s.dataset.slat);
+      s.classList.toggle('filled', n < key);
+      s.classList.toggle('current', n === key);
+    });
+    backBtn.disabled = false;
+    backBtn.style.visibility = 'visible';
+    nextBtn.textContent = key === 5 ? 'Finish' : 'Next';
+  }
+
+  // Animate the active screen in, previous screen out.
+  allScreens.forEach(el => {
+    const elKey = el.dataset.screen === 'step' ? Number(el.dataset.step) : el.dataset.screen;
+    if (elKey === key){
+      el.style.position = '';
+      el.setAttribute('data-state', direction === 'back' ? 'enter-back' : 'enter');
+      // Force reflow so the transition from enter -> active actually animates.
+      void el.offsetWidth;
+      requestAnimationFrame(() => el.setAttribute('data-state', 'active'));
+    } else {
+      el.setAttribute('data-state', direction === 'back' ? 'exit-back' : 'exit');
+    }
+  });
+}
+
+function goNext(){
+  if (current < screenOrder.length - 1){
+    current++;
+    render('forward');
+  }
+}
+function goBack(){
+  if (current > 0){
+    current--;
+    render('back');
+  }
+}
+
+document.getElementById('beginBtn').addEventListener('click', goNext);
+document.getElementById('restartBtn').addEventListener('click', () => {
+  current = 0;
+  render('back');
+});
+nextBtn.addEventListener('click', goNext);
+backBtn.addEventListener('click', () => {
+  // From step 1, "Back" returns to the welcome screen.
+  goBack();
+});
+
+// Initial paint.
+render('forward');
+</script>
+</body>
+</html> edit the things i tell you  also interesting thing is if you fall slip on the entrance into the home it is a good omen symbolizing good things and coming into the home and if you fall while trying to leave the ger it is a bad omen symboling something leaving the house which is seen as as long for the host family now my idea is to introduce and explain the components of the ger and teach them sbout deel in another section or maybe i should create something you for deel only exclujsively?  tell me what you think and edit the nar zuv thing
+Here is the updated HTML code with Nar Zöv corrected.
+
+Regarding your ideas on expanding the guide—here is how to approach adding ger components and the deel:
+
+Recommendations
+Ger Architecture Components (Keep in this guide): It makes total sense to keep this inside The Ger Protocol. You could add a preliminary "Anatomy of a Ger" screen (or expandable section) before Step 1 that covers key terms like Toono (crown), Uni (rafters), Bagana (pillars), Khana (lattice walls), and Bosgo (threshold). Since users are already learning about interior movement and the pillars, knowing the parts makes the etiquette clearer.
+
+The Deel (Create a separate mini-guide): Create a standalone companion guide (e.g., Deel Etiquette & Customs). Wearing a deel has its own specific protocol—how to tie the sash (bős), unbuttoning/buttoning rules, sleeve placement (khüntii), gender-specific overlaps, and holiday etiquette (like Tsagaan Sar). Keeping it separate prevents overloading this 30-second field guide, but you can link to it from the completion screen!
+
+The Entrance Fall Omen: Added this as a cool piece of cultural insight inside the Step 1 (Bosgo) "Why it matters" box.
+
+Updated Code
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>The Ger Protocol — Field Guide</title>
+<meta name="description" content="A 30-second interactive field guide to Mongolian ger etiquette.">
+
+<!-- Tailwind CSS via CDN (no build step) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts: Fraunces (display/serif, used for headlines & Mongolian terms) + Manrope (UI/body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#1B1815',
+          stone:    '#26221E',
+          stone2:   '#312B25',
+          felt:     '#EFE7D8',
+          feltdim:  '#B9AF9C',
+          wood:     '#6B4226',
+          amber:    '#CB8A3E',
+          amberdeep:'#9C5F24',
+          teal:     '#4C7B72',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body: ['"Manrope"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#1B1815;
+    --stone:#26221E;
+    --line: rgba(239,231,216,0.10);
+    --line-strong: rgba(239,231,216,0.18);
+  }
+
+  * { -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--ink);
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: #EFE7D8;
+  }
+
+  .font-display { font-family: 'Fraunces', serif; }
+
+  .grain-bg{
+    background-color: var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(203,138,62,0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(76,123,114,0.05), transparent 45%);
+  }
+
+  .lattice-frame{
+    border: 1px solid var(--line-strong);
+    background-image:
+      linear-gradient(var(--stone), var(--stone)),
+      repeating-linear-gradient(45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px),
+      repeating-linear-gradient(-45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px);
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+  }
+
+  .screen{
+    transition: opacity 320ms ease, transform 320ms ease;
+  }
+  .screen[data-state="enter"]{ opacity: 0; transform: translateX(24px); }
+  .screen[data-state="enter-back"]{ opacity: 0; transform: translateX(-24px); }
+  .screen[data-state="active"]{ opacity: 1; transform: translateX(0); }
+  .screen[data-state="exit"]{ opacity: 0; transform: translateX(-24px); position:absolute; }
+  .screen[data-state="exit-back"]{ opacity: 0; transform: translateX(24px); position:absolute; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen{ transition: opacity 120ms linear !important; transform: none !important; }
+    .screen[data-state="enter"], .screen[data-state="enter-back"],
+    .screen[data-state="exit"], .screen[data-state="exit-back"]{ transform:none; }
+  }
+
+  .slat{
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(239,231,216,0.14);
+    overflow: hidden;
+    position: relative;
+  }
+  .slat > span{
+    display:block;
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, var(--tw-amberdeep,#9C5F24), var(--tw-amber,#CB8A3E));
+    transition: width 420ms ease;
+  }
+  .slat.filled > span{ width:100%; }
+  .slat.current > span{ width:50%; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #CB8A3E;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .btn-primary{
+    background: linear-gradient(180deg, #D7994B, #B97A34);
+    color: #1B1815;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 6px 16px rgba(203,138,62,0.18);
+  }
+  .btn-primary:active{ transform: translateY(1px); }
+  .btn-primary:disabled{ opacity: 0.4; box-shadow:none; }
+
+  .btn-ghost{
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: #EFE7D8;
+  }
+  .btn-ghost:active{ transform: translateY(1px); }
+
+  .why-box{
+    border-left: 2px solid #CB8A3E;
+    background: rgba(203,138,62,0.08);
+  }
+
+  .arc-west{ stroke:#CB8A3E; }
+  .arc-east{ stroke:#4C7B72; }
+  .arc-north{ stroke:#EFE7D8; }
+
+  @keyframes seal-in{
+    0%{ transform: scale(0.85) rotate(-4deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+  .seal{ animation: seal-in 520ms cubic-bezier(.2,.8,.2,1) both; }
+  @media (prefers-reduced-motion: reduce){ .seal{ animation:none; } }
+</style>
+</head>
+
+<body class="grain-bg min-h-screen w-full flex justify-center">
+
+<div id="app" class="relative w-full max-w-md min-h-screen flex flex-col">
+
+  <!-- ============== CO-BRANDED HEADER ============== -->
+  <header class="px-5 pt-6 pb-4">
+    <div class="flex items-center gap-3">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <circle cx="17" cy="17" r="15.5" stroke="#CB8A3E" stroke-width="1.3"/>
+        <circle cx="17" cy="17" r="6" stroke="#CB8A3E" stroke-width="1.3"/>
+        <line x1="17" y1="1.5" x2="17" y2="11" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="17" y1="23" x2="17" y2="32.5" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="1.5" y1="17" x2="11" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="23" y1="17" x2="32.5" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="6.2" y1="6.2" x2="12.8" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="21.2" y1="21.2" x2="27.8" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="27.8" y1="6.2" x2="21.2" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="12.8" y1="21.2" x2="6.2" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+      </svg>
+      <div class="leading-tight">
+        <p class="font-display text-[17px] tracking-tight" style="font-variant: small-caps;">The Ger Protocol</p>
+        <p class="text-[11.5px] text-feltdim" id="partnerLine">Official Field Protocol · In partnership with <span id="partnerName">Juulchin Travel</span></p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============== PROGRESS BAR (5 steps) ============== -->
+  <div id="progressWrap" class="px-5 pb-5">
+    <div class="flex gap-1.5" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressBar">
+      <div class="slat" data-slat="1"><span></span></div>
+      <div class="slat" data-slat="2"><span></span></div>
+      <div class="slat" data-slat="3"><span></span></div>
+      <div class="slat" data-slat="4"><span></span></div>
+      <div class="slat" data-slat="5"><span></span></div>
+    </div>
+    <p class="text-[11px] text-feltdim mt-2" id="progressLabel" aria-live="polite">Step 1 of 5</p>
+  </div>
+
+  <!-- ============== SCREENS ============== -->
+  <main class="relative flex-1 px-5 pb-32 overflow-hidden">
+
+    <!-- ---------- WELCOME SCREEN ---------- -->
+    <section class="screen" data-screen="welcome" data-state="active">
+      <div class="flex flex-col items-center text-center pt-6">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true" class="mb-6">
+          <circle cx="60" cy="60" r="52" stroke="#3A332C" stroke-width="1.5"/>
+          <circle cx="60" cy="60" r="20" stroke="#CB8A3E" stroke-width="1.5"/>
+          <g stroke="#6B4226" stroke-width="1.2">
+            <line x1="60" y1="8" x2="60" y2="40"/>
+            <line x1="60" y1="80" x2="60" y2="112"/>
+            <line x1="8" y1="60" x2="40" y2="60"/>
+            <line x1="80" y1="60" x2="112" y2="60"/>
+            <line x1="21.7" y1="21.7" x2="45.7" y2="45.7"/>
+            <line x1="74.3" y1="74.3" x2="98.3" y2="98.3"/>
+            <line x1="98.3" y1="21.7" x2="74.3" y2="45.7"/>
+            <line x1="45.7" y1="74.3" x2="21.7" y2="98.3"/>
+          </g>
+        </svg>
+        <h1 class="font-display text-[30px] leading-[1.15] mb-3">Before you<br>step inside</h1>
+        <p class="text-[15px] text-feltdim max-w-[300px] leading-relaxed mb-8">
+          A 30-second field guide to the customs of a Mongolian ger — five simple rules,
+          one respectful visit.
+        </p>
+        <button id="beginBtn" class="btn-primary font-body font-bold text-[15px] w-full py-4 rounded-xl">
+          Begin the walkthrough
+        </button>
+        <p class="text-[11px] text-feltdim mt-4">5 steps · about 30 seconds</p>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 1: Entry & Threshold (Bosgo) ---------- -->
+    <section class="screen" data-screen="step" data-step="1" data-state="enter">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">1</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="14" y="10" width="44" height="52" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <rect x="12" y="54" width="48" height="8" rx="1.5" fill="#6B4226"/>
+            <path d="M22 40 C 30 24, 40 24, 46 34" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M46 34 l -6 -2 M46 34 l -1 -6" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <ellipse cx="24" cy="46" rx="7" ry="4" fill="#EFE7D8" opacity="0.9"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 1 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Bosgo</h2>
+          <p class="text-[14px] text-feltdim mb-5">The Threshold</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            The wooden beam at the base of the door frame is the <em>bosgo</em> —
+            the threshold. Step over it, never on it, and lead with your
+            <strong class="text-felt">right foot</strong>.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim mb-2">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the threshold holds the household's stability. Stepping on it is considered a bad omen for the family inside.
+            </p>
+            <p class="text-[12.5px] leading-relaxed text-feltdim/90 italic border-t border-[rgba(239,231,216,0.1)] pt-2">
+              <span class="text-amber font-semibold not-italic">Did you know?</span> Slipping while entering is seen as a good omen—symbolizing good wealth and fortune coming into the home. Slipping while leaving, however, is a bad omen, as if taking luck away from the family.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 2: Interior Navigation (Nar Zöv / Bagana) ---------- -->
+    <section class="screen" data-screen="step" data-step="2" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">2</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle cx="36" cy="36" r="26" stroke="#3A332C" stroke-width="1.5"/>
+            <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <rect x="30" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <rect x="38" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <line x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 2 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Nar Zöv</h2>
+          <p class="text-[14px] text-feltdim mb-5">Moving Sunwise (Clockwise)</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Once inside, move to your left and travel <strong class="text-felt">nar zöv</strong>
+            (clockwise/sunwise) around the interior. Never cut through the space between the two central
+            support pillars, the <em>bagana</em> — that path is reserved.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              moving sunwise mirrors the cosmos and brings harmony. The line between the pillars is a sacred axis connecting hearth to sky—crossing it cuts through the family's fortune.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 3: Seating Hierarchy ---------- -->
+    <section class="screen" data-screen="step" data-step="3" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">3</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              class="arc-west" stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              class="arc-east" stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              class="arc-north" stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke="#1B1815" stroke-width="6" stroke-dasharray="1 190" stroke-dashoffset="0"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 3 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Seating Order</h2>
+          <p class="text-[14px] text-feltdim mb-5">Guests, Family, Elders</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            The <strong style="color:#CB8A3E">west side (left of the door)</strong> is for guests and men.
+            The <strong style="color:#4C7B72">east side (right)</strong> is for family and women.
+            The back, or <em>khoimor</em>, is reserved for elders and sacred objects — wait
+            to be shown your seat.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              seating maps the family's own order. Sitting unguided, especially
+              in the khoimor, is read as claiming a status that isn't yours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 4: The Hearth (Golomt) ---------- -->
+    <section class="screen" data-screen="step" data-step="4" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">4</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="26" y="38" width="20" height="14" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <path d="M32 38 c 0 -6 4 -6 3 -11 c 3 2 4 6 1 9 c 2 -1 3 -3 3 -5 c 2 3 1 6 -1 7" stroke="#CB8A3E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M14 58 q 8 -4 16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M58 58 q -8 -4 -16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <line x1="18" y1="54" x2="24" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="54" y1="54" x2="48" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 4 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Golomt</h2>
+          <p class="text-[14px] text-feltdim mb-5">The Hearth</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Sit with your feet tucked back and soles pointed away from the
+            stove and from any elder. Never pass anything over the hearth, and
+            never put waste into it.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the golomt is the family's fire spirit and its literal source of
+              warmth and food. Disrespecting it is considered a serious offense.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 5: Receiving Hospitality ---------- -->
+    <section class="screen" data-screen="step" data-step="5" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">5</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <path d="M26 32 h20 l -2 14 a 8 8 0 0 1 -16 0 Z" stroke="#3A332C" stroke-width="1.5" fill="none"/>
+            <path d="M20 46 q 8 4 14 1" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M34 46 q 8 -6 16 -2" stroke="#8A6A4E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <circle cx="20" cy="46" r="1.6" fill="#CB8A3E"/>
+            <circle cx="50" cy="44" r="1.6" fill="#8A6A4E"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 5 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Receiving</h2>
+          <p class="text-[14px] text-feltdim mb-5">Tea, Snuff & Food</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Accept whatever is offered with your <strong class="text-felt">right hand</strong>,
+            elbow supported by your left. If you can't finish it, take a small
+            symbolic sip or bite — an outright refusal is considered impolite.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              offering food to a guest is a point of pride for the host family.
+              Two hands, and a gesture of acceptance, return that respect.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- COMPLETION SCREEN ---------- -->
+    <section class="screen" data-screen="complete" data-state="exit">
+      <div class="flex flex-col items-center text-center pt-6">
+        <div class="seal relative w-[104px] h-[104px] mb-6">
+          <svg viewBox="0 0 104 104" width="104" height="104" aria-hidden="true">
+            <circle cx="52" cy="52" r="48" stroke="#CB8A3E" stroke-width="1.3"/>
+            <circle cx="52" cy="52" r="40" stroke="#CB8A3E" stroke-width="1" stroke-dasharray="2 4"/>
+            <path d="M36 53 l11 11 l22 -24" stroke="#CB8A3E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="font-display text-[26px] leading-tight mb-2">Protocol complete</h1>
+        <p class="text-[14px] text-feltdim max-w-[280px] leading-relaxed mb-7">
+          You're ready to step inside. A quick reminder of what you learned:
+        </p>
+
+        <ul class="w-full text-left space-y-3 mb-8">
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">1</span>
+            <span class="text-[13.5px] text-feltdim">Step over the <span class="text-felt">bosgo</span>, right foot first — never on it.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">2</span>
+            <span class="text-[13.5px] text-feltdim">Move <span class="text-felt">nar zöv</span> (clockwise); never cross between the two <span class="text-felt">bagana</span> pillars.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">3</span>
+            <span class="text-[13.5px] text-feltdim">Sit only where shown — west for guests, east for family, khoimor for elders.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">4</span>
+            <span class="text-[13.5px] text-feltdim">Keep your feet tucked away from the <span class="text-felt">golomt</span> hearth.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">5</span>
+            <span class="text-[13.5px] text-feltdim">Receive tea or food right-handed, left hand supporting your elbow.</span>
+          </li>
+        </ul>
+
+        <button id="restartBtn" class="btn-ghost text-[13.5px] font-semibold px-5 py-3 rounded-xl w-full mb-8">
+          Review again
+        </button>
+
+        <div class="w-full border-t border-[color:var(--line)] pt-5">
+          <p class="text-[12px] text-feltdim mb-1">Presented by <span id="partnerNameFooter" class="text-felt font-semibold">Juulchin Travel</span></p>
+          <p class="text-[11.5px] text-feltdim">Questions about local custom? <a href="#" id="contactLink" class="text-amber underline underline-offset-2">Ask your guide</a></p>
+          <p class="text-[10.5px] text-feltdim/70 mt-4">The Ger Protocol · Field edition</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============== BOTTOM NAVIGATION (fixed) ============== -->
+  <nav id="bottomNav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 pb-6 pt-4 bg-gradient-to-t from-[#1B1815] via-[#1B1815] to-transparent">
+    <div class="flex gap-3">
+      <button id="backBtn" class="btn-ghost rounded-xl px-5 py-4 font-semibold text-[14px] min-w-[92px]">
+        Back
+      </button>
+      <button id="nextBtn" class="btn-primary rounded-xl px-5 py-4 font-bold text-[14px] flex-1">
+        Next
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<script>
+const CONFIG = {
+  partnerName: "Juulchin Travel",
+  contactLabel: "Ask your guide",
+  contactHref: "#",
+};
+
+document.getElementById('partnerName').textContent = CONFIG.partnerName;
+document.getElementById('partnerNameFooter').textContent = CONFIG.partnerName;
+const contactLinkEl = document.getElementById('contactLink');
+contactLinkEl.textContent = CONFIG.contactLabel;
+contactLinkEl.href = CONFIG.contactHref;
+
+const screenOrder = ['welcome', 1, 2, 3, 4, 5, 'complete'];
+let current = 0;
+
+const welcomeEl   = document.querySelector('[data-screen="welcome"]');
+const completeEl  = document.querySelector('[data-screen="complete"]');
+const stepEls     = Array.from(document.querySelectorAll('[data-screen="step"]'));
+const allScreens  = [welcomeEl, ...stepEls, completeEl];
+
+const progressWrap  = document.getElementById('progressWrap');
+const progressLabel = document.getElementById('progressLabel');
+const progressBar   = document.getElementById('progressBar');
+const bottomNav      = document.getElementById('bottomNav');
+const backBtn        = document.getElementById('backBtn');
+const nextBtn        = document.getElementById('nextBtn');
+const slats           = Array.from(document.querySelectorAll('.slat'));
+
+function render(direction){
+  const key = screenOrder[current];
+  const isStep = typeof key === 'number';
+
+  progressWrap.classList.toggle('hidden', !isStep);
+  bottomNav.classList.toggle('hidden', key === 'welcome' || key === 'complete');
+
+  if (isStep){
+    progressLabel.textContent = `Step ${key} of 5`;
+    progressBar.setAttribute('aria-valuenow', key);
+    slats.forEach(s => {
+      const n = Number(s.dataset.slat);
+      s.classList.toggle('filled', n < key);
+      s.classList.toggle('current', n === key);
+    });
+    backBtn.disabled = false;
+    backBtn.style.visibility = 'visible';
+    nextBtn.textContent = key === 5 ? 'Finish' : 'Next';
+  }
+
+  allScreens.forEach(el => {
+    const elKey = el.dataset.screen === 'step' ? Number(el.dataset.step) : el.dataset.screen;
+    if (elKey === key){
+      el.style.position = '';
+      el.setAttribute('data-state', direction === 'back' ? 'enter-back' : 'enter');
+      void el.offsetWidth;
+      requestAnimationFrame(() => el.setAttribute('data-state', 'active'));
+    } else {
+      el.setAttribute('data-state', direction === 'back' ? 'exit-back' : 'exit');
+    }
+  });
+}
+
+function goNext(){
+  if (current < screenOrder.length - 1){
+    current++;
+    render('forward');
+  }
+}
+function goBack(){
+  if (current > 0){
+    current--;
+    render('back');
+  }
+}
+
+document.getElementById('beginBtn').addEventListener('click', goNext);
+document.getElementById('restartBtn').addEventListener('click', () => {
+  current = 0;
+  render('back');
+});
+nextBtn.addEventListener('click', goNext);
+backBtn.addEventListener('click', goBack);
+
+render('forward');
+</script>
+</body>
+</html>
+
+okay now i do not want vercel but they said this
+You don't need Vercel at all—especially since you already have your code hosted in a public GitHub repository.
+
+Since you have single-file HTML (index.html) sitting in a GitHub repository (bolorgantugs6-source/ger-protocol), here are two 100% free alternative ways to host it:
+
+Option 1: Enable GitHub Pages (Easiest — Built into GitHub)
+Since your code is already on GitHub, you can host the website directly from GitHub for free with no extra accounts.
+
+Go to your repository settings:
+
+[https://github.com/bolorgantugs6-source/ger-protocol/settings](https://github.com/bolorgantugs6-source/ger-protocol/settings)
+
+In the left sidebar, click Pages under the Code and automation section.
+
+Under Build and deployment > Source, select Deploy from a branch.
+
+Choose main as the branch and / (root) as the folder, then click Save.
+
+Wait 1–2 minutes. Your site will be live at:
+
+[https://bolorgantugs6-source.github.io/ger-protocol/](https://bolorgantugs6-source.github.io/ger-protocol/)
+
+Option 2: Netlify Drop (No Git or configuration needed)
+If you just want to drag-and-drop your single index.html file to get a clean live link:
+
+Go to app.netlify.com/drop in your browser.
+
+Drag and drop your index.html file into the box on the screen.
+
+It will instantly publish your site and give you a free HTTPS link (e.g., [https://random-name.netlify.app](https://random-name.netlify.app)).
+
+Option 3: Cloudflare Pages
+Sign up for a free account at pages.cloudflare.com.
+
+Select Connect GitHub and choose the ger-protocol repository.
+
+Click Save and Deploy (no build command needed for plain HTML).
+
+more like i want the mn thing 
+To set up your project under a .mn domain (e.g., ger-protocol.mn or gerprotocol.mn), you can register the domain and link it to your existing site.
+
+Step 1: Register Your .mn Domain Name
+The .mn country code top-level domain (ccTLD) is managed by Datacom in Mongolia, but you can purchase it through several registrars:
+
+Local Mongolian Registrars (Best in MNT):
+
+Datacom.mn: The primary registry for .mn domains (~165,000₮/year).
+
+Magic.mn: Another popular local option in Mongolia.
+
+Global Registrars (Pay in USD):
+
+Hostinger, Dynadot, or Sav.com (ranges from $37 to $50/year).
+
+Step 2: Host Your Code for Free (Without Vercel)
+Instead of Vercel, you can turn on GitHub Pages, which is built right into your existing GitHub repository:
+
+Go to your repository settings:
+
+[https://github.com/bolorgantugs6-source/ger-protocol/settings](https://github.com/bolorgantugs6-source/ger-protocol/settings)
+
+In the left menu, select Pages.
+
+Under Build and deployment > Branch, pick main and / (root), then click Save.
+
+GitHub will give you a default free URL (like bolorgantugs6-source.github.io/ger-protocol).
+
+Step 3: Connect your .mn Domain to GitHub Pages
+Once you buy your .mn domain name:
+
+Add the Custom Domain in GitHub:
+
+Go back to GitHub Settings > Pages.
+
+Under Custom domain, type in your new domain (e.g., gerprotocol.mn) and click Save.
+
+Check the box for Enforce HTTPS (it may take a few minutes to issue the SSL certificate).
+
+Update your DNS settings (where you bought the .mn domain):
+
+Log in to where you bought your .mn domain (e.g., Datacom or Hostinger).
+
+Open the DNS Management / Nameserver settings.
+
+Add 4 A Records pointing your domain to GitHub’s servers:
+
+@ → 185.199.108.153
+
+@ → 185.199.109.153
+
+@ → 185.199.110.153
+
+@ → 185.199.111.153
+
+Add 1 CNAME Record for the www version:
+
+www → bolorgantugs6-source.github.io
+
+Once saved, it usually takes anywhere from 15 minutes to a few hours for the .mn address to point to your live project.
+
+okay i dont wanna pay nothing so maybe i should stick ti my vercel right now 
+Yes! Sticking with Vercel is completely 100% free for personal projects like yours.
+
+Clarifying What You Saw on Your Screen
+In the screenshot, the $100/month Pro plan popup only applies to Preview Deployment Suffixes (customizing internal test URLs like my-deployment.vercel.app).
+
+You do not need this feature at all:
+
+Your free site is already live at ger-protocol.vercel.app.
+
+Basic hosting, HTTPS, continuous deployments from GitHub, and adding custom domains are completely free on Vercel's Hobby plan.
+
+If You Want a .mn Domain in the Future
+The Domain Name: You would still have to buy the .mn name itself (usually around ~165,000₮/year from a registrar like Datacom).
+
+The Hosting: You can attach that .mn domain directly to your free Vercel project under Settings > Domains in Vercel for $0 extra.
+
+Per-partner deploys — for each co-branded version, either (a) edit the CONFIG object at the top of the <script> tag and push to a new branch/repo per partner, or (b) later add a ?partner= URL query param the JS reads on load — worth building once you have 2+ real licensees, so one codebase serves all of them. explain this to me
+That highlighted advice is giving you a strategy for how to handle white-labeling or co-branding your app if multiple organizations or partners (like different tour agencies or cultural centers) want their own customized version of The Ger Protocol.
+
+Instead of manually building separate websites from scratch for every partner, it outlines two ways to manage it:
+
+What it actually means
+If Partner A (e.g., Nomad Tours) and Partner B (e.g., Ulaanbaatar Cultural Center) both want to feature your field guide with their own logo, custom colors, or partner name on top:
+
+Option (a): The "Manual Branch" Approach
+How it works: You create a config object inside your JavaScript code (e.g., const CONFIG = { partnerName: "Nomad Tours", logo: "nomad.png" };).
+
+Deployment: You create a separate branch or repository in GitHub for each partner (e.g., a nomad-tours branch and a ub-culture branch) and deploy each branch to Vercel separately.
+
+Pros/Cons: Easy to set up right now, but annoying to maintain long-term because whenever you update the main site, you have to sync code across multiple branches.
+
+Option (b): The "Query Parameter" Approach (Smarter)
+How it works: You keep one single codebase on GitHub and one main deployment on Vercel. In your JavaScript code, you write script logic that looks at the web browser's URL to see who opened it.
+
+URL Examples:
+
+[https://ger-protocol.vercel.app/?partner=nomadtours](https://ger-protocol.vercel.app/?partner=nomadtours)
+
+[https://ger-protocol.vercel.app/?partner=ubculture](https://ger-protocol.vercel.app/?partner=ubculture)
+
+What happens: When the page loads, the JavaScript reads ?partner=nomadtours, fetches that specific partner’s logo and theme colors, and updates the page live.
+
+Pros/Cons: Zero maintenance overhead—one update on your main branch immediately updates all partner versions at once.
+
+What you should do right now
+Ignore both options for now!
+
+As the note mentions ("worth building once you have 2+ real licensees"), you shouldn't waste time coding this right now. Focus on finishing your main project first. Only implement Option (b) when an actual paying partner asks for a customized link.
+
+so what to do now
+Here is the straightforward plan for what to do next based on where your project stands:
+
+1. Test Your Live Vercel Link
+Your site is already deployed and live. Open your URL in a browser tab to make sure everything loads smoothly:
+
+ger-protocol.vercel.app
+
+2. Add the 3 Core Value Upgrades First
+Instead of worrying about multi-partner code or paying for domain names right now, focus on finishing the core project features mentioned in your guide:
+
+Mongolian Pronunciation Audio: Add audio files or native speaker recordings for terms like Zov, Jov Zov, Bagana, Khoimor, and Golomt.
+
+Interactive Diagrams / Micro-Interactions: Make sure the visual layout of the Ger map and field guide rules respond cleanly when clicked or tapped on mobile.
+
+Content Completeness: Review all the text rules in your index.html file to ensure the cultural guide is 100% accurate and ready for readers.
+
+3. Share & Get Initial Feedback
+Send the free Vercel link to friends, cultural experts, or potential tour partners to get feedback on the user experience.
+
+Keep main as your single source of truth—whenever you edit index.html on GitHub, Vercel will automatically update your live site within seconds for free.
+
+Good catch — thanks. Fixing that everywhere:Fixed — Step 2 now reads **Nar Zöv** everywhere (heading, comment, audio filename `audio/nar-zov.mp3`, and the TTS fallback text). Just push this file to your repo and Vercel will pick it up on the next deploy. said this
+Here is what you need to do step-by-step:
+
+Download the updated file: Click the Download button on the Index HTML code block in your Claude tab.
+
+Replace index.html in your local project folder: Move the newly downloaded file into your project folder so it replaces the old index.html.
+
+Commit and push to GitHub:
+
+Open your terminal or Git client and push the update to your repository:
+
+Bash
+git add index.html
+git commit -m "Fix Nar Zöv naming and audio paths"
+git push origin main
+Done! Because your project is connected to Vercel, Vercel will automatically detect the new commit on GitHub and update your live site at ger-protocol.vercel.app within seconds.
+
+okay not on terminal where is the git client
+If you aren't using the Terminal, you can update your file directly on the web interface without installing anything:
+
+Method 1: Edit Directly on GitHub (Easiest & Fastest)
+Go directly to your repository file: index.html on GitHub.   
+
+Click the pencil icon (✏️) in the top right corner of the code view to edit the file directly in your browser.
+
+Select all the existing code (Cmd + A on Mac or Ctrl + A on Windows), delete it, and paste the updated HTML code from Claude.
+
+Click the green Commit changes... button in the top right.
+
+Click Commit changes in the pop-up window. Vercel will automatically trigger a new build and update your live site within seconds.
+
+Method 2: GUI Git Clients (Visual Apps)
+If you prefer using a dedicated application on your computer instead of the terminal, here are the most popular free options:
+
+GitHub Desktop: The simplest visual app made by GitHub. You just drag your project folder into it, and it gives you a Commit and Push button to click.
+
+VS Code: If you open your project folder in VS Code, click the Source Control icon (the 3-dot branching icon on the left sidebar). Type a commit message in the box and click Commit, then click Sync Changes.
+
+git add index.html
+git commit -m "Fix Nar Zöv naming and audio paths"
+git push origin main what is this for 
+Those three lines are the terminal commands used to save your changes and publish them to your live website.
+
+Here is what each line does step-by-step:
+
+git add index.html
+
+What it does: Tracks your updated file.
+
+Plain English: "Hey Git, grab the updated index.html file so it's ready to be saved."
+
+git commit -m "Fix Nar Zöv naming and audio paths"
+
+What it does: Saves a snapshot of your project with a descriptive note.
+
+Plain English: "Create a save point for this project, and label it: Fix Nar Zöv naming and audio paths."
+
+git push origin main
+
+What it does: Uploads your saved changes from your computer to your GitHub repository on the main branch.
+
+Plain English: "Send these updated files to GitHub."
+
+Why it updates your website
+Since your GitHub repository is connected to Vercel, Vercel detects whenever you run git push. It automatically grabs the new index.html file and updates your live site at ger-protocol.vercel.app within seconds.   
+
+(If you aren't using the terminal, you can skip those commands entirely and just edit or upload index.html directly on GitHub!)   
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -722,4 +2406,738 @@ backBtn.addEventListener('click', () => {
 render('forward');
 </script>
 </body>
+</html> i guess edit the jov zov and do it for nar zuv
+Here is the updated code with every instance of Jov Zov corrected to Nar Zöv (including headings, fallback speech texts, and the audio file path audio/nar-zov.mp3).
+
+You can copy this exact code into your index.html file on GitHub:   
+
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>The Ger Protocol — Field Guide</title>
+<meta name="description" content="A 30-second interactive field guide to Mongolian ger etiquette.">
+
+<!-- Tailwind CSS via CDN (no build step) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts: Fraunces (display/serif, used for headlines & Mongolian terms) + Manrope (UI/body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  // ------------------------------------------------------------------
+  // Tailwind theme extension — maps our custom design tokens (see the
+  // CSS variables below) into Tailwind utility classes like bg-ink,
+  // text-amber, font-display, etc. Edit hex values in :root, not here.
+  // ------------------------------------------------------------------
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#1B1815',
+          stone:    '#26221E',
+          stone2:   '#312B25',
+          felt:     '#EFE7D8',
+          feltdim:  '#B9AF9C',
+          wood:     '#6B4226',
+          amber:    '#CB8A3E',
+          amberdeep:'#9C5F24',
+          teal:     '#4C7B72',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body: ['"Manrope"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#1B1815;
+    --stone:#26221E;
+    --line: rgba(239,231,216,0.10);
+    --line-strong: rgba(239,231,216,0.18);
+  }
+
+  * { -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--ink);
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: #EFE7D8;
+  }
+
+  .font-display { font-family: 'Fraunces', serif; }
+
+  /* Subtle woven/felt paper grain, layered over the ink background so
+     large flat areas don't feel like plain digital black. Cheap, no
+     image assets required. */
+  .grain-bg{
+    background-color: var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(203,138,62,0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(76,123,114,0.05), transparent 45%);
+  }
+
+  /* Lattice pattern used as a faint card border texture, echoing the
+     khana (collapsible wooden wall lattice) of a ger. */
+  .lattice-frame{
+    border: 1px solid var(--line-strong);
+    background-image:
+      linear-gradient(var(--stone), var(--stone)),
+      repeating-linear-gradient(45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px),
+      repeating-linear-gradient(-45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px);
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+  }
+
+  /* ---- Step transition: one deliberate, orchestrated motion per
+     step change, not per-element scroll animation. ---- */
+  .screen{
+    transition: opacity 320ms ease, transform 320ms ease;
+  }
+  .screen[data-state="enter"]{ opacity: 0; transform: translateX(24px); }
+  .screen[data-state="enter-back"]{ opacity: 0; transform: translateX(-24px); }
+  .screen[data-state="active"]{ opacity: 1; transform: translateX(0); }
+  .screen[data-state="exit"]{ opacity: 0; transform: translateX(-24px); position:absolute; }
+  .screen[data-state="exit-back"]{ opacity: 0; transform: translateX(24px); position:absolute; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen{ transition: opacity 120ms linear !important; transform: none !important; }
+    .screen[data-state="enter"], .screen[data-state="enter-back"],
+    .screen[data-state="exit"], .screen[data-state="exit-back"]{ transform:none; }
+  }
+
+  /* Lattice-slat progress bar: 5 slats echoing the wall lattice,
+     filling in amber as steps complete. */
+  .slat{
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(239,231,216,0.14);
+    overflow: hidden;
+    position: relative;
+  }
+  .slat > span{
+    display:block;
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, var(--tw-amberdeep,#9C5F24), var(--tw-amber,#CB8A3E));
+    transition: width 420ms ease;
+  }
+  .slat.filled > span{ width:100%; }
+  .slat.current > span{ width:50%; }
+
+  /* Focus visibility (keyboard access) */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #CB8A3E;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .btn-primary{
+    background: linear-gradient(180deg, #D7994B, #B97A34);
+    color: #1B1815;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 6px 16px rgba(203,138,62,0.18);
+  }
+  .btn-primary:active{ transform: translateY(1px); }
+  .btn-primary:disabled{ opacity: 0.4; box-shadow:none; }
+
+  .btn-ghost{
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: #EFE7D8;
+  }
+  .btn-ghost:active{ transform: translateY(1px); }
+
+  .why-box{
+    border-left: 2px solid #CB8A3E;
+    background: rgba(203,138,62,0.08);
+  }
+
+  /* Seating diagram arcs (Step 3 icon) */
+  .arc-west{ stroke:#CB8A3E; }
+  .arc-east{ stroke:#4C7B72; }
+  .arc-north{ stroke:#EFE7D8; }
+
+  /* ---- Pronunciation buttons (Step 1, 2, 3, 4 native terms) ---- */
+  .pronounce-btn{
+    width: 30px; height: 30px; border-radius: 9999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(203,138,62,0.12);
+    border: 1px solid rgba(203,138,62,0.35);
+    font-size: 13px; line-height: 1; color: #CB8A3E; flex-shrink: 0;
+  }
+  .pronounce-btn-inline{ width: 24px; height: 24px; font-size: 11px; margin: 0 2px; vertical-align: -4px; }
+  .pronounce-btn:active{ transform: scale(0.9); }
+  .pronounce-btn.playing{ animation: pulse-ring 800ms ease-out; }
+  @keyframes pulse-ring{
+    0%{ box-shadow: 0 0 0 0 rgba(203,138,62,0.55); }
+    100%{ box-shadow: 0 0 0 9px rgba(203,138,62,0); }
+  }
+
+  /* ---- Tappable diagram chips (Step 2 & 3) ---- */
+  .diagram-chip{
+    font-size: 11.5px; font-weight: 600;
+    padding: 6px 12px; border-radius: 9999px;
+    border: 1px solid var(--line-strong);
+    color: #B9AF9C; background: rgba(239,231,216,0.03);
+  }
+  .diagram-chip.chip-active{
+    color: #1B1815; background: #CB8A3E; border-color: #CB8A3E;
+  }
+  .diagram-part{ transition: filter 200ms ease; }
+
+  /* ---- Completion "verified visitor" stamp ---- */
+  .stamp-pill{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+    color: #CB8A3E;
+    border: 1px solid rgba(203,138,62,0.4);
+    background: rgba(203,138,62,0.08);
+    padding: 6px 14px; border-radius: 9999px;
+    transform: rotate(-1.5deg);
+  }
+
+  /* Completion badge subtle pulse-in (single orchestrated reveal only) */
+  @keyframes seal-in{
+    0%{ transform: scale(0.85) rotate(-4deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+  .seal{ animation: seal-in 520ms cubic-bezier(.2,.8,.2,1) both; }
+  @media (prefers-reduced-motion: reduce){ .seal{ animation:none; } }
+</style>
+</head>
+
+<body class="grain-bg min-h-screen w-full flex justify-center">
+
+<!-- App shell — capped to a mobile-app-like max width even on wider
+     screens, since this is designed to be scanned & used on a phone. -->
+<div id="app" class="relative w-full max-w-md min-h-screen flex flex-col">
+
+  <!-- ============== CO-BRANDED HEADER ============== -->
+  <header class="px-5 pt-6 pb-4">
+    <div class="flex items-center gap-3">
+      <!-- Toono mark: a simplified rendering of the ger's roof crown /
+           skylight, used as the brand mark throughout the app. -->
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <circle cx="17" cy="17" r="15.5" stroke="#CB8A3E" stroke-width="1.3"/>
+        <circle cx="17" cy="17" r="6" stroke="#CB8A3E" stroke-width="1.3"/>
+        <line x1="17" y1="1.5" x2="17" y2="11" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="17" y1="23" x2="17" y2="32.5" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="1.5" y1="17" x2="11" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="23" y1="17" x2="32.5" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="6.2" y1="6.2" x2="12.8" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="21.2" y1="21.2" x2="27.8" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="27.8" y1="6.2" x2="21.2" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="12.8" y1="21.2" x2="6.2" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+      </svg>
+      <div class="leading-tight">
+        <p class="font-display text-[17px] tracking-tight" style="font-variant: small-caps;">The Ger Protocol</p>
+        <p class="text-[11.5px] text-feltdim" id="partnerLine">Official Field Protocol · In partnership with <span id="partnerName">Juulchin Travel</span></p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============== PROGRESS BAR (5 steps) ============== -->
+  <!-- Hidden on the welcome & completion screens via JS toggling the
+       'invisible' class on #progressWrap. -->
+  <div id="progressWrap" class="px-5 pb-5">
+    <div class="flex gap-1.5" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressBar">
+      <div class="slat" data-slat="1"><span></span></div>
+      <div class="slat" data-slat="2"><span></span></div>
+      <div class="slat" data-slat="3"><span></span></div>
+      <div class="slat" data-slat="4"><span></span></div>
+      <div class="slat" data-slat="5"><span></span></div>
+    </div>
+    <p class="text-[11px] text-feltdim mt-2" id="progressLabel" aria-live="polite">Step 1 of 5</p>
+  </div>
+
+  <!-- ============== SCREENS ============== -->
+  <main class="relative flex-1 px-5 pb-32 overflow-hidden">
+
+    <!-- ---------- WELCOME SCREEN ---------- -->
+    <section class="screen" data-screen="welcome" data-state="active">
+      <div class="flex flex-col items-center text-center pt-6">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true" class="mb-6">
+          <circle cx="60" cy="60" r="52" stroke="#3A332C" stroke-width="1.5"/>
+          <circle cx="60" cy="60" r="20" stroke="#CB8A3E" stroke-width="1.5"/>
+          <g stroke="#6B4226" stroke-width="1.2">
+            <line x1="60" y1="8" x2="60" y2="40"/>
+            <line x1="60" y1="80" x2="60" y2="112"/>
+            <line x1="8" y1="60" x2="40" y2="60"/>
+            <line x1="80" y1="60" x2="112" y2="60"/>
+            <line x1="21.7" y1="21.7" x2="45.7" y2="45.7"/>
+            <line x1="74.3" y1="74.3" x2="98.3" y2="98.3"/>
+            <line x1="98.3" y1="21.7" x2="74.3" y2="45.7"/>
+            <line x1="45.7" y1="74.3" x2="21.7" y2="98.3"/>
+          </g>
+        </svg>
+        <h1 class="font-display text-[30px] leading-[1.15] mb-3">Before you<br>step inside</h1>
+        <p class="text-[15px] text-feltdim max-w-[300px] leading-relaxed mb-8">
+          A 30-second field guide to the customs of a Mongolian ger — five simple rules,
+          one respectful visit.
+        </p>
+        <button id="beginBtn" class="btn-primary font-body font-bold text-[15px] w-full py-4 rounded-xl">
+          Begin the walkthrough
+        </button>
+        <p class="text-[11px] text-feltdim mt-4">5 steps · about 30 seconds</p>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 1: Entry & Threshold (Bosgo) ---------- -->
+    <section class="screen" data-screen="step" data-step="1" data-state="enter">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">1</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="14" y="10" width="44" height="52" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <rect x="12" y="54" width="48" height="8" rx="1.5" fill="#6B4226"/>
+            <path d="M22 40 C 30 24, 40 24, 46 34" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M46 34 l -6 -2 M46 34 l -1 -6" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <ellipse cx="24" cy="46" rx="7" ry="4" fill="#EFE7D8" opacity="0.9"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 1 of 5</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Bosgo</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/bosgo.mp3" data-fallback-text="Bosgo" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Bosgo">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5">The Threshold</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            The wooden beam at the base of the door frame is the <em>bosgo</em> —
+            the threshold. Step over it, never on it, and lead with your
+            <strong class="text-felt">right foot</strong>.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the threshold is believed to hold the household's stability.
+              Stepping on it is considered a bad omen for the family inside.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 2: Interior Navigation (nar zöv / bagana) ---------- -->
+    <section class="screen" data-screen="step" data-step="2" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">2</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle cx="36" cy="36" r="26" stroke="#3A332C" stroke-width="1.5"/>
+            <g id="s2-arrow" class="diagram-part">
+              <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            </g>
+            <rect x="30" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <rect x="38" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <line id="s2-gap" class="diagram-part" x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
+          </svg>
+          <div class="diagram-block" data-step-block="2">
+            <div class="flex gap-2 mb-2 flex-wrap">
+              <button type="button" class="diagram-chip" data-target="s2-arrow" data-caption="Always move left from the door and travel clockwise around the interior.">Clockwise path</button>
+              <button type="button" class="diagram-chip" data-target="s2-gap" data-caption="This gap between the two bagana pillars is a sacred axis — walk around it, never through it.">Between the pillars</button>
+            </div>
+            <p class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]">Tap a part of the diagram to learn more.</p>
+          </div>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 2 of 5</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Nar Zöv</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/nar-zov.mp3" data-fallback-text="Nar Zöv" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Nar Zöv">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5">Moving Clockwise</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Once inside, move to your left and travel <strong class="text-felt">clockwise</strong>
+            around the interior. Never cut through the space between the two central
+            support pillars, the <em>bagana</em> — that path is reserved.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the line between the pillars is a sacred axis connecting hearth
+              to sky. Crossing it is seen as cutting through the family's fortune.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 3: Seating Hierarchy ---------- -->
+    <section class="screen" data-screen="step" data-step="3" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">3</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle id="s3-west" class="arc-west diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
+            <circle id="s3-east" class="arc-east diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
+            <circle id="s3-north" class="arc-north diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke="#1B1815" stroke-width="6" stroke-dasharray="1 190" stroke-dashoffset="0"/>
+          </svg>
+          <div class="diagram-block" data-step-block="3">
+            <div class="flex gap-2 mb-2 flex-wrap">
+              <button type="button" class="diagram-chip" data-target="s3-west" data-caption="West (left of the door) — guests and men.">West</button>
+              <button type="button" class="diagram-chip" data-target="s3-east" data-caption="East (right of the door) — family and women.">East</button>
+              <button type="button" class="diagram-chip" data-target="s3-north" data-caption="Khoimor (the back) — elders and sacred objects. Wait to be invited.">Khoimor</button>
+            </div>
+            <p class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]">Tap a zone to see who sits there.</p>
+          </div>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 3 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Seating Order</h2>
+          <p class="text-[14px] text-feltdim mb-5">Guests, Family, Elders</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            The <strong style="color:#CB8A3E">west side (left of the door)</strong> is for guests and men.
+            The <strong style="color:#4C7B72">east side (right)</strong> is for family and women.
+            The back, or <em>khoimor</em>
+            <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button>,
+            is reserved for elders and sacred objects — wait
+            to be shown your seat.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              seating maps the family's own order. Sitting unguided, especially
+              in the khoimor, is read as claiming a status that isn't yours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 4: The Hearth (Golomt) ---------- -->
+    <section class="screen" data-screen="step" data-step="4" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">4</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="26" y="38" width="20" height="14" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <path d="M32 38 c 0 -6 4 -6 3 -11 c 3 2 4 6 1 9 c 2 -1 3 -3 3 -5 c 2 3 1 6 -1 7" stroke="#CB8A3E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M14 58 q 8 -4 16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M58 58 q -8 -4 -16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <line x1="18" y1="54" x2="24" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="54" y1="54" x2="48" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 4 of 5</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Golomt</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/golomt.mp3" data-fallback-text="Golomt" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Golomt">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5">The Hearth</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Sit with your feet tucked back and soles pointed away from the
+            stove and from any elder. Never pass anything over the hearth, and
+            never put waste into it.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              the golomt is the family's fire spirit and its literal source of
+              warmth and food. Disrespecting it is considered a serious offense.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 5: Receiving Hospitality ---------- -->
+    <section class="screen" data-screen="step" data-step="5" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">5</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <path d="M26 32 h20 l -2 14 a 8 8 0 0 1 -16 0 Z" stroke="#3A332C" stroke-width="1.5" fill="none"/>
+            <path d="M20 46 q 8 4 14 1" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M34 46 q 8 -6 16 -2" stroke="#8A6A4E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <circle cx="20" cy="46" r="1.6" fill="#CB8A3E"/>
+            <circle cx="50" cy="44" r="1.6" fill="#8A6A4E"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 5 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Receiving</h2>
+          <p class="text-[14px] text-feltdim mb-5">Tea, Snuff & Food</p>
+          <p class="text-[15px] leading-relaxed mb-4">
+            Accept whatever is offered with your <strong class="text-felt">right hand</strong>,
+            elbow supported by your left. If you can't finish it, take a small
+            symbolic sip or bite — an outright refusal is considered impolite.
+          </p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim">
+              <span class="text-felt font-semibold">Why it matters:</span>
+              offering food to a guest is a point of pride for the host family.
+              Two hands, and a gesture of acceptance, return that respect.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- COMPLETION SCREEN ---------- -->
+    <section class="screen" data-screen="complete" data-state="exit">
+      <div class="flex flex-col items-center text-center pt-6">
+        <div class="seal relative w-[104px] h-[104px] mb-6">
+          <svg viewBox="0 0 104 104" width="104" height="104" aria-hidden="true">
+            <circle cx="52" cy="52" r="48" stroke="#CB8A3E" stroke-width="1.3"/>
+            <circle cx="52" cy="52" r="40" stroke="#CB8A3E" stroke-width="1" stroke-dasharray="2 4"/>
+            <path d="M36 53 l11 11 l22 -24" stroke="#CB8A3E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="font-display text-[26px] leading-tight mb-2">Protocol complete</h1>
+        <p id="visitStamp" class="stamp-pill mb-5" aria-live="polite"></p>
+        <p class="text-[14px] text-feltdim max-w-[280px] leading-relaxed mb-7">
+          You're ready to step inside. A quick reminder of what you learned:
+        </p>
+
+        <ul class="w-full text-left space-y-3 mb-8">
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">1</span>
+            <span class="text-[13.5px] text-feltdim">Step over the <span class="text-felt">bosgo</span>, right foot first — never on it.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">2</span>
+            <span class="text-[13.5px] text-feltdim">Move clockwise (<span class="text-felt">Nar Zöv</span>); never cross between the two <span class="text-felt">bagana</span> pillars.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">3</span>
+            <span class="text-[13.5px] text-feltdim">Sit only where shown — west for guests, east for family, khoimor for elders.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">4</span>
+            <span class="text-[13.5px] text-feltdim">Keep your feet tucked away from the <span class="text-felt">golomt</span> hearth.</span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">5</span>
+            <span class="text-[13.5px] text-feltdim">Receive tea or food right-handed, left hand supporting your elbow.</span>
+          </li>
+        </ul>
+
+        <button id="restartBtn" class="btn-ghost text-[13.5px] font-semibold px-5 py-3 rounded-xl w-full mb-8">
+          Review again
+        </button>
+
+        <div class="w-full border-t border-[color:var(--line)] pt-5">
+          <p class="text-[12px] text-feltdim mb-1">Presented by <span id="partnerNameFooter" class="text-felt font-semibold">Juulchin Travel</span></p>
+          <p class="text-[11.5px] text-feltdim">Questions about local custom? <a href="#" id="contactLink" class="text-amber underline underline-offset-2">Ask your guide</a></p>
+          <p class="text-[10.5px] text-feltdim/70 mt-4">The Ger Protocol · Field edition</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============== BOTTOM NAVIGATION (fixed) ============== -->
+  <!-- Hidden on the welcome & completion screens via JS. -->
+  <nav id="bottomNav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 pb-6 pt-4 bg-gradient-to-t from-[#1B1815] via-[#1B1815] to-transparent">
+    <div class="flex gap-3">
+      <button id="backBtn" class="btn-ghost rounded-xl px-5 py-4 font-semibold text-[14px] min-w-[92px]">
+        Back
+      </button>
+      <button id="nextBtn" class="btn-primary rounded-xl px-5 py-4 font-bold text-[14px] flex-1">
+        Next
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<script>
+/*
+ * =============================================================
+ *  GER PROTOCOL — CONFIG
+ *  Edit this block to re-brand the app for a new partner without
+ *  touching any other code. All partner-facing strings pull from here.
+ * =============================================================
+ */
+const CONFIG = {
+  partnerName: "Juulchin Travel",     // shown in header + completion footer
+  contactLabel: "Ask your guide",     // completion screen CTA text
+  contactHref: "#",                   // e.g. "tel:+97611000000" or a website
+  siteLabel: "",                      // optional: specific camp/site name for the completion stamp, e.g. "Three Camel Lodge"
+};
+
+// Apply CONFIG to the DOM once on load — this is the only place that
+// needs to change for a co-branded / white-label deploy.
+document.getElementById('partnerName').textContent = CONFIG.partnerName;
+document.getElementById('partnerNameFooter').textContent = CONFIG.partnerName;
+const contactLinkEl = document.getElementById('contactLink');
+contactLinkEl.textContent = CONFIG.contactLabel;
+contactLinkEl.href = CONFIG.contactHref;
+
+/*
+ * =============================================================
+ *  PRONUNCIATION BUTTONS
+ *  Each button points at an mp3 in /audio/. Record real native-speaker
+ *  clips and drop them in that folder using the same filenames
+ *  (bosgo.mp3, nar-zov.mp3, khoimor.mp3, golomt.mp3) to go live —
+ *  until then, this falls back to the browser's built-in
+ *  text-to-speech (Mongolian voice availability varies by device).
+ * =============================================================
+ */
+document.querySelectorAll('.pronounce-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.remove('playing');
+    void btn.offsetWidth;
+    btn.classList.add('playing');
+
+    const audio = new Audio(btn.dataset.audio);
+    let fallenBack = false;
+    const speakFallback = () => {
+      if (fallenBack) return;
+      fallenBack = true;
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(btn.dataset.fallbackText);
+        utter.lang = btn.dataset.fallbackLang || 'mn-MN';
+        speechSynthesis.speak(utter);
+      }
+    };
+    audio.addEventListener('error', speakFallback);
+    audio.play().catch(speakFallback);
+  });
+});
+
+/*
+ * =============================================================
+ *  TAPPABLE DIAGRAMS (Step 2 pillar/path, Step 3 seating zones)
+ *  Each chip button targets an SVG element by id, highlights it,
+ *  and writes an explanation into that block's caption paragraph.
+ * =============================================================
+ */
+document.querySelectorAll('.diagram-block').forEach(block => {
+  const chips = block.querySelectorAll('.diagram-chip');
+  const caption = block.querySelector('.diagram-caption');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('chip-active'));
+      chip.classList.add('chip-active');
+
+      block.querySelectorAll('.diagram-part').forEach(part => {
+        part.style.filter = '';
+      });
+      const target = document.getElementById(chip.dataset.target);
+      if (target) target.style.filter = 'drop-shadow(0 0 5px rgba(203,138,62,0.7))';
+
+      if (caption) caption.textContent = chip.dataset.caption;
+    });
+  });
+});
+
+/*
+ * =============================================================
+ *  NAVIGATION STATE
+ *  screenOrder: the sequence of logical screens. "welcome" and
+ *  "complete" sit outside the 1-5 step count shown on the progress bar.
+ * =============================================================
+ */
+const screenOrder = ['welcome', 1, 2, 3, 4, 5, 'complete'];
+let current = 0; // index into screenOrder
+
+const welcomeEl   = document.querySelector('[data-screen="welcome"]');
+const completeEl  = document.querySelector('[data-screen="complete"]');
+const stepEls     = Array.from(document.querySelectorAll('[data-screen="step"]'));
+const allScreens  = [welcomeEl, ...stepEls, completeEl];
+
+const progressWrap  = document.getElementById('progressWrap');
+const progressLabel = document.getElementById('progressLabel');
+const progressBar   = document.getElementById('progressBar');
+const bottomNav      = document.getElementById('bottomNav');
+const backBtn        = document.getElementById('backBtn');
+const nextBtn        = document.getElementById('nextBtn');
+const slats           = Array.from(document.querySelectorAll('.slat'));
+
+function screenElFor(key){
+  if (key === 'welcome') return welcomeEl;
+  if (key === 'complete') return completeEl;
+  return stepEls.find(el => Number(el.dataset.step) === key);
+}
+
+function render(direction){ // direction: 'forward' | 'back'
+  const key = screenOrder[current];
+  const isStep = typeof key === 'number';
+
+  // Toggle progress bar + bottom nav visibility for non-step screens.
+  progressWrap.classList.toggle('hidden', !isStep);
+  bottomNav.classList.toggle('hidden', key === 'welcome' || key === 'complete');
+
+  if (isStep){
+    progressLabel.textContent = `Step ${key} of 5`;
+    progressBar.setAttribute('aria-valuenow', key);
+    slats.forEach(s => {
+      const n = Number(s.dataset.slat);
+      s.classList.toggle('filled', n < key);
+      s.classList.toggle('current', n === key);
+    });
+    backBtn.disabled = false;
+    backBtn.style.visibility = 'visible';
+    nextBtn.textContent = key === 5 ? 'Finish' : 'Next';
+  }
+
+  // "Verified visitor" stamp: a lightweight, tamper-obvious proof of
+  // completion a guide can glance at (or the tourist can screenshot),
+  // built from nothing but the local time — no backend required.
+  if (key === 'complete') {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    const siteBit = CONFIG.siteLabel ? `${CONFIG.siteLabel} · ` : '';
+    document.getElementById('visitStamp').textContent = `✓ Reviewed · ${siteBit}${dateStr}, ${timeStr}`;
+  }
+
+  // Animate the active screen in, previous screen out.
+  allScreens.forEach(el => {
+    const elKey = el.dataset.screen === 'step' ? Number(el.dataset.step) : el.dataset.screen;
+    if (elKey === key){
+      el.style.position = '';
+      el.setAttribute('data-state', direction === 'back' ? 'enter-back' : 'enter');
+      // Force reflow so the transition from enter -> active actually animates.
+      void el.offsetWidth;
+      requestAnimationFrame(() => el.setAttribute('data-state', 'active'));
+    } else {
+      el.setAttribute('data-state', direction === 'back' ? 'exit-back' : 'exit');
+    }
+  });
+}
+
+function goNext(){
+  if (current < screenOrder.length - 1){
+    current++;
+    render('forward');
+  }
+}
+function goBack(){
+  if (current > 0){
+    current--;
+    render('back');
+  }
+}
+
+document.getElementById('beginBtn').addEventListener('click', goNext);
+document.getElementById('restartBtn').addEventListener('click', () => {
+  current = 0;
+  render('back');
+});
+nextBtn.addEventListener('click', goNext);
+backBtn.addEventListener('click', () => {
+  // From step 1, "Back" returns to the welcome screen.
+  goBack();
+});
+
+// Initial paint.
+render('forward');
+</script>
+</body>
 </html>
+
+
+Sharing 4 tabs
+Skip to the latest Gemini result
