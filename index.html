@@ -15,6 +15,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script>
+  // ------------------------------------------------------------------
+  // Tailwind theme extension — maps our custom design tokens (see the
+  // CSS variables below) into Tailwind utility classes like bg-ink,
+  // text-amber, font-display, etc. Edit hex values in :root, not here.
+  // ------------------------------------------------------------------
   tailwind.config = {
     theme: {
       extend: {
@@ -60,6 +65,9 @@
 
   .font-display { font-family: 'Fraunces', serif; }
 
+  /* Subtle woven/felt paper grain, layered over the ink background so
+     large flat areas don't feel like plain digital black. Cheap, no
+     image assets required. */
   .grain-bg{
     background-color: var(--ink);
     background-image:
@@ -67,6 +75,8 @@
       radial-gradient(circle at 85% 80%, rgba(76,123,114,0.05), transparent 45%);
   }
 
+  /* Lattice pattern used as a faint card border texture, echoing the
+     khana (collapsible wooden wall lattice) of a ger. */
   .lattice-frame{
     border: 1px solid var(--line-strong);
     background-image:
@@ -77,6 +87,8 @@
     background-clip: padding-box, border-box, border-box;
   }
 
+  /* ---- Step transition: one deliberate, orchestrated motion per
+     step change, not per-element scroll animation. ---- */
   .screen{
     transition: opacity 320ms ease, transform 320ms ease;
   }
@@ -92,6 +104,8 @@
     .screen[data-state="exit"], .screen[data-state="exit-back"]{ transform:none; }
   }
 
+  /* Lattice-slat progress bar: 5 slats echoing the wall lattice,
+     filling in amber as steps complete. */
   .slat{
     flex: 1;
     height: 4px;
@@ -110,6 +124,7 @@
   .slat.filled > span{ width:100%; }
   .slat.current > span{ width:50%; }
 
+  /* Focus visibility (keyboard access) */
   a:focus-visible, button:focus-visible {
     outline: 2px solid #CB8A3E;
     outline-offset: 3px;
@@ -136,10 +151,51 @@
     background: rgba(203,138,62,0.08);
   }
 
+  /* Seating diagram arcs (Step 3 icon) */
   .arc-west{ stroke:#CB8A3E; }
   .arc-east{ stroke:#4C7B72; }
   .arc-north{ stroke:#EFE7D8; }
 
+  /* ---- Pronunciation buttons (Step 1, 2, 3, 4 native terms) ---- */
+  .pronounce-btn{
+    width: 30px; height: 30px; border-radius: 9999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(203,138,62,0.12);
+    border: 1px solid rgba(203,138,62,0.35);
+    font-size: 13px; line-height: 1; color: #CB8A3E; flex-shrink: 0;
+  }
+  .pronounce-btn-inline{ width: 24px; height: 24px; font-size: 11px; margin: 0 2px; vertical-align: -4px; }
+  .pronounce-btn:active{ transform: scale(0.9); }
+  .pronounce-btn.playing{ animation: pulse-ring 800ms ease-out; }
+  @keyframes pulse-ring{
+    0%{ box-shadow: 0 0 0 0 rgba(203,138,62,0.55); }
+    100%{ box-shadow: 0 0 0 9px rgba(203,138,62,0); }
+  }
+
+  /* ---- Tappable diagram chips (Step 2 & 3) ---- */
+  .diagram-chip{
+    font-size: 11.5px; font-weight: 600;
+    padding: 6px 12px; border-radius: 9999px;
+    border: 1px solid var(--line-strong);
+    color: #B9AF9C; background: rgba(239,231,216,0.03);
+  }
+  .diagram-chip.chip-active{
+    color: #1B1815; background: #CB8A3E; border-color: #CB8A3E;
+  }
+  .diagram-part{ transition: filter 200ms ease; }
+
+  /* ---- Completion "verified visitor" stamp ---- */
+  .stamp-pill{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+    color: #CB8A3E;
+    border: 1px solid rgba(203,138,62,0.4);
+    background: rgba(203,138,62,0.08);
+    padding: 6px 14px; border-radius: 9999px;
+    transform: rotate(-1.5deg);
+  }
+
+  /* Completion badge subtle pulse-in (single orchestrated reveal only) */
   @keyframes seal-in{
     0%{ transform: scale(0.85) rotate(-4deg); opacity:0; }
     100%{ transform: scale(1) rotate(0deg); opacity:1; }
@@ -151,11 +207,15 @@
 
 <body class="grain-bg min-h-screen w-full flex justify-center">
 
+<!-- App shell — capped to a mobile-app-like max width even on wider
+     screens, since this is designed to be scanned & used on a phone. -->
 <div id="app" class="relative w-full max-w-md min-h-screen flex flex-col">
 
   <!-- ============== CO-BRANDED HEADER ============== -->
   <header class="px-5 pt-6 pb-4">
     <div class="flex items-center gap-3">
+      <!-- Toono mark: a simplified rendering of the ger's roof crown /
+           skylight, used as the brand mark throughout the app. -->
       <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
         <circle cx="17" cy="17" r="15.5" stroke="#CB8A3E" stroke-width="1.3"/>
         <circle cx="17" cy="17" r="6" stroke="#CB8A3E" stroke-width="1.3"/>
@@ -176,6 +236,8 @@
   </header>
 
   <!-- ============== PROGRESS BAR (5 steps) ============== -->
+  <!-- Hidden on the welcome & completion screens via JS toggling the
+       'invisible' class on #progressWrap. -->
   <div id="progressWrap" class="px-5 pb-5">
     <div class="flex gap-1.5" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressBar">
       <div class="slat" data-slat="1"><span></span></div>
@@ -232,7 +294,10 @@
             <ellipse cx="24" cy="46" rx="7" ry="4" fill="#EFE7D8" opacity="0.9"/>
           </svg>
           <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 1 of 5</p>
-          <h2 class="font-display italic text-[26px] mb-1">Bosgo</h2>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Bosgo</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/bosgo.mp3" data-fallback-text="Bosgo" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Bosgo">🔊</button>
+          </div>
           <p class="text-[14px] text-feltdim mb-5">The Threshold</p>
           <p class="text-[15px] leading-relaxed mb-4">
             The wooden beam at the base of the door frame is the <em>bosgo</em> —
@@ -240,43 +305,54 @@
             <strong class="text-felt">right foot</strong>.
           </p>
           <div class="why-box rounded-r-lg p-4 mb-4">
-            <p class="text-[13px] leading-relaxed text-feltdim mb-2">
+            <p class="text-[13px] leading-relaxed text-feltdim">
               <span class="text-felt font-semibold">Why it matters:</span>
-              the threshold holds the household's stability. Stepping on it is considered a bad omen for the family inside.
-            </p>
-            <p class="text-[12.5px] leading-relaxed text-feltdim/90 italic border-t border-[rgba(239,231,216,0.1)] pt-2">
-              <span class="text-amber font-semibold not-italic">Did you know?</span> Slipping while entering is seen as a good omen—symbolizing good wealth and fortune coming into the home. Slipping while leaving, however, is a bad omen, as if taking luck away from the family.
+              the threshold is believed to hold the household's stability.
+              Stepping on it is considered a bad omen for the family inside.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ---------- STEP 2: Interior Navigation (Nar Zöv / Bagana) ---------- -->
+    <!-- ---------- STEP 2: Interior Navigation (nar zöv / bagana) ---------- -->
     <section class="screen" data-screen="step" data-step="2" data-state="exit">
       <div class="relative">
         <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">2</span>
         <div class="relative pt-10">
           <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
             <circle cx="36" cy="36" r="26" stroke="#3A332C" stroke-width="1.5"/>
-            <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <g id="s2-arrow" class="diagram-part">
+              <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            </g>
             <rect x="30" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
             <rect x="38" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
-            <line x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
+            <line id="s2-gap" class="diagram-part" x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
           </svg>
+          <div class="diagram-block" data-step-block="2">
+            <div class="flex gap-2 mb-2 flex-wrap">
+              <button type="button" class="diagram-chip" data-target="s2-arrow" data-caption="Always move left from the door and travel clockwise around the interior.">Clockwise path</button>
+              <button type="button" class="diagram-chip" data-target="s2-gap" data-caption="This gap between the two bagana pillars is a sacred axis — walk around it, never through it.">Between the pillars</button>
+            </div>
+            <p class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]">Tap a part of the diagram to learn more.</p>
+          </div>
           <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 2 of 5</p>
-          <h2 class="font-display italic text-[26px] mb-1">Nar Zöv</h2>
-          <p class="text-[14px] text-feltdim mb-5">Moving Sunwise (Clockwise)</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Nar Zöv</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/nar-zov.mp3" data-fallback-text="Nar zöv" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Nar Zöv">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5">Moving Clockwise</p>
           <p class="text-[15px] leading-relaxed mb-4">
-            Once inside, move to your left and travel <strong class="text-felt">nar zöv</strong>
-            (clockwise/sunwise) around the interior. Never cut through the space between the two central
+            Once inside, move to your left and travel <strong class="text-felt">clockwise</strong>
+            around the interior. Never cut through the space between the two central
             support pillars, the <em>bagana</em> — that path is reserved.
           </p>
           <div class="why-box rounded-r-lg p-4 mb-4">
             <p class="text-[13px] leading-relaxed text-feltdim">
               <span class="text-felt font-semibold">Why it matters:</span>
-              moving sunwise mirrors the cosmos and brings harmony. The line between the pillars is a sacred axis connecting hearth to sky—crossing it cuts through the family's fortune.
+              the line between the pillars is a sacred axis connecting hearth
+              to sky. Crossing it is seen as cutting through the family's fortune.
             </p>
           </div>
         </div>
@@ -289,21 +365,31 @@
         <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">3</span>
         <div class="relative pt-10">
           <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
-            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
-              class="arc-west" stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
-            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
-              class="arc-east" stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
-            <circle cx="36" cy="36" r="26" fill="none" stroke-width="6"
-              class="arc-north" stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
+            <circle id="s3-west" class="arc-west diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
+            <circle id="s3-east" class="arc-east diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
+            <circle id="s3-north" class="arc-north diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
             <circle cx="36" cy="36" r="26" fill="none" stroke="#1B1815" stroke-width="6" stroke-dasharray="1 190" stroke-dashoffset="0"/>
           </svg>
+          <div class="diagram-block" data-step-block="3">
+            <div class="flex gap-2 mb-2 flex-wrap">
+              <button type="button" class="diagram-chip" data-target="s3-west" data-caption="West (left of the door) — guests and men.">West</button>
+              <button type="button" class="diagram-chip" data-target="s3-east" data-caption="East (right of the door) — family and women.">East</button>
+              <button type="button" class="diagram-chip" data-target="s3-north" data-caption="Khoimor (the back) — elders and sacred objects. Wait to be invited.">Khoimor</button>
+            </div>
+            <p class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]">Tap a zone to see who sits there.</p>
+          </div>
           <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 3 of 5</p>
           <h2 class="font-display italic text-[26px] mb-1">Seating Order</h2>
           <p class="text-[14px] text-feltdim mb-5">Guests, Family, Elders</p>
           <p class="text-[15px] leading-relaxed mb-4">
             The <strong style="color:#CB8A3E">west side (left of the door)</strong> is for guests and men.
             The <strong style="color:#4C7B72">east side (right)</strong> is for family and women.
-            The back, or <em>khoimor</em>, is reserved for elders and sacred objects — wait
+            The back, or <em>khoimor</em>
+            <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button>,
+            is reserved for elders and sacred objects — wait
             to be shown your seat.
           </p>
           <div class="why-box rounded-r-lg p-4 mb-4">
@@ -331,7 +417,10 @@
             <line x1="54" y1="54" x2="48" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
           <p class="text-[13px] tracking-wide text-amber font-semibold mb-1">Step 4 of 5</p>
-          <h2 class="font-display italic text-[26px] mb-1">Golomt</h2>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Golomt</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/golomt.mp3" data-fallback-text="Golomt" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Golomt">🔊</button>
+          </div>
           <p class="text-[14px] text-feltdim mb-5">The Hearth</p>
           <p class="text-[15px] leading-relaxed mb-4">
             Sit with your feet tucked back and soles pointed away from the
@@ -391,6 +480,7 @@
           </svg>
         </div>
         <h1 class="font-display text-[26px] leading-tight mb-2">Protocol complete</h1>
+        <p id="visitStamp" class="stamp-pill mb-5" aria-live="polite"></p>
         <p class="text-[14px] text-feltdim max-w-[280px] leading-relaxed mb-7">
           You're ready to step inside. A quick reminder of what you learned:
         </p>
@@ -402,7 +492,7 @@
           </li>
           <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
             <span class="font-display italic text-amber text-[15px] mt-[1px]">2</span>
-            <span class="text-[13.5px] text-feltdim">Move <span class="text-felt">nar zöv</span> (clockwise); never cross between the two <span class="text-felt">bagana</span> pillars.</span>
+            <span class="text-[13.5px] text-feltdim">Move clockwise; never cross between the two <span class="text-felt">bagana</span> pillars.</span>
           </li>
           <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
             <span class="font-display italic text-amber text-[15px] mt-[1px]">3</span>
@@ -433,6 +523,7 @@
   </main>
 
   <!-- ============== BOTTOM NAVIGATION (fixed) ============== -->
+  <!-- Hidden on the welcome & completion screens via JS. -->
   <nav id="bottomNav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 pb-6 pt-4 bg-gradient-to-t from-[#1B1815] via-[#1B1815] to-transparent">
     <div class="flex gap-3">
       <button id="backBtn" class="btn-ghost rounded-xl px-5 py-4 font-semibold text-[14px] min-w-[92px]">
@@ -447,20 +538,95 @@
 </div>
 
 <script>
+/*
+ * =============================================================
+ *  GER PROTOCOL — CONFIG
+ *  Edit this block to re-brand the app for a new partner without
+ *  touching any other code. All partner-facing strings pull from here.
+ * =============================================================
+ */
 const CONFIG = {
-  partnerName: "Juulchin Travel",
-  contactLabel: "Ask your guide",
-  contactHref: "#",
+  partnerName: "Juulchin Travel",     // shown in header + completion footer
+  contactLabel: "Ask your guide",     // completion screen CTA text
+  contactHref: "#",                   // e.g. "tel:+97611000000" or a website
+  siteLabel: "",                      // optional: specific camp/site name for the completion stamp, e.g. "Three Camel Lodge"
 };
 
+// Apply CONFIG to the DOM once on load — this is the only place that
+// needs to change for a co-branded / white-label deploy.
 document.getElementById('partnerName').textContent = CONFIG.partnerName;
 document.getElementById('partnerNameFooter').textContent = CONFIG.partnerName;
 const contactLinkEl = document.getElementById('contactLink');
 contactLinkEl.textContent = CONFIG.contactLabel;
 contactLinkEl.href = CONFIG.contactHref;
 
+/*
+ * =============================================================
+ *  PRONUNCIATION BUTTONS
+ *  Each button points at an mp3 in /audio/. Record real native-speaker
+ *  clips and drop them in that folder using the same filenames
+ *  (bosgo.mp3, nar-zov.mp3, khoimor.mp3, golomt.mp3) to go live —
+ *  until then, this falls back to the browser's built-in
+ *  text-to-speech (Mongolian voice availability varies by device).
+ * =============================================================
+ */
+document.querySelectorAll('.pronounce-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.remove('playing');
+    void btn.offsetWidth;
+    btn.classList.add('playing');
+
+    const audio = new Audio(btn.dataset.audio);
+    let fallenBack = false;
+    const speakFallback = () => {
+      if (fallenBack) return;
+      fallenBack = true;
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(btn.dataset.fallbackText);
+        utter.lang = btn.dataset.fallbackLang || 'mn-MN';
+        speechSynthesis.speak(utter);
+      }
+    };
+    audio.addEventListener('error', speakFallback);
+    audio.play().catch(speakFallback);
+  });
+});
+
+/*
+ * =============================================================
+ *  TAPPABLE DIAGRAMS (Step 2 pillar/path, Step 3 seating zones)
+ *  Each chip button targets an SVG element by id, highlights it,
+ *  and writes an explanation into that block's caption paragraph.
+ * =============================================================
+ */
+document.querySelectorAll('.diagram-block').forEach(block => {
+  const chips = block.querySelectorAll('.diagram-chip');
+  const caption = block.querySelector('.diagram-caption');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('chip-active'));
+      chip.classList.add('chip-active');
+
+      block.querySelectorAll('.diagram-part').forEach(part => {
+        part.style.filter = '';
+      });
+      const target = document.getElementById(chip.dataset.target);
+      if (target) target.style.filter = 'drop-shadow(0 0 5px rgba(203,138,62,0.7))';
+
+      if (caption) caption.textContent = chip.dataset.caption;
+    });
+  });
+});
+
+/*
+ * =============================================================
+ *  NAVIGATION STATE
+ *  screenOrder: the sequence of logical screens. "welcome" and
+ *  "complete" sit outside the 1-5 step count shown on the progress bar.
+ * =============================================================
+ */
 const screenOrder = ['welcome', 1, 2, 3, 4, 5, 'complete'];
-let current = 0;
+let current = 0; // index into screenOrder
 
 const welcomeEl   = document.querySelector('[data-screen="welcome"]');
 const completeEl  = document.querySelector('[data-screen="complete"]');
@@ -475,10 +641,17 @@ const backBtn        = document.getElementById('backBtn');
 const nextBtn        = document.getElementById('nextBtn');
 const slats           = Array.from(document.querySelectorAll('.slat'));
 
-function render(direction){
+function screenElFor(key){
+  if (key === 'welcome') return welcomeEl;
+  if (key === 'complete') return completeEl;
+  return stepEls.find(el => Number(el.dataset.step) === key);
+}
+
+function render(direction){ // direction: 'forward' | 'back'
   const key = screenOrder[current];
   const isStep = typeof key === 'number';
 
+  // Toggle progress bar + bottom nav visibility for non-step screens.
   progressWrap.classList.toggle('hidden', !isStep);
   bottomNav.classList.toggle('hidden', key === 'welcome' || key === 'complete');
 
@@ -495,11 +668,24 @@ function render(direction){
     nextBtn.textContent = key === 5 ? 'Finish' : 'Next';
   }
 
+  // "Verified visitor" stamp: a lightweight, tamper-obvious proof of
+  // completion a guide can glance at (or the tourist can screenshot),
+  // built from nothing but the local time — no backend required.
+  if (key === 'complete') {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    const siteBit = CONFIG.siteLabel ? `${CONFIG.siteLabel} · ` : '';
+    document.getElementById('visitStamp').textContent = `✓ Reviewed · ${siteBit}${dateStr}, ${timeStr}`;
+  }
+
+  // Animate the active screen in, previous screen out.
   allScreens.forEach(el => {
     const elKey = el.dataset.screen === 'step' ? Number(el.dataset.step) : el.dataset.screen;
     if (elKey === key){
       el.style.position = '';
       el.setAttribute('data-state', direction === 'back' ? 'enter-back' : 'enter');
+      // Force reflow so the transition from enter -> active actually animates.
       void el.offsetWidth;
       requestAnimationFrame(() => el.setAttribute('data-state', 'active'));
     } else {
@@ -527,8 +713,12 @@ document.getElementById('restartBtn').addEventListener('click', () => {
   render('back');
 });
 nextBtn.addEventListener('click', goNext);
-backBtn.addEventListener('click', goBack);
+backBtn.addEventListener('click', () => {
+  // From step 1, "Back" returns to the welcome screen.
+  goBack();
+});
 
+// Initial paint.
 render('forward');
 </script>
 </body>
