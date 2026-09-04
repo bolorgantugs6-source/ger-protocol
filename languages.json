@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>The Ger Protocol — Field Guide</title>
+<meta name="description" content="A 30-second interactive field guide to Mongolian ger etiquette.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#1B1815',
+          stone:    '#26221E',
+          stone2:   '#312B25',
+          felt:     '#EFE7D8',
+          feltdim:  '#B9AF9C',
+          wood:     '#6B4226',
+          amber:    '#CB8A3E',
+          amberdeep:'#9C5F24',
+          teal:     '#4C7B72',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body: ['"Manrope"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#1B1815;
+    --stone:#26221E;
+    --line: rgba(239,231,216,0.10);
+    --line-strong: rgba(239,231,216,0.18);
+  }
+  * { -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--ink); overscroll-behavior-y: none; }
+  body { font-family: 'Manrope', sans-serif; color: #EFE7D8; }
+  .font-display { font-family: 'Fraunces', serif; }
+
+  .grain-bg{
+    background-color: var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(203,138,62,0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(76,123,114,0.05), transparent 45%);
+  }
+
+  .lattice-frame{
+    border: 1px solid var(--line-strong);
+    background-image:
+      linear-gradient(var(--stone), var(--stone)),
+      repeating-linear-gradient(45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px),
+      repeating-linear-gradient(-45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px);
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+  }
+
+  .screen{ transition: opacity 320ms ease, transform 320ms ease; }
+  .screen[data-state="enter"]{ opacity: 0; transform: translateX(24px); }
+  .screen[data-state="enter-back"]{ opacity: 0; transform: translateX(-24px); }
+  .screen[data-state="active"]{ opacity: 1; transform: translateX(0); }
+  .screen[data-state="exit"]{ opacity: 0; transform: translateX(-24px); position:absolute; }
+  .screen[data-state="exit-back"]{ opacity: 0; transform: translateX(24px); position:absolute; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen{ transition: opacity 120ms linear !important; transform: none !important; }
+  }
+
+  .slat{ flex: 1; height: 4px; border-radius: 2px; background: rgba(239,231,216,0.14); overflow: hidden; position: relative; }
+  .slat > span{ display:block; height:100%; width:0%; background: linear-gradient(90deg, #9C5F24, #CB8A3E); transition: width 420ms ease; }
+  .slat.filled > span{ width:100%; }
+  .slat.current > span{ width:50%; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #CB8A3E; outline-offset: 3px; border-radius: 6px;
+  }
+
+  .btn-primary{
+    background: linear-gradient(180deg, #D7994B, #B97A34);
+    color: #1B1815;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 6px 16px rgba(203,138,62,0.18);
+  }
+  .btn-primary:active{ transform: translateY(1px); }
+
+  .btn-ghost{ background: transparent; border: 1px solid var(--line-strong); color: #EFE7D8; }
+  .btn-ghost:active{ transform: translateY(1px); }
+
+  .why-box{ border-left: 2px solid #CB8A3E; background: rgba(203,138,62,0.08); }
+
+  .arc-west{ stroke:#CB8A3E; } .arc-east{ stroke:#4C7B72; } .arc-north{ stroke:#EFE7D8; }
+
+  @keyframes seal-in{
+    0%{ transform: scale(0.85) rotate(-4deg); opacity:0; }
+    100%{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+  .seal{ animation: seal-in 520ms cubic-bezier(.2,.8,.2,1) both; }
+  @media (prefers-reduced-motion: reduce){ .seal{ animation:none; } }
+
+  /* Pronunciation buttons */
+  .pronounce-btn{
+    width: 30px; height: 30px; border-radius: 9999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(203,138,62,0.12); border: 1px solid rgba(203,138,62,0.35);
+    font-size: 13px; line-height: 1; color: #CB8A3E; flex-shrink: 0;
+  }
+  .pronounce-btn-inline{ width: 24px; height: 24px; font-size: 11px; margin: 0 2px; vertical-align: -4px; }
+  .pronounce-btn:active{ transform: scale(0.9); }
+  .pronounce-btn.playing{ animation: pulse-ring 800ms ease-out; }
+  @keyframes pulse-ring{
+    0%{ box-shadow: 0 0 0 0 rgba(203,138,62,0.55); }
+    100%{ box-shadow: 0 0 0 9px rgba(203,138,62,0); }
+  }
+
+  /* Tappable diagram chips */
+  .diagram-chip{
+    font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 9999px;
+    border: 1px solid var(--line-strong); color: #B9AF9C; background: rgba(239,231,216,0.03);
+  }
+  .diagram-chip.chip-active{ color: #1B1815; background: #CB8A3E; border-color: #CB8A3E; }
+  .diagram-part{ transition: filter 200ms ease; }
+
+  /* Completion stamp */
+  .stamp-pill{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #CB8A3E;
+    border: 1px solid rgba(203,138,62,0.4); background: rgba(203,138,62,0.08);
+    padding: 6px 14px; border-radius: 9999px; transform: rotate(-1.5deg);
+  }
+
+  /* Language switcher */
+  .lang-btn{
+    font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 9999px;
+    border: 1px solid var(--line-strong); color: #B9AF9C; background: transparent;
+  }
+  .lang-btn.lang-active{ color:#1B1815; background:#CB8A3E; border-color:#CB8A3E; }
+</style>
+</head>
+
+<body class="grain-bg min-h-screen w-full flex justify-center">
+
+<div id="app" class="relative w-full max-w-md min-h-screen flex flex-col">
+
+  <!-- ============== HEADER ============== -->
+  <header class="px-5 pt-6 pb-4">
+    <div class="flex items-center gap-3 mb-3">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <circle cx="17" cy="17" r="15.5" stroke="#CB8A3E" stroke-width="1.3"/>
+        <circle cx="17" cy="17" r="6" stroke="#CB8A3E" stroke-width="1.3"/>
+        <line x1="17" y1="1.5" x2="17" y2="11" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="17" y1="23" x2="17" y2="32.5" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="1.5" y1="17" x2="11" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="23" y1="17" x2="32.5" y2="17" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="6.2" y1="6.2" x2="12.8" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="21.2" y1="21.2" x2="27.8" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="27.8" y1="6.2" x2="21.2" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
+        <line x1="12.8" y1="21.2" x2="6.2" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
+      </svg>
+      <div class="leading-tight flex-1">
+        <p class="font-display text-[17px] tracking-tight" style="font-variant: small-caps;">The Ger Protocol</p>
+        <p class="text-[11.5px] text-feltdim">
+          <span data-i18n="header.label">Official Field Protocol</span> ·
+          <span data-i18n="header.partnerLabel">Partner:</span>
+          <span id="partnerName">Juulchin Travel</span>
+        </p>
+      </div>
+    </div>
+    <!-- Language switcher -->
+    <div class="flex gap-1.5 flex-wrap" role="group" aria-label="Language">
+      <button type="button" class="lang-btn lang-active" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="zh">中文</button>
+      <button type="button" class="lang-btn" data-lang="ko">한국어</button>
+      <button type="button" class="lang-btn" data-lang="ja">日本語</button>
+      <button type="button" class="lang-btn" data-lang="ru">RU</button>
+    </div>
+  </header>
+
+  <!-- ============== PROGRESS BAR ============== -->
+  <div id="progressWrap" class="px-5 pb-5">
+    <div class="flex gap-1.5" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressBar">
+      <div class="slat" data-slat="1"><span></span></div>
+      <div class="slat" data-slat="2"><span></span></div>
+      <div class="slat" data-slat="3"><span></span></div>
+      <div class="slat" data-slat="4"><span></span></div>
+      <div class="slat" data-slat="5"><span></span></div>
+    </div>
+    <p class="text-[11px] text-feltdim mt-2" id="progressLabel" aria-live="polite">Step 1 of 5</p>
+  </div>
+
+  <!-- ============== SCREENS ============== -->
+  <main class="relative flex-1 px-5 pb-32 overflow-hidden">
+
+    <!-- ---------- WELCOME ---------- -->
+    <section class="screen" data-screen="welcome" data-state="active">
+      <div class="flex flex-col items-center text-center pt-6">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true" class="mb-6">
+          <circle cx="60" cy="60" r="52" stroke="#3A332C" stroke-width="1.5"/>
+          <circle cx="60" cy="60" r="20" stroke="#CB8A3E" stroke-width="1.5"/>
+          <g stroke="#6B4226" stroke-width="1.2">
+            <line x1="60" y1="8" x2="60" y2="40"/><line x1="60" y1="80" x2="60" y2="112"/>
+            <line x1="8" y1="60" x2="40" y2="60"/><line x1="80" y1="60" x2="112" y2="60"/>
+            <line x1="21.7" y1="21.7" x2="45.7" y2="45.7"/><line x1="74.3" y1="74.3" x2="98.3" y2="98.3"/>
+            <line x1="98.3" y1="21.7" x2="74.3" y2="45.7"/><line x1="45.7" y1="74.3" x2="21.7" y2="98.3"/>
+          </g>
+        </svg>
+        <h1 class="font-display text-[30px] leading-[1.15] mb-3">
+          <span data-i18n="welcome.headline1">Before you</span><br>
+          <span data-i18n="welcome.headline2">step inside</span>
+        </h1>
+        <p class="text-[15px] text-feltdim max-w-[300px] leading-relaxed mb-8" data-i18n="welcome.subcopy">
+          A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.
+        </p>
+        <button id="beginBtn" class="btn-primary font-body font-bold text-[15px] w-full py-4 rounded-xl" data-i18n="welcome.cta">
+          Begin the walkthrough
+        </button>
+        <p class="text-[11px] text-feltdim mt-4" data-i18n="welcome.meta">5 steps · about 30 seconds</p>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 1: Bosgo ---------- -->
+    <section class="screen" data-screen="step" data-step="1" data-state="enter">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">1</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="14" y="10" width="44" height="52" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <rect x="12" y="54" width="48" height="8" rx="1.5" fill="#6B4226"/>
+            <path d="M22 40 C 30 24, 40 24, 46 34" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M46 34 l -6 -2 M46 34 l -1 -6" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <ellipse cx="24" cy="46" rx="7" ry="4" fill="#EFE7D8" opacity="0.9"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1" data-i18n="progress.stepLabel1">Step 1 of 5</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Bosgo</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/bosgo.mp3" data-fallback-text="Bosgo" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Bosgo">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5" data-i18n="step1.subtitle">The Threshold</p>
+          <p class="text-[15px] leading-relaxed mb-4" data-i18n-html="step1.body"></p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim" data-i18n-html="step1.why"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 2: Nar Zöv ---------- -->
+    <section class="screen" data-screen="step" data-step="2" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">2</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle cx="36" cy="36" r="26" stroke="#3A332C" stroke-width="1.5"/>
+            <g id="s2-arrow" class="diagram-part">
+              <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            </g>
+            <rect x="30" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <rect x="38" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
+            <line id="s2-gap" class="diagram-part" x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
+          </svg>
+          <div class="diagram-block" data-step-block="2">
+            <div class="flex gap-2 mb-2 flex-wrap">
+              <button type="button" class="diagram-chip" data-target="s2-arrow" data-i18n="step2.chipArrow" data-caption-key="step2.captionArrow">Clockwise path</button>
+              <button type="button" class="diagram-chip" data-target="s2-gap" data-i18n="step2.chipGap" data-caption-key="step2.captionGap">Between the pillars</button>
+            </div>
+            <p class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]" data-i18n="step2.captionDefault">Tap a part of the diagram to learn more.</p>
+          </div>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1" data-i18n="progress.stepLabel2">Step 2 of 5</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Nar Zöv</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/nar-zov.mp3" data-fallback-text="Nar zöv" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Nar Zöv">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5" data-i18n="step2.subtitle">Moving Clockwise</p>
+          <p class="text-[15px] leading-relaxed mb-4" data-i18n-html="step2.body"></p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim" data-i18n-html="step2.why"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 3: Seating ---------- -->
+    <section class="screen" data-screen="step" data-step="3" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">3</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <circle id="s3-west" class="arc-west diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
+            <circle id="s3-east" class="arc-east diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
+            <circle id="s3-north" class="arc-north diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
+              stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
+            <circle cx="36" cy="36" r="26" fill="none" stroke="#1B1815" stroke-width="6" stroke-dasharray="1 190" stroke-dashoffset="0"/>
+          </svg>
+          <div class="diagram-block" data-step-block="3">
+            <div class="flex gap-2 mb-2 flex-wrap">
+              <button type="button" class="diagram-chip" data-target="s3-west" data-i18n="step3.chipWest" data-caption-key="step3.captionWest">West</button>
+              <button type="button" class="diagram-chip" data-target="s3-east" data-i18n="step3.chipEast" data-caption-key="step3.captionEast">East</button>
+              <button type="button" class="diagram-chip" data-target="s3-north" data-i18n="step3.chipKhoimor" data-caption-key="step3.captionKhoimor">Khoimor</button>
+            </div>
+            <p class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]" data-i18n="step3.captionDefault">Tap a zone to see who sits there.</p>
+          </div>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1" data-i18n="progress.stepLabel3">Step 3 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Seating Order</h2>
+          <p class="text-[14px] text-feltdim mb-5" data-i18n="step3.subtitle">Guests, Family, Elders</p>
+          <p class="text-[15px] leading-relaxed mb-4" data-i18n-html="step3.body"></p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim" data-i18n-html="step3.why"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 4: Golomt ---------- -->
+    <section class="screen" data-screen="step" data-step="4" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">4</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <rect x="26" y="38" width="20" height="14" rx="2" stroke="#3A332C" stroke-width="1.5"/>
+            <path d="M32 38 c 0 -6 4 -6 3 -11 c 3 2 4 6 1 9 c 2 -1 3 -3 3 -5 c 2 3 1 6 -1 7" stroke="#CB8A3E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M14 58 q 8 -4 16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M58 58 q -8 -4 -16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <line x1="18" y1="54" x2="24" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="54" y1="54" x2="48" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1" data-i18n="progress.stepLabel4">Step 4 of 5</p>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="font-display italic text-[26px]">Golomt</h2>
+            <button type="button" class="pronounce-btn" data-audio="audio/golomt.mp3" data-fallback-text="Golomt" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Golomt">🔊</button>
+          </div>
+          <p class="text-[14px] text-feltdim mb-5" data-i18n="step4.subtitle">The Hearth</p>
+          <p class="text-[15px] leading-relaxed mb-4" data-i18n-html="step4.body"></p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim" data-i18n-html="step4.why"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 5: Receiving ---------- -->
+    <section class="screen" data-screen="step" data-step="5" data-state="exit">
+      <div class="relative">
+        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">5</span>
+        <div class="relative pt-10">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
+            <path d="M26 32 h20 l -2 14 a 8 8 0 0 1 -16 0 Z" stroke="#3A332C" stroke-width="1.5" fill="none"/>
+            <path d="M20 46 q 8 4 14 1" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M34 46 q 8 -6 16 -2" stroke="#8A6A4E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <circle cx="20" cy="46" r="1.6" fill="#CB8A3E"/>
+            <circle cx="50" cy="44" r="1.6" fill="#8A6A4E"/>
+          </svg>
+          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1" data-i18n="progress.stepLabel5">Step 5 of 5</p>
+          <h2 class="font-display italic text-[26px] mb-1">Receiving</h2>
+          <p class="text-[14px] text-feltdim mb-5" data-i18n="step5.subtitle">Tea, Snuff &amp; Food</p>
+          <p class="text-[15px] leading-relaxed mb-4" data-i18n-html="step5.body"></p>
+          <div class="why-box rounded-r-lg p-4 mb-4">
+            <p class="text-[13px] leading-relaxed text-feltdim" data-i18n-html="step5.why"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- COMPLETION ---------- -->
+    <section class="screen" data-screen="complete" data-state="exit">
+      <div class="flex flex-col items-center text-center pt-6">
+        <div class="seal relative w-[104px] h-[104px] mb-6">
+          <svg viewBox="0 0 104 104" width="104" height="104" aria-hidden="true">
+            <circle cx="52" cy="52" r="48" stroke="#CB8A3E" stroke-width="1.3"/>
+            <circle cx="52" cy="52" r="40" stroke="#CB8A3E" stroke-width="1" stroke-dasharray="2 4"/>
+            <path d="M36 53 l11 11 l22 -24" stroke="#CB8A3E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="font-display text-[26px] leading-tight mb-2" data-i18n="complete.heading">Protocol complete</h1>
+        <p id="visitStamp" class="stamp-pill mb-5" aria-live="polite"></p>
+        <p class="text-[14px] text-feltdim max-w-[280px] leading-relaxed mb-7" data-i18n="complete.subcopy">
+          You're ready to step inside. A quick reminder of what you learned:
+        </p>
+
+        <ul class="w-full text-left space-y-3 mb-8">
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">1</span>
+            <span class="text-[13.5px] text-feltdim" data-i18n-html="complete.tip1"></span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">2</span>
+            <span class="text-[13.5px] text-feltdim" data-i18n-html="complete.tip2"></span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">3</span>
+            <span class="text-[13.5px] text-feltdim" data-i18n-html="complete.tip3"></span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">4</span>
+            <span class="text-[13.5px] text-feltdim" data-i18n-html="complete.tip4"></span>
+          </li>
+          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
+            <span class="font-display italic text-amber text-[15px] mt-[1px]">5</span>
+            <span class="text-[13.5px] text-feltdim" data-i18n-html="complete.tip5"></span>
+          </li>
+        </ul>
+
+        <button id="restartBtn" class="btn-ghost text-[13.5px] font-semibold px-5 py-3 rounded-xl w-full mb-8" data-i18n="complete.restart">
+          Review again
+        </button>
+
+        <div class="w-full border-t border-[color:var(--line)] pt-5">
+          <p class="text-[12px] text-feltdim mb-1">
+            <span data-i18n="complete.presentedBy">Presented by:</span>
+            <span id="partnerNameFooter" class="text-felt font-semibold">Juulchin Travel</span>
+          </p>
+          <p class="text-[11.5px] text-feltdim">
+            <span data-i18n="complete.contactPrefix">Questions about local custom?</span>
+            <a href="#" id="contactLink" class="text-amber underline underline-offset-2" data-i18n="complete.contactLabel">Ask your guide</a>
+          </p>
+          <p class="text-[10.5px] text-feltdim/70 mt-4">The Ger Protocol · Field edition</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============== BOTTOM NAV ============== -->
+  <nav id="bottomNav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 pb-6 pt-4 bg-gradient-to-t from-[#1B1815] via-[#1B1815] to-transparent">
+    <div class="flex gap-3">
+      <button id="backBtn" class="btn-ghost rounded-xl px-5 py-4 font-semibold text-[14px] min-w-[92px]" data-i18n="nav.back">
+        Back
+      </button>
+      <button id="nextBtn" class="btn-primary rounded-xl px-5 py-4 font-bold text-[14px] flex-1" data-i18n="nav.next">
+        Next
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<script>
+/*
+ * =============================================================
+ *  GER PROTOCOL — CONFIG
+ *  Edit this block to re-brand the app for a new partner. Contact
+ *  link text is language-driven (see TRANSLATIONS); contactHref is
+ *  the one thing every language shares (a phone/website/booking link).
+ * =============================================================
+ */
+const CONFIG = {
+  partnerName: "Juulchin Travel",
+  contactHref: "#",           // e.g. "tel:+97611000000" or a booking link
+  siteLabel: "",               // optional camp/site name for the completion stamp
+};
+document.getElementById('partnerName').textContent = CONFIG.partnerName;
+document.getElementById('partnerNameFooter').textContent = CONFIG.partnerName;
+document.getElementById('contactLink').href = CONFIG.contactHref;
+
+/*
+ * =============================================================
+ *  TRANSLATIONS
+ *  Keys ending in "*.body" / "*.why" / "*.tip#" are HTML strings
+ *  (they contain <strong>/<em>/<span> markup) — applied via
+ *  innerHTML. Everything else is plain text — applied via
+ *  textContent. Add a language by adding a new top-level key here;
+ *  nothing else in the code needs to change.
+ * =============================================================
+ */
+const TRANSLATIONS = {
+en: {
+  "header.label": "Official Field Protocol",
+  "header.partnerLabel": "Partner:",
+  "welcome.headline1": "Before you",
+  "welcome.headline2": "step inside",
+  "welcome.subcopy": "A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.",
+  "welcome.cta": "Begin the walkthrough",
+  "welcome.meta": "5 steps · about 30 seconds",
+  "progress.stepLabel1": "Step 1 of 5", "progress.stepLabel2": "Step 2 of 5",
+  "progress.stepLabel3": "Step 3 of 5", "progress.stepLabel4": "Step 4 of 5", "progress.stepLabel5": "Step 5 of 5",
+  "nav.back": "Back", "nav.next": "Next", "nav.finish": "Finish",
+  "step1.subtitle": "The Threshold",
+  "step1.body": 'The wooden beam at the base of the door frame is the <em>bosgo</em> — the threshold. Step over it, never on it, and lead with your <strong class="text-felt">right foot</strong>.',
+  "step1.why": '<span class="text-felt font-semibold">Why it matters:</span> the threshold is believed to hold the household\'s stability. Stepping on it is considered a bad omen for the family inside.',
+  "step2.subtitle": "Moving Clockwise",
+  "step2.body": 'Once inside, move to your left and travel <strong class="text-felt">clockwise</strong> around the interior. Never cut through the space between the two central support pillars, the <em>bagana</em> — that path is reserved.',
+  "step2.why": '<span class="text-felt font-semibold">Why it matters:</span> the line between the pillars is a sacred axis connecting hearth to sky. Crossing it is seen as cutting through the family\'s fortune.',
+  "step2.chipArrow": "Clockwise path", "step2.chipGap": "Between the pillars",
+  "step2.captionArrow": "Always move left from the door and travel clockwise around the interior.",
+  "step2.captionGap": "This gap between the two bagana pillars is a sacred axis — walk around it, never through it.",
+  "step2.captionDefault": "Tap a part of the diagram to learn more.",
+  "step3.subtitle": "Guests, Family, Elders",
+  "step3.body": 'The <strong style="color:#CB8A3E">west side (left of the door)</strong> is for guests and men. The <strong style="color:#4C7B72">east side (right)</strong> is for family and women. The back, or <em>khoimor</em> <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button>, is reserved for elders and sacred objects — wait to be shown your seat.',
+  "step3.why": '<span class="text-felt font-semibold">Why it matters:</span> seating maps the family\'s own order. Sitting unguided, especially in the khoimor, is read as claiming a status that isn\'t yours.',
+  "step3.chipWest": "West", "step3.chipEast": "East", "step3.chipKhoimor": "Khoimor",
+  "step3.captionWest": "West (left of the door) — guests and men.",
+  "step3.captionEast": "East (right of the door) — family and women.",
+  "step3.captionKhoimor": "Khoimor (the back) — elders and sacred objects. Wait to be invited.",
+  "step3.captionDefault": "Tap a zone to see who sits there.",
+  "step4.subtitle": "The Hearth",
+  "step4.body": "Sit with your feet tucked back and soles pointed away from the stove and from any elder. Never pass anything over the hearth, and never put waste into it.",
+  "step4.why": '<span class="text-felt font-semibold">Why it matters:</span> the golomt is the family\'s fire spirit and its literal source of warmth and food. Disrespecting it is considered a serious offense.',
+  "step5.subtitle": "Tea, Snuff & Food",
+  "step5.body": 'Accept whatever is offered with your <strong class="text-felt">right hand</strong>, elbow supported by your left. If you can\'t finish it, take a small symbolic sip or bite — an outright refusal is considered impolite.',
+  "step5.why": '<span class="text-felt font-semibold">Why it matters:</span> offering food to a guest is a point of pride for the host family. Two hands, and a gesture of acceptance, return that respect.',
+  "complete.heading": "Protocol complete",
+  "complete.subcopy": "You're ready to step inside. A quick reminder of what you learned:",
+  "complete.tip1": 'Step over the <span class="text-felt">bosgo</span>, right foot first — never on it.',
+  "complete.tip2": 'Move clockwise; never cross between the two <span class="text-felt">bagana</span> pillars.',
+  "complete.tip3": "Sit only where shown — west for guests, east for family, khoimor for elders.",
+  "complete.tip4": 'Keep your feet tucked away from the <span class="text-felt">golomt</span> hearth.',
+  "complete.tip5": "Receive tea or food right-handed, left hand supporting your elbow.",
+  "complete.restart": "Review again",
+  "complete.presentedBy": "Presented by:",
+  "complete.contactPrefix": "Questions about local custom?",
+  "complete.contactLabel": "Ask your guide",
+  "stamp.reviewed": "Reviewed",
+},
+zh: {
+  "header.label": "官方入乡指南",
+  "header.partnerLabel": "合作方：",
+  "welcome.headline1": "进入蒙古包前",
+  "welcome.headline2": "先读这份指南",
+  "welcome.subcopy": "30秒了解蒙古包的传统礼仪——五条简单规则，成就一次得体的拜访。",
+  "welcome.cta": "开始了解",
+  "welcome.meta": "共5步 · 约30秒",
+  "progress.stepLabel1": "第 1 步，共 5 步", "progress.stepLabel2": "第 2 步，共 5 步",
+  "progress.stepLabel3": "第 3 步，共 5 步", "progress.stepLabel4": "第 4 步，共 5 步", "progress.stepLabel5": "第 5 步，共 5 步",
+  "nav.back": "返回", "nav.next": "下一步", "nav.finish": "完成",
+  "step1.subtitle": "门槛",
+  "step1.body": '门框底部的木梁叫做 <em>bosgo</em>（门槛）。跨过它，切勿踩踏，并要 <strong class="text-felt">先迈右脚</strong>。',
+  "step1.why": '<span class="text-felt font-semibold">为什么重要：</span>蒙古人相信门槛承载着这户人家的安稳，踩踏门槛被视为对屋内家庭不吉利的举动。',
+  "step2.subtitle": "顺时针而行",
+  "step2.body": '进入蒙古包后，向左移动，沿 <strong class="text-felt">顺时针方向</strong> 绕行室内。切勿穿过中央两根支柱（<em>bagana</em>）之间的空隙——那条路是禁行的。',
+  "step2.why": '<span class="text-felt font-semibold">为什么重要：</span>两根支柱之间的连线被视为连接火炉与苍天的神圣轴线，穿过它被认为会切断这家人的运势。',
+  "step2.chipArrow": "顺时针路线", "step2.chipGap": "两柱之间",
+  "step2.captionArrow": "进门后向左走，并沿顺时针方向绕行室内。",
+  "step2.captionGap": "两根柱子（bagana）之间是神圣的轴线——请绕行，切勿穿过。",
+  "step2.captionDefault": "点击图中部位了解详情。",
+  "step3.subtitle": "座次尊卑",
+  "step3.body": '<strong style="color:#CB8A3E">西侧（进门左手边）</strong>是客人和男性的座位；<strong style="color:#4C7B72">东侧（右手边）</strong>是家人和女性的座位。里侧上位，即 <em>khoimor</em> <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button>，是留给长辈和圣物的位置——请等待主人示意入座。',
+  "step3.why": '<span class="text-felt font-semibold">为什么重要：</span>座位安排体现着这家人的既有秩序。未经指引擅自落座，尤其是坐在khoimor（上位），会被视为僭越了不属于自己的身份。',
+  "step3.chipWest": "西侧", "step3.chipEast": "东侧", "step3.chipKhoimor": "上位",
+  "step3.captionWest": "西侧（进门左手边）——客人与男性的座位。",
+  "step3.captionEast": "东侧（右手边）——家人与女性的座位。",
+  "step3.captionKhoimor": "Khoimor（里侧上位）——留给长辈和圣物，请等待邀请再入座。",
+  "step3.captionDefault": "点击区域了解各自的座次安排。",
+  "step4.subtitle": "火炉",
+  "step4.body": "就座时请将双脚收回，鞋底不要朝向火炉或任何长辈。切勿从火炉上方递送物品，也绝不能往炉中丢弃垃圾。",
+  "step4.why": '<span class="text-felt font-semibold">为什么重要：</span>golomt（火炉）被视为这家人的火神，也是他们温暖与食物的实际来源，对火炉不敬被认为是严重的冒犯。',
+  "step5.subtitle": "接受待客之物",
+  "step5.body": '无论主人递上什么，都请用 <strong class="text-felt">右手</strong> 接过，并用左手托住右肘。如果吃不完，也请象征性地喝一口或咬一口——直接拒绝会被认为不礼貌。',
+  "step5.why": '<span class="text-felt font-semibold">为什么重要：</span>为客人奉上食物是主人家引以为豪的待客之道。用双手（右手接、左手托肘）加上接受的姿态，是对这份心意的回应与尊重。',
+  "complete.heading": "礼仪完成",
+  "complete.subcopy": "你已经准备好进入蒙古包了。以下是学习内容的快速回顾：",
+  "complete.tip1": '跨过 <span class="text-felt">bosgo</span>（门槛），先迈右脚——切勿踩踏。',
+  "complete.tip2": '沿顺时针方向绕行；切勿穿过两根 <span class="text-felt">bagana</span> 支柱之间。',
+  "complete.tip3": "只坐在被指引的位置——西侧为客人，东侧为家人，khoimor（里侧）为长辈。",
+  "complete.tip4": '双脚收好，不要朝向 <span class="text-felt">golomt</span>（火炉）。',
+  "complete.tip5": "用右手接受茶或食物，左手托住右肘。",
+  "complete.restart": "再看一遍",
+  "complete.presentedBy": "呈现方：",
+  "complete.contactPrefix": "对当地习俗有疑问？",
+  "complete.contactLabel": "请教导游",
+  "stamp.reviewed": "已完成学习",
+},
+ko: {
+  "header.label": "공식 필드 프로토콜",
+  "header.partnerLabel": "파트너:",
+  "welcome.headline1": "게르에 들어가기 전",
+  "welcome.headline2": "꼭 알아야 할 것",
+  "welcome.subcopy": "몽골 게르의 전통 예절을 30초 만에 알아보는 가이드 — 다섯 가지 간단한 규칙으로 예의 바른 방문을 완성하세요.",
+  "welcome.cta": "가이드 시작하기",
+  "welcome.meta": "5단계 · 약 30초",
+  "progress.stepLabel1": "5단계 중 1단계", "progress.stepLabel2": "5단계 중 2단계",
+  "progress.stepLabel3": "5단계 중 3단계", "progress.stepLabel4": "5단계 중 4단계", "progress.stepLabel5": "5단계 중 5단계",
+  "nav.back": "이전", "nav.next": "다음", "nav.finish": "완료",
+  "step1.subtitle": "문턱",
+  "step1.body": '문틀 아래에 있는 나무 문턱을 <em>보스고(bosgo)</em>라고 합니다. 절대 밟지 말고 넘어가되, <strong class="text-felt">오른발부터</strong> 내디디세요.',
+  "step1.why": '<span class="text-felt font-semibold">중요한 이유:</span> 문턱은 그 집의 안정을 지탱한다고 여겨집니다. 문턱을 밟는 것은 집안에 불운을 가져온다고 믿어집니다.',
+  "step2.subtitle": "시계 방향으로 걷기",
+  "step2.body": '안으로 들어가면 왼쪽으로 이동해 실내를 <strong class="text-felt">시계 방향</strong>으로 도세요. 중앙의 두 기둥, <em>바가나(bagana)</em> 사이 공간은 절대 가로질러서는 안 됩니다 — 그 길은 따로 정해진 자리입니다.',
+  "step2.why": '<span class="text-felt font-semibold">중요한 이유:</span> 두 기둥 사이를 잇는 선은 화로와 하늘을 연결하는 신성한 축으로 여겨집니다. 그 사이를 가로지르면 그 가족의 복을 가르는 행동으로 여겨집니다.',
+  "step2.chipArrow": "시계 방향 경로", "step2.chipGap": "기둥 사이 공간",
+  "step2.captionArrow": "문에서 왼쪽으로 이동해 실내를 시계 방향으로 도세요.",
+  "step2.captionGap": "두 바가나 기둥 사이는 신성한 축입니다 — 가로지르지 말고 돌아가세요.",
+  "step2.captionDefault": "그림의 각 부분을 눌러 자세히 알아보세요.",
+  "step3.subtitle": "손님, 가족, 어른의 자리",
+  "step3.body": '<strong style="color:#CB8A3E">서쪽(문 왼쪽)</strong>은 손님과 남성의 자리이고, <strong style="color:#4C7B72">동쪽(오른쪽)</strong>은 가족과 여성의 자리입니다. 안쪽 상석인 <em>호이모르(khoimor)</em> <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button>는 어른과 신성한 물건을 위한 자리이니, 자리를 안내받을 때까지 기다리세요.',
+  "step3.why": '<span class="text-felt font-semibold">중요한 이유:</span> 좌석 배치는 그 가족의 서열을 그대로 보여줍니다. 안내 없이 아무 자리에나, 특히 호이모르에 앉는 것은 자신의 것이 아닌 지위를 주장하는 행동으로 여겨집니다.',
+  "step3.chipWest": "서쪽", "step3.chipEast": "동쪽", "step3.chipKhoimor": "호이모르",
+  "step3.captionWest": "서쪽(문 왼쪽) — 손님과 남성의 자리.",
+  "step3.captionEast": "동쪽(오른쪽) — 가족과 여성의 자리.",
+  "step3.captionKhoimor": "호이모르(안쪽 상석) — 어른과 신성한 물건의 자리. 안내받을 때까지 기다리세요.",
+  "step3.captionDefault": "구역을 눌러 누구의 자리인지 확인하세요.",
+  "step4.subtitle": "화로",
+  "step4.body": "앉을 때는 발을 뒤로 당기고, 발바닥이 화로나 어른을 향하지 않도록 하세요. 화로 위로 물건을 건네지 말고, 화로 안에 쓰레기를 버리지 마세요.",
+  "step4.why": '<span class="text-felt font-semibold">중요한 이유:</span> 골롬트(화로)는 그 집안의 불의 정령이자 온기와 음식의 실질적인 근원으로 여겨집니다. 화로를 함부로 대하는 것은 심각한 결례로 여겨집니다.',
+  "step5.subtitle": "차, 코담배, 음식 받기",
+  "step5.body": '무엇을 건네받든 <strong class="text-felt">오른손</strong>으로 받고, 왼손으로 오른쪽 팔꿈치를 받치세요. 다 먹지 못하더라도 상징적으로 한 모금이나 한 입은 드세요 — 아예 거절하는 것은 무례하게 여겨집니다.',
+  "step5.why": '<span class="text-felt font-semibold">중요한 이유:</span> 손님에게 음식을 대접하는 것은 그 집안의 자랑입니다. 두 손을 사용하고 받아들이는 태도를 보이는 것이 그 정성에 대한 예의입니다.',
+  "complete.heading": "프로토콜 완료",
+  "complete.subcopy": "이제 게르에 들어갈 준비가 되었습니다. 배운 내용을 간단히 정리해드릴게요:",
+  "complete.tip1": '<span class="text-felt">보스고(bosgo)</span>는 오른발부터 넘어가세요 — 절대 밟지 마세요.',
+  "complete.tip2": '시계 방향으로 이동하고, 두 <span class="text-felt">바가나(bagana)</span> 기둥 사이는 절대 가로지르지 마세요.',
+  "complete.tip3": "안내받은 자리에만 앉으세요 — 서쪽은 손님, 동쪽은 가족, 호이모르는 어른의 자리입니다.",
+  "complete.tip4": '<span class="text-felt">골롬트(golomt)</span> 화로 쪽으로 발을 향하지 마세요.',
+  "complete.tip5": "차나 음식은 오른손으로 받고, 왼손으로 팔꿈치를 받치세요.",
+  "complete.restart": "다시 보기",
+  "complete.presentedBy": "제공:",
+  "complete.contactPrefix": "현지 관습이 궁금하신가요?",
+  "complete.contactLabel": "가이드에게 문의하기",
+  "stamp.reviewed": "학습 완료",
+},
+ja: {
+  "header.label": "公式フィールドプロトコル",
+  "header.partnerLabel": "パートナー：",
+  "welcome.headline1": "ゲルに入る前に",
+  "welcome.headline2": "知っておきたいこと",
+  "welcome.subcopy": "モンゴルのゲルの伝統的な作法を30秒で学べるガイド——5つのシンプルなルールで、礼儀正しい訪問を。",
+  "welcome.cta": "ガイドを始める",
+  "welcome.meta": "全5ステップ・約30秒",
+  "progress.stepLabel1": "ステップ 1 / 5", "progress.stepLabel2": "ステップ 2 / 5",
+  "progress.stepLabel3": "ステップ 3 / 5", "progress.stepLabel4": "ステップ 4 / 5", "progress.stepLabel5": "ステップ 5 / 5",
+  "nav.back": "戻る", "nav.next": "次へ", "nav.finish": "完了",
+  "step1.subtitle": "敷居（しきい）",
+  "step1.body": '扉枠の下部にある木の梁は <em>ボスゴ（bosgo）</em>——敷居です。踏まずにまたぎ、必ず <strong class="text-felt">右足から</strong> 入りましょう。',
+  "step1.why": '<span class="text-felt font-semibold">大切な理由：</span>敷居はその家の安定を支えると信じられています。敷居を踏むことは、家族にとって不吉な兆しとされます。',
+  "step2.subtitle": "時計回りに進む",
+  "step2.body": '中に入ったら左へ進み、室内を <strong class="text-felt">時計回り</strong> に移動します。中央にある2本の支柱、<em>バガナ（bagana）</em>の間を決して横切らないでください——その通り道は特別な意味を持ちます。',
+  "step2.why": '<span class="text-felt font-semibold">大切な理由：</span>2本の柱を結ぶ線は、炉と天をつなぐ神聖な軸とされています。そこを横切ることは、その家族の運を断ち切る行為とみなされます。',
+  "step2.chipArrow": "時計回りの経路", "step2.chipGap": "柱の間",
+  "step2.captionArrow": "ドアから左へ進み、室内を時計回りに移動しましょう。",
+  "step2.captionGap": "2本のバガナ（柱）の間は神聖な軸です——横切らず、回り込みましょう。",
+  "step2.captionDefault": "図の各部分をタップすると詳しく分かります。",
+  "step3.subtitle": "客人・家族・年長者の席",
+  "step3.body": '<strong style="color:#CB8A3E">西側（ドアの左）</strong>は客人と男性の席、<strong style="color:#4C7B72">東側（右）</strong>は家族と女性の席です。奥の上座、<em>ホイモル（khoimor）</em> <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button> は年長者や神聖な品のために取っておかれます——案内されるまで席には座らず待ちましょう。',
+  "step3.why": '<span class="text-felt font-semibold">大切な理由：</span>席順はその家族の秩序を表します。案内なしに、特にホイモルに座ることは、自分のものではない地位を主張する行為と受け取られます。',
+  "step3.chipWest": "西側", "step3.chipEast": "東側", "step3.chipKhoimor": "ホイモル",
+  "step3.captionWest": "西側（ドアの左）——客人と男性の席。",
+  "step3.captionEast": "東側（右）——家族と女性の席。",
+  "step3.captionKhoimor": "ホイモル（奥の上座）——年長者と神聖な品のための席。案内されるまで待ちましょう。",
+  "step3.captionDefault": "エリアをタップすると、誰の席か分かります。",
+  "step4.subtitle": "炉（ゴロムト）",
+  "step4.body": "座るときは足を後ろに引き、靴底がストーブや年長者の方を向かないようにしましょう。炉の上から物を渡したり、ゴミを炉に入れたりしてはいけません。",
+  "step4.why": '<span class="text-felt font-semibold">大切な理由：</span>ゴロムト（炉）はその家の火の精霊であり、暖かさと食べ物の源そのものとされています。炉を粗末に扱うことは重大な無礼と考えられます。',
+  "step5.subtitle": "お茶・かぎたばこ・食べ物",
+  "step5.body": '差し出されたものは何でも <strong class="text-felt">右手</strong> で受け取り、左手で右肘を支えましょう。食べきれない場合も、象徴的に一口だけ口をつけてください——きっぱりと断ることは失礼とされます。',
+  "step5.why": '<span class="text-felt font-semibold">大切な理由：</span>客人に食べ物をふるまうことは、もてなす家族にとって誇りです。両手を使い、受け取る仕草を見せることが、その心遣いへの返礼になります。',
+  "complete.heading": "プロトコル完了",
+  "complete.subcopy": "これでゲルに入る準備ができました。学んだ内容を簡単に振り返りましょう：",
+  "complete.tip1": '<span class="text-felt">ボスゴ（bosgo）</span>は右足からまたぎ——決して踏まないこと。',
+  "complete.tip2": '時計回りに移動し、2本の <span class="text-felt">バガナ（bagana）</span> の間は決して横切らないこと。',
+  "complete.tip3": "案内された席にのみ座る——西側は客人、東側は家族、ホイモルは年長者の席。",
+  "complete.tip4": '足は <span class="text-felt">ゴロムト（golomt）</span>（炉）から離しておくこと。',
+  "complete.tip5": "お茶や食べ物は右手で受け取り、左手で肘を支えること。",
+  "complete.restart": "もう一度見る",
+  "complete.presentedBy": "提供：",
+  "complete.contactPrefix": "現地の習慣について質問がありますか？",
+  "complete.contactLabel": "ガイドに聞く",
+  "stamp.reviewed": "確認済み",
+},
+ru: {
+  "header.label": "Официальный протокол",
+  "header.partnerLabel": "Партнёр:",
+  "welcome.headline1": "Прежде чем",
+  "welcome.headline2": "войти в гэр",
+  "welcome.subcopy": "30-секундный гид по традициям монгольского гэра — пять простых правил для уважительного визита.",
+  "welcome.cta": "Начать гид",
+  "welcome.meta": "5 шагов · около 30 секунд",
+  "progress.stepLabel1": "Шаг 1 из 5", "progress.stepLabel2": "Шаг 2 из 5",
+  "progress.stepLabel3": "Шаг 3 из 5", "progress.stepLabel4": "Шаг 4 из 5", "progress.stepLabel5": "Шаг 5 из 5",
+  "nav.back": "Назад", "nav.next": "Далее", "nav.finish": "Готово",
+  "step1.subtitle": "Порог",
+  "step1.body": 'Деревянная балка у основания дверного проёма — это <em>босго</em> (порог). Переступайте через неё, никогда не наступайте, и первым делайте шаг <strong class="text-felt">правой ногой</strong>.',
+  "step1.why": '<span class="text-felt font-semibold">Почему это важно:</span> считается, что порог хранит благополучие семьи. Наступить на него — плохая примета для хозяев дома.',
+  "step2.subtitle": "Движение по часовой стрелке",
+  "step2.body": 'Войдя внутрь, двигайтесь влево и обходите помещение <strong class="text-felt">по часовой стрелке</strong>. Никогда не проходите между двумя центральными опорными столбами, <em>багана</em> — этот путь предназначен не для гостей.',
+  "step2.why": '<span class="text-felt font-semibold">Почему это важно:</span> линия между столбами — священная ось, соединяющая очаг с небом. Пройти через неё значит, по поверью, «перерезать» удачу семьи.',
+  "step2.chipArrow": "Путь по часовой стрелке", "step2.chipGap": "Между столбами",
+  "step2.captionArrow": "От двери двигайтесь влево и обходите помещение по часовой стрелке.",
+  "step2.captionGap": "Промежуток между двумя столбами багана — священная ось: обходите его, никогда не пересекайте.",
+  "step2.captionDefault": "Нажмите на часть схемы, чтобы узнать больше.",
+  "step3.subtitle": "Гости, семья, старшие",
+  "step3.body": '<strong style="color:#CB8A3E">Западная сторона (слева от двери)</strong> — для гостей и мужчин. <strong style="color:#4C7B72">Восточная сторона (справа)</strong> — для членов семьи и женщин. Задняя часть, или <em>хоймор</em> <button type="button" class="pronounce-btn pronounce-btn-inline" data-audio="audio/khoimor.mp3" data-fallback-text="Khoimor" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Khoimor">🔊</button>, предназначена для старших и священных предметов — дождитесь, пока вам укажут место.',
+  "step3.why": '<span class="text-felt font-semibold">Почему это важно:</span> рассадка отражает собственный порядок семьи. Сесть без приглашения, особенно в хойморе, значит присвоить себе чужой статус.',
+  "step3.chipWest": "Запад", "step3.chipEast": "Восток", "step3.chipKhoimor": "Хоймор",
+  "step3.captionWest": "Запад (слева от двери) — гости и мужчины.",
+  "step3.captionEast": "Восток (справа) — семья и женщины.",
+  "step3.captionKhoimor": "Хоймор (задняя часть) — старшие и священные предметы. Дождитесь приглашения.",
+  "step3.captionDefault": "Нажмите на зону, чтобы узнать, кто там сидит.",
+  "step4.subtitle": "Очаг",
+  "step4.body": "Сядьте так, чтобы ноги были подобраны, а подошвы не были направлены на печь или на кого-то из старших. Никогда не передавайте ничего над очагом и не бросайте в него мусор.",
+  "step4.why": '<span class="text-felt font-semibold">Почему это важно:</span> голомт — это дух огня семьи и буквальный источник тепла и еды. Неуважение к очагу считается серьёзным проступком.',
+  "step5.subtitle": "Чай, табак и угощение",
+  "step5.body": 'Что бы вам ни предложили, принимайте <strong class="text-felt">правой рукой</strong>, поддерживая локоть левой. Если не можете доесть до конца, сделайте хотя бы символический глоток или откусите немного — прямой отказ считается невежливым.',
+  "step5.why": '<span class="text-felt font-semibold">Почему это важно:</span> угощение гостя — предмет гордости для семьи хозяев. Приём двумя руками и жест принятия — это ответное проявление уважения.',
+  "complete.heading": "Протокол пройден",
+  "complete.subcopy": "Вы готовы войти внутрь. Краткое напоминание о том, что вы узнали:",
+  "complete.tip1": 'Переступите через <span class="text-felt">босго</span> правой ногой первой — никогда не наступайте на него.',
+  "complete.tip2": 'Двигайтесь по часовой стрелке; никогда не проходите между двумя столбами <span class="text-felt">багана</span>.',
+  "complete.tip3": "Садитесь только туда, куда укажут — запад для гостей, восток для семьи, хоймор для старших.",
+  "complete.tip4": 'Держите ноги подальше от очага <span class="text-felt">голомт</span>.',
+  "complete.tip5": "Принимайте чай или еду правой рукой, поддерживая локоть левой.",
+  "complete.restart": "Пройти снова",
+  "complete.presentedBy": "Организатор:",
+  "complete.contactPrefix": "Есть вопросы о местных обычаях?",
+  "complete.contactLabel": "Спросите гида",
+  "stamp.reviewed": "Пройдено",
+},
+};
+
+const LOCALE_MAP = { en: 'en-US', zh: 'zh-CN', ko: 'ko-KR', ja: 'ja-JP', ru: 'ru-RU' };
+let currentLang = 'en';
+try {
+  const saved = localStorage.getItem('gerProtocolLang');
+  if (saved && TRANSLATIONS[saved]) currentLang = saved;
+} catch (e) { /* localStorage unavailable — default to English */ }
+
+function t(key){
+  return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.en[key] || '';
+}
+
+function resetDiagrams(){
+  document.querySelectorAll('.diagram-block').forEach(block => {
+    block.querySelectorAll('.diagram-chip').forEach(c => c.classList.remove('chip-active'));
+    block.querySelectorAll('.diagram-part').forEach(p => p.style.filter = '');
+  });
+}
+
+function applyLanguage(lang){
+  if (!TRANSLATIONS[lang]) return;
+  currentLang = lang;
+  try { localStorage.setItem('gerProtocolLang', lang); } catch (e) {}
+
+  document.getElementById('htmlRoot').setAttribute('lang', lang);
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.dataset.i18nHtml);
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('lang-active', btn.dataset.lang === lang);
+  });
+
+  resetDiagrams();
+  // Diagram default captions live under data-i18n already, so they're
+  // refreshed by the loop above — nothing extra needed here.
+
+  // Nav button label depends on which step is showing; re-sync it.
+  const key = screenOrder[current];
+  if (typeof key === 'number' && nextBtn) {
+    nextBtn.textContent = key === 5 ? t('nav.finish') : t('nav.next');
+  }
+
+  // If already on the completion screen, refresh the stamp in the new language.
+  if (screenOrder[current] === 'complete') {
+    writeStamp();
+  }
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+});
+
+/*
+ * =============================================================
+ *  EVENT DELEGATION
+ *  Pronunciation buttons and diagram chips are (re)rendered via
+ *  innerHTML on every language switch, so listeners are attached
+ *  once on document and matched by selector — this way they keep
+ *  working no matter how many times the DOM underneath is replaced.
+ * =============================================================
+ */
+document.addEventListener('click', (e) => {
+  const pronounceBtn = e.target.closest('.pronounce-btn');
+  if (pronounceBtn) {
+    pronounceBtn.classList.remove('playing');
+    void pronounceBtn.offsetWidth;
+    pronounceBtn.classList.add('playing');
+
+    const audio = new Audio(pronounceBtn.dataset.audio);
+    let fallenBack = false;
+    const speakFallback = () => {
+      if (fallenBack) return;
+      fallenBack = true;
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(pronounceBtn.dataset.fallbackText);
+        utter.lang = pronounceBtn.dataset.fallbackLang || 'mn-MN';
+        speechSynthesis.speak(utter);
+      }
+    };
+    audio.addEventListener('error', speakFallback);
+    audio.play().catch(speakFallback);
+    return;
+  }
+
+  const chip = e.target.closest('.diagram-chip');
+  if (chip) {
+    const block = chip.closest('.diagram-block');
+    block.querySelectorAll('.diagram-chip').forEach(c => c.classList.remove('chip-active'));
+    chip.classList.add('chip-active');
+    block.querySelectorAll('.diagram-part').forEach(part => { part.style.filter = ''; });
+    const target = document.getElementById(chip.dataset.target);
+    if (target) target.style.filter = 'drop-shadow(0 0 5px rgba(203,138,62,0.7))';
+    const caption = block.querySelector('.diagram-caption');
+    if (caption) caption.textContent = t(chip.dataset.captionKey);
+    return;
+  }
+});
+
+/*
+ * =============================================================
+ *  NAVIGATION STATE
+ * =============================================================
+ */
+const screenOrder = ['welcome', 1, 2, 3, 4, 5, 'complete'];
+let current = 0;
+
+const welcomeEl   = document.querySelector('[data-screen="welcome"]');
+const completeEl  = document.querySelector('[data-screen="complete"]');
+const stepEls     = Array.from(document.querySelectorAll('[data-screen="step"]'));
+const allScreens  = [welcomeEl, ...stepEls, completeEl];
+
+const progressWrap  = document.getElementById('progressWrap');
+const progressLabel = document.getElementById('progressLabel');
+const progressBar   = document.getElementById('progressBar');
+const bottomNav      = document.getElementById('bottomNav');
+const backBtn        = document.getElementById('backBtn');
+const nextBtn        = document.getElementById('nextBtn');
+const slats           = Array.from(document.querySelectorAll('.slat'));
+
+function writeStamp(){
+  const now = new Date();
+  const locale = LOCALE_MAP[currentLang] || 'en-US';
+  const dateStr = now.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+  const timeStr = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+  const siteBit = CONFIG.siteLabel ? `${CONFIG.siteLabel} · ` : '';
+  document.getElementById('visitStamp').textContent = `✓ ${t('stamp.reviewed')} · ${siteBit}${dateStr}, ${timeStr}`;
+}
+
+function render(direction){
+  const key = screenOrder[current];
+  const isStep = typeof key === 'number';
+
+  progressWrap.classList.toggle('hidden', !isStep);
+  bottomNav.classList.toggle('hidden', key === 'welcome' || key === 'complete');
+
+  if (isStep){
+    progressLabel.textContent = t(`progress.stepLabel${key}`);
+    progressBar.setAttribute('aria-valuenow', key);
+    slats.forEach(s => {
+      const n = Number(s.dataset.slat);
+      s.classList.toggle('filled', n < key);
+      s.classList.toggle('current', n === key);
+    });
+    nextBtn.textContent = key === 5 ? t('nav.finish') : t('nav.next');
+  }
+
+  if (key === 'complete') writeStamp();
+
+  allScreens.forEach(el => {
+    const elKey = el.dataset.screen === 'step' ? Number(el.dataset.step) : el.dataset.screen;
+    if (elKey === key){
+      el.style.position = '';
+      el.setAttribute('data-state', direction === 'back' ? 'enter-back' : 'enter');
+      void el.offsetWidth;
+      requestAnimationFrame(() => el.setAttribute('data-state', 'active'));
+    } else {
+      el.setAttribute('data-state', direction === 'back' ? 'exit-back' : 'exit');
+    }
+  });
+}
+
+function goNext(){
+  if (current < screenOrder.length - 1){ current++; render('forward'); }
+}
+function goBack(){
+  if (current > 0){ current--; render('back'); }
+}
+
+document.getElementById('beginBtn').addEventListener('click', goNext);
+document.getElementById('restartBtn').addEventListener('click', () => { current = 0; render('back'); });
+nextBtn.addEventListener('click', goNext);
+backBtn.addEventListener('click', goBack);
+
+// Initial paint.
+applyLanguage(currentLang);
+render('forward');
+</script>
+</body>
+</html>
