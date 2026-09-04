@@ -1,3 +1,6 @@
+Here is the complete `index.html` file containing the full walkthrough interface, all 5 steps, interactive elements, quiz state, and the language switching for all 6 languages.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +16,8 @@
       --accent: #d99b43;
       --accent-hover: #c48937;
       --border: #2e2b27;
+      --success: #4a8b5c;
+      --error: #b84a4a;
     }
 
     * {
@@ -34,13 +39,14 @@
     }
 
     header {
-      position: absolute;
+      position: fixed;
       top: 1.5rem;
       left: 1.5rem;
       right: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 10;
     }
 
     .brand {
@@ -97,6 +103,7 @@
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
+      margin-top: 4rem;
     }
 
     .graphic-container {
@@ -107,7 +114,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       position: relative;
     }
 
@@ -118,9 +125,17 @@
       border-radius: 50%;
     }
 
+    .step-badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     h2 {
       font-family: Georgia, serif;
-      font-size: 2.25rem;
+      font-size: 2rem;
       font-weight: normal;
       line-height: 1.2;
     }
@@ -129,6 +144,27 @@
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.5;
+    }
+
+    .rule-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .rule-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .rule-card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.4;
     }
 
     .btn-primary {
@@ -148,9 +184,30 @@
       background-color: var(--accent-hover);
     }
 
+    .btn-secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
     .meta-info {
       font-size: 0.75rem;
       color: var(--muted);
+    }
+
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
@@ -178,81 +235,251 @@
   </header>
 
   <main>
-    <div class="graphic-container">
-      <div class="graphic-center"></div>
+    <!-- HERO VIEW -->
+    <div id="viewHero" class="view-screen">
+      <div class="graphic-container">
+        <div class="graphic-center"></div>
+      </div>
+      <h2 id="heroHeading">Before you step inside</h2>
+      <p id="heroDesc" class="description">
+        A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.
+      </p>
+      <button class="btn-primary" id="startBtn" onclick="startWalkthrough()">Begin the walkthrough</button>
+      <p id="metaText" class="meta-info">5 steps · about 30 seconds</p>
     </div>
 
-    <h2 id="heroHeading">Before you step inside</h2>
-    <p id="heroDesc" class="description">
-      A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.
-    </p>
+    <!-- WALKTHROUGH VIEW -->
+    <div id="viewStep" class="view-screen hidden">
+      <span id="stepBadge" class="step-badge">Rule 1 of 5</span>
+      <h2 id="stepHeading">Step Title</h2>
+      
+      <div class="rule-card">
+        <h3 id="stepSubheading">Key Concept</h3>
+        <p id="stepDesc">Description text goes here.</p>
+      </div>
 
-    <button id="startBtn" class="btn-primary">Begin the walkthrough</button>
-    <p id="metaText" class="meta-info">5 steps · about 30 seconds</p>
+      <div class="nav-buttons">
+        <button id="prevBtn" class="btn-secondary" onclick="prevStep()">Back</button>
+        <button id="nextBtn" class="btn-primary" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <!-- COMPLETION VIEW -->
+    <div id="viewComplete" class="view-screen hidden">
+      <div class="graphic-container">
+        <div class="graphic-center" style="background-color: var(--accent);"></div>
+      </div>
+      <h2 id="completeHeading">You're ready to enter</h2>
+      <p id="completeDesc" class="description">
+        You now know the core etiquette for visiting an authentic Mongolian family ger.
+      </p>
+      <button class="btn-primary" id="restartBtn" onclick="resetWalkthrough()">Start Over</button>
+    </div>
   </main>
 
   <script>
+    let currentLang = 'en';
+    let currentStepIndex = 0;
+
     const TRANSLATIONS = {
       en: {
         title: "The Ger Protocol",
         subtitle: "Official Field Protocol · Juulchin Travel",
-        heading: "Before you step inside",
-        desc: "A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.",
-        button: "Begin the walkthrough",
-        meta: "5 steps · about 30 seconds"
+        heroHeading: "Before you step inside",
+        heroDesc: "A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.",
+        startBtn: "Begin the walkthrough",
+        metaText: "5 steps · about 30 seconds",
+        backBtn: "Back",
+        nextBtn: "Next",
+        finishBtn: "Complete",
+        completeHeading: "You're ready to enter",
+        completeDesc: "You now know the core etiquette for visiting an authentic Mongolian family ger.",
+        restartBtn: "Start Over",
+        steps: [
+          { badge: "Rule 1 of 5", title: "Never Step on the Threshold", sub: "Bosgo (Threshold)", desc: "Step cleanly OVER the wooden threshold when entering or leaving. Stepping on it is considered bringing bad luck or disrespecting the host's head." },
+          { badge: "Rule 2 of 5", title: "Walk Clockwise Inside", sub: "Nar Zuv (Sunwise Movement)", desc: "Always move around the central hearth in a clockwise direction. This respects the traditional cosmological order and flow of the ger." },
+          { badge: "Rule 3 of 5", title: "Accept Offerings with Right Hand", sub: "Offerings & Tea", desc: "Accept tea, food, or snuff bottles with your right hand, resting your left hand under your right elbow to show deep respect." },
+          { badge: "Rule 4 of 5", title: "Do Not Lean on Support Posts", sub: "Bagana (Columns)", desc: "The two central columns support the roof ring (Toono) and hold spiritual significance. Never lean against them or pass items between them." },
+          { badge: "Rule 5 of 5", title: "Tuck Your Legs When Seated", sub: "Seating Customs", desc: "Sit comfortably without pointing the soles of your feet directly at the hearth, alter, or other people. Cross-legged or tucked seating is best." }
+        ]
       },
       mn: {
         title: "Гэрийн Дэг Журам",
         subtitle: "Албан ёсны гарын авлага · Жуулчин Трэвел",
-        heading: "Та гэрт орохоосоо өмнө",
-        desc: "Монгол гэрийн ёс заншлын 30 секундын гарын авлага — таван энгийн дүрэм, нэг хүндэтгэлтэй зочлолт.",
-        button: "Заавартай танилцах",
-        meta: "5 алхам · ойролцоогоор 30 секунд"
+        heroHeading: "Та гэрт орохоосоо өмнө",
+        heroDesc: "Монгол гэрийн ёс заншлын 30 секундын гарын авлага — таван энгийн дүрэм, нэг хүндэтгэлтэй зочлолт.",
+        startBtn: "Заавартай танилцах",
+        metaText: "5 алхам · ойролцоогоор 30 секунд",
+        backBtn: "Буцах",
+        nextBtn: "Дараах",
+        finishBtn: "Дуусгах",
+        completeHeading: "Та гэрт ороход бэлэн боллоо",
+        completeDesc: "Та монгол айлд зочлох үндсэн ёс заншлын талаар мэдэж авлаа.",
+        restartBtn: "Дахин эхлэх",
+        steps: [
+          { badge: "Дүрэм 1 / 5", title: "Босгон дээр гишгэж болохгүй", sub: "Босго", desc: "Гэрт орох болон гарахдаа босгон дээр гишгэхгүй алхаж гарна. Босгон дээр гишгэх нь айлын хийморийг доройтуулдаг гэж үздэг." },
+          { badge: "Дүрэм 2 / 5", title: "Нар зөв эргэх", sub: "Нар зөв хөдөлгөөн", desc: "Гэрт зочлохдоо гол голомтыг нар зөв буюу нарны хүрдний дагуу нар зөв тойрон алхана." },
+          { badge: "Дүрэм 3 / 5", title: "Баруун гараараа тосон авах", sub: "Цай, цагаа барих ёс", desc: "Айлын дайлсан цай, идээг баруун гараар авна. Зүүн гараараа баруун тохойгоо түшиж хүндэтгэл үзүүлнэ." },
+          { badge: "Дүрэм 4 / 5", title: "Баганаас барьж болохгүй", sub: "Багана", desc: "Гэрийн хоёр багана нь тооно болон өрхийг тэтгэж байдаг тул тулах, баганын дундуур юм зөрүүлэн өгөх нь цээртэй." },
+          { badge: "Дүрэм 5 / 5", title: "Хөлөө жийж суухгүй байх", sub: "Суух ёс", desc: "Сууж байхдаа хөлийн ул болон хөлөө голомт руу болон хүмүүс рүү харуулж жийж сууж болохгүй." }
+        ]
       },
       zh: {
         title: "蒙古包礼仪指南",
         subtitle: "官方实用指南 · Juulchin Travel",
-        heading: "进入蒙古包之前",
-        desc: "30秒快速了解蒙古包传统习俗 — 五项简单规则，一次充满尊重拜访。",
-        button: "开始了解",
-        meta: "5个步骤 · 约需30秒"
+        heroHeading: "进入蒙古包之前",
+        heroDesc: "30秒快速了解蒙古包传统习俗 — 五项简单规则，一次充满尊重拜访。",
+        startBtn: "开始了解",
+        metaText: "5个步骤 · 约需30秒",
+        backBtn: "返回",
+        nextBtn: "下一步",
+        finishBtn: "完成",
+        completeHeading: "准备就绪",
+        completeDesc: "您已掌握拜访传统蒙古包家庭的核心礼仪。",
+        restartBtn: "重新开始",
+        steps: [
+          { badge: "规则 1 / 5", title: "切勿踩踏门槛", sub: "门槛 (Bosgo)", desc: "进出蒙古包时请跨过门槛。踩踏门槛被视为对主人的不敬及不吉利。" },
+          { badge: "规则 2 / 5", title: "顺时针行走", sub: "顺时针方向", desc: "在蒙古包内部移动时，请始终绕着中央火炉顺时针行走。" },
+          { badge: "规则 3 / 5", title: "用右手接过物品", sub: "接物礼仪", desc: "接过茶水或食物时请用右手，左手托住右肘以示尊重。" },
+          { badge: "规则 4 / 5", title: "请勿依靠支柱", sub: "立柱 (Bagana)", desc: "中央的两根立柱支撑着包顶，具有神圣意义，切勿依靠或穿过两柱间递物。" },
+          { badge: "规则 5 / 5", title: "注意坐姿", sub: "坐姿礼仪", desc: "入座时请勿将脚底直接对着火炉、神龛或他人，盘腿而坐最为得体。" }
+        ]
       },
       ja: {
         title: "ゲル訪問マナーガイド",
         subtitle: "公式フィールドガイド · Juulchin Travel",
-        heading: "ゲル（包）に入る前に",
-        desc: "モンゴルのゲルでのマナーを学ぶ30秒のガイド — 5つの簡単なルールで敬意ある訪問を。",
-        button: "ガイドを開始する",
-        meta: "5つのステップ · 約30秒"
+        heroHeading: "ゲル（包）に入る前に",
+        heroDesc: "モンゴルのゲルでのマナーを学ぶ30秒のガイド — 5つの簡単なルールで敬意ある訪問を。",
+        startBtn: "ガイドを開始する",
+        metaText: "5つのステップ · 約30秒",
+        backBtn: "戻る",
+        nextBtn: "次へ",
+        finishBtn: "完了",
+        completeHeading: "準備が整いました",
+        completeDesc: "これでモンゴル家庭のゲルを訪問するための基本マナーは完璧です。",
+        restartBtn: "最初からやり直す",
+        steps: [
+          { badge: "ルール 1 / 5", title: "敷居を踏まない", sub: "敷居（ボスゴ）", desc: "出入りの際は木製の敷居をまたいでください。敷居を踏むことは不吉であり、家主への失礼にあたります。" },
+          { badge: "ルール 2 / 5", title: "時計回りに移動する", sub: "時計回りの移動", desc: "ゲルの中では、中央の炉のまわりを常に時計回りに移動します。" },
+          { badge: "ルール 3 / 5", title: "右手でもてなしを受け取る", sub: "もてなしの受け取り", desc: "お茶や食べ物を受け取る際は右手を使います。左手を右肘に添えると深い敬意を示せます。" },
+          { badge: "ルール 4 / 5", title: "支柱によりかからない", sub: "支柱（バガナ）", desc: "中央の2本の柱はゲルを支える神圣なものです。よりかかったり、柱の間でものを手渡したりしないでください。" },
+          { badge: "ルール 5 / 5", title: "足の裏を見せない", sub: "座り方のマナー", desc: "座る際は足の裏を火炉や神棚、人に向けて伸ばさないように注意し、胡坐などで座りましょう。" }
+        ]
       },
       ko: {
         title: "게르 방문 에티켓 Guide",
         subtitle: "공식 현장 가이드 · Juulchin Travel",
-        heading: "게르에 들어서기 전에",
-        desc: "몽골 게르의 전통 예절을 배우는 30초 가이드 — 5가지 간단한 규칙, 존중하는 방문.",
-        button: "가이드 시작하기",
-        meta: "5단계 · 약 30초 소요"
+        heroHeading: "게르에 들어서기 전에",
+        heroDesc: "몽골 게르의 전통 예절을 배우는 30초 가이드 — 5가지 간단한 규칙, 존중하는 방문.",
+        startBtn: "가이드 시작하기",
+        metaText: "5단계 · 약 30초 소요",
+        backBtn: "이전",
+        nextBtn: "다음",
+        finishBtn: "완료",
+        completeHeading: "입장 준비 완료",
+        completeDesc: "이제 몽골 전통 게르 방문을 위한 핵심 에티켓을 숙지하셨습니다.",
+        restartBtn: "다시 시작",
+        steps: [
+          { badge: "규칙 1 / 5", title: "문턱을 밟지 마세요", sub: "문턱 (Bosgo)", desc: "게르에 들어오거나 나갈 때는 문턱을 넘어 걸으세요. 문턱을 밟는 것은 집주인에 대한 실례이자 불운을 가져온다고 여깁니다." },
+          { badge: "규칙 2 / 5", title: "시계 방향으로 이동하세요", sub: "시계 방향 이동", desc: "게르 내부에서는 항상 중앙 화로를 중심으로 시계 방향으로 이동합니다." },
+          { badge: "규칙 3 / 5", title: "오른손으로 음식을 받으세요", sub: "차와 음식 받기", desc: "차나 음식을 받을 때는 오른손을 사용하며, 오른팔 팔꿈치 아래에 왼손을 받쳐 존경을 표하세요." },
+          { badge: "규칙 4 / 5", title: "기둥에 기대지 마세요", sub: "기둥 (Bagana)", desc: "중앙의 두 기둥은 지붕을 받치는 신성한 구조물입니다. 기둥에 기대거나 기둥 사이로 물건을 건네지 마세요." },
+          { badge: "규칙 5 / 5", title: "발바닥이 보이지 않게 앉으세요", sub: "앉는 자세", desc: "앉을 때 발바닥이 화로나 불단, 타인을 향해 뻗지 않도록 양반다리로 편안하게 앉으세요." }
+        ]
       },
       ru: {
         title: "Протокол Посещения Юрты",
         subtitle: "Официальный гид · Juulchin Travel",
-        heading: "Прежде чем войти в юрту",
-        desc: "30-секундный гид по традициям монгольской юрты — пять простых правил для уважительного визита.",
-        button: "Начать ознакомление",
-        meta: "5 шагов · около 30 секунд"
+        heroHeading: "Прежде чем войти в юрту",
+        heroDesc: "30-секундный гид по традициям монгольской юрты — пять простых правил для уважительного визита.",
+        startBtn: "Начать ознакомление",
+        metaText: "5 шагов · около 30 секунд",
+        backBtn: "Назад",
+        nextBtn: "Далее",
+        finishBtn: "Завершить",
+        completeHeading: "Вы готовы к визиту",
+        completeDesc: "Теперь вы знаете основные правила этикета при посещении традиционной монгольской юрты.",
+        restartBtn: "Начать заново",
+        steps: [
+          { badge: "Правило 1 / 5", title: "Не наступайте на порог", sub: "Порог (Bosgo)", desc: "Перешагивайте через деревянный порог при входе и выходе. Наступить на него считается проявлением неуважения к хозяину." },
+          { badge: "Правило 2 / 5", title: "Двигайтесь по часовой стрелке", sub: "Движение по солнцу", desc: "Внутри юрты всегда передвигайтесь вокруг центрального очага по часовой стрелке." },
+          { badge: "Правило 3 / 5", title: "Принимайте угощения правой рукой", sub: "Угощения и чай", desc: "Принимайте чай или еду правой рукой, поддерживая правый локоть левой рукой в знак уважения." },
+          { badge: "Правило 4 / 5", title: "Не опирайтесь на опорные столбы", sub: "Столбы (Bagana)", desc: "Два центральных столба имеют сакральное значение. Не опирайтесь на них и не передавайте вещи между ними." },
+          { badge: "Правило 5 / 5", title: "Следите за положением ног", sub: "Правила посадки", desc: "Сидите так, чтобы подошвы ваших ног не были направлены прямо на очаг, алтарь или других людей." }
+        ]
       }
     };
 
     function changeLanguage(langKey) {
+      currentLang = langKey;
       const data = TRANSLATIONS[langKey] || TRANSLATIONS.en;
+      
       document.getElementById('appTitle').innerText = data.title;
       document.getElementById('appSubtitle').innerText = data.subtitle;
-      document.getElementById('heroHeading').innerText = data.heading;
-      document.getElementById('heroDesc').innerText = data.desc;
-      document.getElementById('startBtn').innerText = data.button;
-      document.getElementById('metaText').innerText = data.meta;
+      document.getElementById('heroHeading').innerText = data.heroHeading;
+      document.getElementById('heroDesc').innerText = data.heroDesc;
+      document.getElementById('startBtn').innerText = data.startBtn;
+      document.getElementById('metaText').innerText = data.metaText;
+      document.getElementById('completeHeading').innerText = data.completeHeading;
+      document.getElementById('completeDesc').innerText = data.completeDesc;
+      document.getElementById('restartBtn').innerText = data.restartBtn;
       document.documentElement.lang = langKey;
+
+      renderStep();
+    }
+
+    function renderStep() {
+      const data = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      const step = data.steps[currentStepIndex];
+
+      document.getElementById('stepBadge').innerText = step.badge;
+      document.getElementById('stepHeading').innerText = step.title;
+      document.getElementById('stepSubheading').innerText = step.sub;
+      document.getElementById('stepDesc').innerText = step.desc;
+
+      document.getElementById('prevBtn').innerText = data.backBtn;
+      if (currentStepIndex === data.steps.length - 1) {
+        document.getElementById('nextBtn').innerText = data.finishBtn;
+      } else {
+        document.getElementById('nextBtn').innerText = data.nextBtn;
+      }
+
+      document.getElementById('prevBtn').style.visibility = currentStepIndex === 0 ? 'hidden' : 'visible';
+    }
+
+    function startWalkthrough() {
+      currentStepIndex = 0;
+      document.getElementById('viewHero').classList.add('hidden');
+      document.getElementById('viewComplete').classList.add('hidden');
+      document.getElementById('viewStep').classList.remove('hidden');
+      renderStep();
+    }
+
+    function nextStep() {
+      const data = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+      if (currentStepIndex < data.steps.length - 1) {
+        currentStepIndex++;
+        renderStep();
+      } else {
+        document.getElementById('viewStep').classList.add('hidden');
+        document.getElementById('viewComplete').classList.remove('hidden');
+      }
+    }
+
+    function prevStep() {
+      if (currentStepIndex > 0) {
+        currentStepIndex--;
+        renderStep();
+      }
+    }
+
+    function resetWalkthrough() {
+      currentStepIndex = 0;
+      document.getElementById('viewComplete').classList.add('hidden');
+      document.getElementById('viewHero').classList.remove('hidden');
     }
   </script>
 </body>
 </html>
+
+```
