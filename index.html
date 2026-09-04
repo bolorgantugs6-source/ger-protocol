@@ -1,703 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>The Ger Protocol — Field Guide</title>
-<meta name="description" content="A 30-second interactive field guide to Mongolian ger etiquette.">
-
-<!-- Tailwind CSS via CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          ink:      '#1B1815',
-          stone:    '#26221E',
-          stone2:   '#312B25',
-          felt:     '#EFE7D8',
-          feltdim:  '#B9AF9C',
-          wood:     '#6B4226',
-          amber:    '#CB8A3E',
-          amberdeep:'#9C5F24',
-          teal:     '#4C7B72',
-        },
-        fontFamily: {
-          display: ['"Fraunces"', 'serif'],
-          body: ['"Manrope"', 'sans-serif'],
-        },
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ger Protocol — Field Guide</title>
+  <style>
+    :root {
+      --bg: #121110;
+      --card-bg: #1c1a18;
+      --text: #e6e1da;
+      --muted: #a09a90;
+      --accent: #d99b43;
+      --accent-hover: #c48937;
+      --border: #2e2b27;
     }
-  }
-</script>
 
-<style>
-  :root{
-    --ink:#1B1815;
-    --stone:#26221E;
-    --line: rgba(239,231,216,0.10);
-    --line-strong: rgba(239,231,216,0.18);
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  * { -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
 
-  html, body {
-    background: var(--ink);
-    overscroll-behavior-y: none;
-  }
+    header {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  body {
-    font-family: 'Manrope', sans-serif;
-    color: #EFE7D8;
-  }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-  .font-display { font-family: 'Fraunces', serif; }
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .grain-bg{
-    background-color: var(--ink);
-    background-image:
-      radial-gradient(circle at 15% 20%, rgba(203,138,62,0.06), transparent 40%),
-      radial-gradient(circle at 85% 80%, rgba(76,123,114,0.05), transparent 45%);
-  }
+    .logo-inner {
+      width: 16px;
+      height: 16px;
+      border: 1px dashed var(--accent);
+      border-radius: 50%;
+    }
 
-  .lattice-frame{
-    border: 1px solid var(--line-strong);
-    background-image:
-      linear-gradient(var(--stone), var(--stone)),
-      repeating-linear-gradient(45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px),
-      repeating-linear-gradient(-45deg, rgba(239,231,216,0.05) 0px, rgba(239,231,216,0.05) 1px, transparent 1px, transparent 10px);
-    background-origin: border-box;
-    background-clip: padding-box, border-box, border-box;
-  }
+    .titles h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
 
-  .screen{
-    transition: opacity 320ms ease, transform 320ms ease;
-  }
-  .screen[data-state="enter"]{ opacity: 0; transform: translateX(24px); }
-  .screen[data-state="enter-back"]{ opacity: 0; transform: translateX(-24px); }
-  .screen[data-state="active"]{ opacity: 1; transform: translateX(0); }
-  .screen[data-state="exit"]{ opacity: 0; transform: translateX(-24px); position:absolute; }
-  .screen[data-state="exit-back"]{ opacity: 0; transform: translateX(24px); position:absolute; }
+    .titles p {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
 
-  @media (prefers-reduced-motion: reduce) {
-    .screen{ transition: opacity 120ms linear !important; transform: none !important; }
-    .screen[data-state="enter"], .screen[data-state="enter-back"],
-    .screen[data-state="exit"], .screen[data-state="exit-back"]{ transform:none; }
-  }
+    .lang-switcher select {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+    }
 
-  .slat{
-    flex: 1;
-    height: 4px;
-    border-radius: 2px;
-    background: rgba(239,231,216,0.14);
-    overflow: hidden;
-    position: relative;
-  }
-  .slat > span{
-    display:block;
-    height:100%;
-    width:0%;
-    background: linear-gradient(90deg, var(--tw-amberdeep,#9C5F24), var(--tw-amber,#CB8A3E));
-    transition: width 420ms ease;
-  }
-  .slat.filled > span{ width:100%; }
-  .slat.current > span{ width:50%; }
+    main {
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-  a:focus-visible, button:focus-visible, select:focus-visible {
-    outline: 2px solid #CB8A3E;
-    outline-offset: 3px;
-    border-radius: 6px;
-  }
+    .graphic-container {
+      width: 120px;
+      height: 120px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      position: relative;
+    }
 
-  .btn-primary{
-    background: linear-gradient(180deg, #D7994B, #B97A34);
-    color: #1B1815;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 6px 16px rgba(203,138,62,0.18);
-  }
-  .btn-primary:active{ transform: translateY(1px); }
-  .btn-primary:disabled{ opacity: 0.4; box-shadow:none; }
+    .graphic-center {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+    }
 
-  .btn-ghost{
-    background: transparent;
-    border: 1px solid var(--line-strong);
-    color: #EFE7D8;
-  }
-  .btn-ghost:active{ transform: translateY(1px); }
+    h2 {
+      font-family: Georgia, serif;
+      font-size: 2.25rem;
+      font-weight: normal;
+      line-height: 1.2;
+    }
 
-  .why-box{
-    border-left: 2px solid #CB8A3E;
-    background: rgba(203,138,62,0.08);
-  }
+    .description {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
 
-  .arc-west{ stroke:#CB8A3E; }
-  .arc-east{ stroke:#4C7B72; }
-  .arc-north{ stroke:#EFE7D8; }
+    .btn-primary {
+      background-color: var(--accent);
+      color: #121110;
+      border: none;
+      padding: 0.85rem 2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.2s ease;
+    }
 
-  .pronounce-btn{
-    width: 30px; height: 30px; border-radius: 9999px;
-    display: inline-flex; align-items: center; justify-content: center;
-    background: rgba(203,138,62,0.12);
-    border: 1px solid rgba(203,138,62,0.35);
-    font-size: 13px; line-height: 1; color: #CB8A3E; flex-shrink: 0;
-  }
-  .pronounce-btn-inline{ width: 24px; height: 24px; font-size: 11px; margin: 0 2px; vertical-align: -4px; }
-  .pronounce-btn:active{ transform: scale(0.9); }
-  .pronounce-btn.playing{ animation: pulse-ring 800ms ease-out; }
-  @keyframes pulse-ring{
-    0%{ box-shadow: 0 0 0 0 rgba(203,138,62,0.55); }
-    100%{ box-shadow: 0 0 0 9px rgba(203,138,62,0); }
-  }
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
 
-  .diagram-chip{
-    font-size: 11.5px; font-weight: 600;
-    padding: 6px 12px; border-radius: 9999px;
-    border: 1px solid var(--line-strong);
-    color: #B9AF9C; background: rgba(239,231,216,0.03);
-  }
-  .diagram-chip.chip-active{
-    color: #1B1815; background: #CB8A3E; border-color: #CB8A3E;
-  }
-  .diagram-part{ transition: filter 200ms ease; }
-
-  .stamp-pill{
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
-    color: #CB8A3E;
-    border: 1px solid rgba(203,138,62,0.4);
-    background: rgba(203,138,62,0.08);
-    padding: 6px 14px; border-radius: 9999px;
-    transform: rotate(-1.5deg);
-  }
-
-  @keyframes seal-in{
-    0%{ transform: scale(0.85) rotate(-4deg); opacity:0; }
-    100%{ transform: scale(1) rotate(0deg); opacity:1; }
-  }
-  .seal{ animation: seal-in 520ms cubic-bezier(.2,.8,.2,1) both; }
-  @media (prefers-reduced-motion: reduce){ .seal{ animation:none; } }
-</style>
+    .meta-info {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+  </style>
 </head>
+<body>
 
-<body class="grain-bg min-h-screen w-full flex justify-center">
-
-<div id="app" class="relative w-full max-w-md min-h-screen flex flex-col">
-
-  <!-- HEADER WITH LANGUAGE SELECTOR -->
-  <header class="px-5 pt-6 pb-4 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
-        <circle cx="17" cy="17" r="15.5" stroke="#CB8A3E" stroke-width="1.3"/>
-        <circle cx="17" cy="17" r="6" stroke="#CB8A3E" stroke-width="1.3"/>
-        <line x1="17" y1="1.5" x2="17" y2="11" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="17" y1="23" x2="17" y2="32.5" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="1.5" y1="17" x2="11" y2="17" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="23" y1="17" x2="32.5" y2="17" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="6.2" y1="6.2" x2="12.8" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="21.2" y1="21.2" x2="27.8" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="27.8" y1="6.2" x2="21.2" y2="12.8" stroke="#CB8A3E" stroke-width="1"/>
-        <line x1="12.8" y1="21.2" x2="6.2" y2="27.8" stroke="#CB8A3E" stroke-width="1"/>
-      </svg>
-      <div class="leading-tight">
-        <p class="font-display text-[17px] tracking-tight" style="font-variant: small-caps;">The Ger Protocol</p>
-        <p class="text-[11.5px] text-feltdim" id="partnerLine"><span data-i18n="official_protocol">Official Field Protocol</span> · <span id="partnerName">Juulchin Travel</span></p>
+  <header>
+    <div class="brand">
+      <div class="logo"><div class="logo-inner"></div></div>
+      <div class="titles">
+        <h1 id="appTitle">The Ger Protocol</h1>
+        <p id="appSubtitle">Official Field Protocol · Juulchin Travel</p>
       </div>
     </div>
-
-    <!-- Language Selector Dropdown -->
-    <select id="langSelect" class="bg-stone2 text-felt border border-[color:var(--line-strong)] rounded-lg px-2.5 py-1 text-[12px] font-semibold cursor-pointer">
-      <option value="en">EN</option>
-      <option value="mn">MN</option>
-    </select>
+    
+    <div class="lang-switcher">
+      <select id="langSelect" onchange="changeLanguage(this.value)">
+        <option value="en" selected>EN</option>
+        <option value="mn">MN</option>
+        <option value="zh">ZH</option>
+        <option value="ja">JA</option>
+        <option value="ko">KO</option>
+        <option value="ru">RU</option>
+      </select>
+    </div>
   </header>
 
-  <!-- PROGRESS BAR -->
-  <div id="progressWrap" class="px-5 pb-5 hidden">
-    <div class="flex gap-1.5" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressBar">
-      <div class="slat" data-slat="1"><span></span></div>
-      <div class="slat" data-slat="2"><span></span></div>
-      <div class="slat" data-slat="3"><span></span></div>
-      <div class="slat" data-slat="4"><span></span></div>
-      <div class="slat" data-slat="5"><span></span></div>
+  <main>
+    <div class="graphic-container">
+      <div class="graphic-center"></div>
     </div>
-    <p class="text-[11px] text-feltdim mt-2" id="progressLabel" aria-live="polite">Step 1 of 5</p>
-  </div>
 
-  <!-- SCREENS -->
-  <main class="relative flex-1 px-5 pb-32 overflow-hidden">
+    <h2 id="heroHeading">Before you step inside</h2>
+    <p id="heroDesc" class="description">
+      A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.
+    </p>
 
-    <!-- WELCOME SCREEN -->
-    <section class="screen" data-screen="welcome" data-state="active">
-      <div class="flex flex-col items-center text-center pt-6">
-        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true" class="mb-6">
-          <circle cx="60" cy="60" r="52" stroke="#3A332C" stroke-width="1.5"/>
-          <circle cx="60" cy="60" r="20" stroke="#CB8A3E" stroke-width="1.5"/>
-          <g stroke="#6B4226" stroke-width="1.2">
-            <line x1="60" y1="8" x2="60" y2="40"/>
-            <line x1="60" y1="80" x2="60" y2="112"/>
-            <line x1="8" y1="60" x2="40" y2="60"/>
-            <line x1="80" y1="60" x2="112" y2="60"/>
-            <line x1="21.7" y1="21.7" x2="45.7" y2="45.7"/>
-            <line x1="74.3" y1="74.3" x2="98.3" y2="98.3"/>
-            <line x1="98.3" y1="21.7" x2="74.3" y2="45.7"/>
-            <line x1="45.7" y1="74.3" x2="21.7" y2="98.3"/>
-          </g>
-        </svg>
-        <h1 data-i18n="welcome_title" class="font-display text-[30px] leading-[1.15] mb-3">Before you<br>step inside</h1>
-        <p data-i18n="welcome_subtitle" class="text-[15px] text-feltdim max-w-[300px] leading-relaxed mb-8">
-          A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.
-        </p>
-        <button id="beginBtn" data-i18n="begin_btn" class="btn-primary font-body font-bold text-[15px] w-full py-4 rounded-xl">
-          Begin the walkthrough
-        </button>
-        <p data-i18n="welcome_time" class="text-[11px] text-feltdim mt-4">5 steps · about 30 seconds</p>
-      </div>
-    </section>
-
-    <!-- STEP 1: Bosgo -->
-    <section class="screen" data-screen="step" data-step="1" data-state="exit">
-      <div class="relative">
-        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">1</span>
-        <div class="relative pt-10">
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
-            <rect x="14" y="10" width="44" height="52" rx="2" stroke="#3A332C" stroke-width="1.5"/>
-            <rect x="12" y="54" width="48" height="8" rx="1.5" fill="#6B4226"/>
-            <path d="M22 40 C 30 24, 40 24, 46 34" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <path d="M46 34 l -6 -2 M46 34 l -1 -6" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-            <ellipse cx="24" cy="46" rx="7" ry="4" fill="#EFE7D8" opacity="0.9"/>
-          </svg>
-          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1"><span data-i18n="step_prefix">Step</span> 1 <span data-i18n="step_of">of</span> 5</p>
-          <div class="flex items-center gap-2 mb-1">
-            <h2 data-i18n="step1_title" class="font-display italic text-[26px]">Bosgo</h2>
-            <button type="button" class="pronounce-btn" data-audio="audio/bosgo.mp3" data-fallback-text="Bosgo" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Bosgo">🔊</button>
-          </div>
-          <p data-i18n="step1_subtitle" class="text-[14px] text-feltdim mb-5">The Threshold</p>
-          <p data-i18n="step1_desc" class="text-[15px] leading-relaxed mb-4">
-            The wooden beam at the base of the door frame is the bosgo — the threshold. Step over it, never on it, and lead with your right foot.
-          </p>
-          <div class="why-box rounded-r-lg p-4 mb-4">
-            <p class="text-[13px] leading-relaxed text-feltdim">
-              <span data-i18n="why_it_matters" class="text-felt font-semibold">Why it matters:</span>
-              <span data-i18n="step1_why">the threshold is believed to hold the household's stability. Stepping on it is considered a bad omen for the family inside.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STEP 2: Nar Zöv -->
-    <section class="screen" data-screen="step" data-step="2" data-state="exit">
-      <div class="relative">
-        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">2</span>
-        <div class="relative pt-10">
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
-            <circle cx="36" cy="36" r="26" stroke="#3A332C" stroke-width="1.5"/>
-            <g id="s2-arrow" class="diagram-part">
-              <path d="M36 12 A24 24 0 1 1 14 40" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-              <path d="M14 40 l 4 -6 M14 40 l 7 1" stroke="#CB8A3E" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-            </g>
-            <rect x="30" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
-            <rect x="38" y="28" width="4" height="16" rx="1" fill="#6B4226"/>
-            <line id="s2-gap" class="diagram-part" x1="32" y1="36" x2="40" y2="36" stroke="#8A6A4E" stroke-width="1.4" stroke-dasharray="2 2"/>
-          </svg>
-          <div class="diagram-block" data-step-block="2">
-            <div class="flex gap-2 mb-2 flex-wrap">
-              <button type="button" class="diagram-chip" data-target="s2-arrow" data-i18n="step2_chip1">Clockwise path</button>
-              <button type="button" class="diagram-chip" data-target="s2-gap" data-i18n="step2_chip2">Between the pillars</button>
-            </div>
-            <p data-i18n="tap_diagram_hint" class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]">Tap a part of the diagram to learn more.</p>
-          </div>
-          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1"><span data-i18n="step_prefix">Step</span> 2 <span data-i18n="step_of">of</span> 5</p>
-          <div class="flex items-center gap-2 mb-1">
-            <h2 data-i18n="step2_title" class="font-display italic text-[26px]">Nar Zöv</h2>
-            <button type="button" class="pronounce-btn" data-audio="audio/nar-zov.mp3" data-fallback-text="Nar Zöv" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Nar Zöv">🔊</button>
-          </div>
-          <p data-i18n="step2_subtitle" class="text-[14px] text-feltdim mb-5">Moving Clockwise</p>
-          <p data-i18n="step2_desc" class="text-[15px] leading-relaxed mb-4">
-            Once inside, move to your left and travel clockwise around the interior. Never cut through the space between the two central support pillars, the bagana — that path is reserved.
-          </p>
-          <div class="why-box rounded-r-lg p-4 mb-4">
-            <p class="text-[13px] leading-relaxed text-feltdim">
-              <span data-i18n="why_it_matters" class="text-felt font-semibold">Why it matters:</span>
-              <span data-i18n="step2_why">the line between the pillars is a sacred axis connecting hearth to sky. Crossing it is seen as cutting through the family's fortune.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STEP 3: Seating Order -->
-    <section class="screen" data-screen="step" data-step="3" data-state="exit">
-      <div class="relative">
-        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">3</span>
-        <div class="relative pt-10">
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
-            <circle id="s3-west" class="arc-west diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
-              stroke-dasharray="52 190" stroke-dashoffset="-14" transform="rotate(-90 36 36)"/>
-            <circle id="s3-east" class="arc-east diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
-              stroke-dasharray="52 190" stroke-dashoffset="-108" transform="rotate(-90 36 36)"/>
-            <circle id="s3-north" class="arc-north diagram-part" cx="36" cy="36" r="26" fill="none" stroke-width="6"
-              stroke-dasharray="26 190" stroke-dashoffset="-176" transform="rotate(-90 36 36)" opacity="0.85"/>
-            <circle cx="36" cy="36" r="26" fill="none" stroke="#1B1815" stroke-width="6" stroke-dasharray="1 190" stroke-dashoffset="0"/>
-          </svg>
-          <div class="diagram-block" data-step-block="3">
-            <div class="flex gap-2 mb-2 flex-wrap">
-              <button type="button" class="diagram-chip" data-target="s3-west" data-i18n="step3_chip1">West</button>
-              <button type="button" class="diagram-chip" data-target="s3-east" data-i18n="step3_chip2">East</button>
-              <button type="button" class="diagram-chip" data-target="s3-north" data-i18n="step3_chip3">Khoimor</button>
-            </div>
-            <p data-i18n="tap_zone_hint" class="diagram-caption text-[12.5px] text-feltdim min-h-[32px]">Tap a zone to see who sits there.</p>
-          </div>
-          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1"><span data-i18n="step_prefix">Step</span> 3 <span data-i18n="step_of">of</span> 5</p>
-          <h2 data-i18n="step3_title" class="font-display italic text-[26px] mb-1">Seating Order</h2>
-          <p data-i18n="step3_subtitle" class="text-[14px] text-feltdim mb-5">Guests, Family, Elders</p>
-          <p data-i18n="step3_desc" class="text-[15px] leading-relaxed mb-4">
-            The west side (left of the door) is for guests and men. The east side (right) is for family and women. The back, or khoimor, is reserved for elders and sacred objects — wait to be shown your seat.
-          </p>
-          <div class="why-box rounded-r-lg p-4 mb-4">
-            <p class="text-[13px] leading-relaxed text-feltdim">
-              <span data-i18n="why_it_matters" class="text-felt font-semibold">Why it matters:</span>
-              <span data-i18n="step3_why">seating maps the family's own order. Sitting unguided, especially in the khoimor, is read as claiming a status that isn't yours.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STEP 4: Golomt -->
-    <section class="screen" data-screen="step" data-step="4" data-state="exit">
-      <div class="relative">
-        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">4</span>
-        <div class="relative pt-10">
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
-            <rect x="26" y="38" width="20" height="14" rx="2" stroke="#3A332C" stroke-width="1.5"/>
-            <path d="M32 38 c 0 -6 4 -6 3 -11 c 3 2 4 6 1 9 c 2 -1 3 -3 3 -5 c 2 3 1 6 -1 7" stroke="#CB8A3E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-            <path d="M14 58 q 8 -4 16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-            <path d="M58 58 q -8 -4 -16 -1" stroke="#8A6A4E" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-            <line x1="18" y1="54" x2="24" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="54" y1="54" x2="48" y2="58" stroke="#3A332C" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1"><span data-i18n="step_prefix">Step</span> 4 <span data-i18n="step_of">of</span> 5</p>
-          <div class="flex items-center gap-2 mb-1">
-            <h2 data-i18n="step4_title" class="font-display italic text-[26px]">Golomt</h2>
-            <button type="button" class="pronounce-btn" data-audio="audio/golomt.mp3" data-fallback-text="Golomt" data-fallback-lang="mn-MN" aria-label="Play pronunciation of Golomt">🔊</button>
-          </div>
-          <p data-i18n="step4_subtitle" class="text-[14px] text-feltdim mb-5">The Hearth</p>
-          <p data-i18n="step4_desc" class="text-[15px] leading-relaxed mb-4">
-            Sit with your feet tucked back and soles pointed away from the stove and from any elder. Never pass anything over the hearth, and never put waste into it.
-          </p>
-          <div class="why-box rounded-r-lg p-4 mb-4">
-            <p class="text-[13px] leading-relaxed text-feltdim">
-              <span data-i18n="why_it_matters" class="text-felt font-semibold">Why it matters:</span>
-              <span data-i18n="step4_why">the golomt is the family's fire spirit and its literal source of warmth and food. Disrespecting it is considered a serious offense.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STEP 5: Receiving Hospitality -->
-    <section class="screen" data-screen="step" data-step="5" data-state="exit">
-      <div class="relative">
-        <span class="font-display italic text-[92px] leading-none text-[#2E2822] absolute -top-3 -left-1 select-none" aria-hidden="true">5</span>
-        <div class="relative pt-10">
-          <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true" class="mb-5">
-            <path d="M26 32 h20 l -2 14 a 8 8 0 0 1 -16 0 Z" stroke="#3A332C" stroke-width="1.5" fill="none"/>
-            <path d="M20 46 q 8 4 14 1" stroke="#CB8A3E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <path d="M34 46 q 8 -6 16 -2" stroke="#8A6A4E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <circle cx="20" cy="46" r="1.6" fill="#CB8A3E"/>
-            <circle cx="50" cy="44" r="1.6" fill="#8A6A4E"/>
-          </svg>
-          <p class="text-[13px] tracking-wide text-amber font-semibold mb-1"><span data-i18n="step_prefix">Step</span> 5 <span data-i18n="step_of">of</span> 5</p>
-          <h2 data-i18n="step5_title" class="font-display italic text-[26px] mb-1">Receiving</h2>
-          <p data-i18n="step5_subtitle" class="text-[14px] text-feltdim mb-5">Tea, Snuff & Food</p>
-          <p data-i18n="step5_desc" class="text-[15px] leading-relaxed mb-4">
-            Accept whatever is offered with your right hand, elbow supported by your left. If you can't finish it, take a small symbolic sip or bite — an outright refusal is considered impolite.
-          </p>
-          <div class="why-box rounded-r-lg p-4 mb-4">
-            <p class="text-[13px] leading-relaxed text-feltdim">
-              <span data-i18n="why_it_matters" class="text-felt font-semibold">Why it matters:</span>
-              <span data-i18n="step5_why">offering food to a guest is a point of pride for the host family. Two hands, and a gesture of acceptance, return that respect.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMPLETION SCREEN -->
-    <section class="screen" data-screen="complete" data-state="exit">
-      <div class="flex flex-col items-center text-center pt-6">
-        <div class="seal relative w-[104px] h-[104px] mb-6">
-          <svg viewBox="0 0 104 104" width="104" height="104" aria-hidden="true">
-            <circle cx="52" cy="52" r="48" stroke="#CB8A3E" stroke-width="1.3"/>
-            <circle cx="52" cy="52" r="40" stroke="#CB8A3E" stroke-width="1" stroke-dasharray="2 4"/>
-            <path d="M36 53 l11 11 l22 -24" stroke="#CB8A3E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h1 data-i18n="complete_title" class="font-display text-[26px] leading-tight mb-2">Protocol complete</h1>
-        <p id="visitStamp" class="stamp-pill mb-5" aria-live="polite"></p>
-        <p data-i18n="complete_desc" class="text-[14px] text-feltdim max-w-[280px] leading-relaxed mb-7">
-          You're ready to step inside. A quick reminder of what you learned:
-        </p>
-
-        <ul class="w-full text-left space-y-3 mb-8">
-          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
-            <span class="font-display italic text-amber text-[15px] mt-[1px]">1</span>
-            <span data-i18n="summary_1" class="text-[13.5px] text-feltdim">Step over the bosgo, right foot first — never on it.</span>
-          </li>
-          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
-            <span class="font-display italic text-amber text-[15px] mt-[1px]">2</span>
-            <span data-i18n="summary_2" class="text-[13.5px] text-feltdim">Move clockwise (Nar Zöv); never cross between the two bagana pillars.</span>
-          </li>
-          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
-            <span class="font-display italic text-amber text-[15px] mt-[1px]">3</span>
-            <span data-i18n="summary_3" class="text-[13.5px] text-feltdim">Sit only where shown — west for guests, east for family, khoimor for elders.</span>
-          </li>
-          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
-            <span class="font-display italic text-amber text-[15px] mt-[1px]">4</span>
-            <span data-i18n="summary_4" class="text-[13.5px] text-feltdim">Keep your feet tucked away from the golomt hearth.</span>
-          </li>
-          <li class="lattice-frame rounded-lg px-4 py-3 flex gap-3 items-start">
-            <span class="font-display italic text-amber text-[15px] mt-[1px]">5</span>
-            <span data-i18n="summary_5" class="text-[13.5px] text-feltdim">Receive tea or food right-handed, left hand supporting your elbow.</span>
-          </li>
-        </ul>
-
-        <button id="restartBtn" data-i18n="restart_btn" class="btn-ghost text-[13.5px] font-semibold px-5 py-3 rounded-xl w-full mb-8">
-          Review again
-        </button>
-
-        <div class="w-full border-t border-[color:var(--line)] pt-5">
-          <p class="text-[12px] text-feltdim mb-1"><span data-i18n="presented_by">Presented by</span> <span id="partnerNameFooter" class="text-felt font-semibold">Juulchin Travel</span></p>
-          <p class="text-[11.5px] text-feltdim"><span data-i18n="questions">Questions about local custom?</span> <a href="#" id="contactLink" data-i18n="ask_guide" class="text-amber underline underline-offset-2">Ask your guide</a></p>
-          <p data-i18n="footer_edition" class="text-[10.5px] text-feltdim/70 mt-4">The Ger Protocol · Field edition</p>
-        </div>
-      </div>
-    </section>
-
+    <button id="startBtn" class="btn-primary">Begin the walkthrough</button>
+    <p id="metaText" class="meta-info">5 steps · about 30 seconds</p>
   </main>
 
-  <!-- BOTTOM NAVIGATION -->
-  <nav id="bottomNav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-5 pb-6 pt-4 bg-gradient-to-t from-[#1B1815] via-[#1B1815] to-transparent hidden">
-    <div class="flex gap-3">
-      <button id="backBtn" data-i18n="nav_back" class="btn-ghost rounded-xl px-5 py-4 font-semibold text-[14px] min-w-[92px]">
-        Back
-      </button>
-      <button id="nextBtn" data-i18n="nav_next" class="btn-primary rounded-xl px-5 py-4 font-bold text-[14px] flex-1">
-        Next
-      </button>
-    </div>
-  </nav>
-
-</div>
-
-<script>
-const CONFIG = {
-  partnerName: "Juulchin Travel",
-  contactLabel: "Ask your guide",
-  contactHref: "#",
-  siteLabel: "",
-};
-
-document.getElementById('partnerName').textContent = CONFIG.partnerName;
-document.getElementById('partnerNameFooter').textContent = CONFIG.partnerName;
-const contactLinkEl = document.getElementById('contactLink');
-contactLinkEl.href = CONFIG.contactHref;
-
-/* --- MULTI-LANGUAGE / I18N ENGINE --- */
-let translations = {};
-let currentLang = 'en';
-
-async function loadTranslations() {
-  try {
-    const res = await fetch('languages.json');
-    translations = await res.json();
-    
-    // Check saved preference or default to English
-    currentLang = localStorage.getItem('app_lang') || 'en';
-    document.getElementById('langSelect').value = currentLang;
-    applyLanguage(currentLang);
-  } catch (err) {
-    console.warn('Could not load languages.json, using fallback HTML text.', err);
-  }
-}
-
-function applyLanguage(lang) {
-  currentLang = lang;
-  localStorage.setItem('app_lang', lang);
-  
-  if (!translations[lang]) return;
-
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (translations[lang][key]) {
-      el.innerHTML = translations[lang][key];
-    }
-  });
-
-  // Re-render UI labels for progress/buttons
-  const key = screenOrder[current];
-  if (typeof key === 'number') {
-    const prefix = translations[lang]['step_prefix'] || 'Step';
-    const ofWord = translations[lang]['step_of'] || 'of';
-    const finishBtn = translations[lang]['nav_finish'] || 'Finish';
-    const nextBtnText = translations[lang]['nav_next'] || 'Next';
-
-    progressLabel.textContent = `${prefix} ${key} ${ofWord} 5`;
-    nextBtn.textContent = key === 5 ? finishBtn : nextBtnText;
-  }
-}
-
-document.getElementById('langSelect').addEventListener('change', (e) => {
-  applyLanguage(e.target.value);
-});
-
-/* --- AUDIO PRONUNCIATION --- */
-document.querySelectorAll('.pronounce-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.classList.remove('playing');
-    void btn.offsetWidth;
-    btn.classList.add('playing');
-
-    const audio = new Audio(btn.dataset.audio);
-    let fallenBack = false;
-    const speakFallback = () => {
-      if (fallenBack) return;
-      fallenBack = true;
-      if ('speechSynthesis' in window) {
-        const utter = new SpeechSynthesisUtterance(btn.dataset.fallbackText);
-        utter.lang = btn.dataset.fallbackLang || 'mn-MN';
-        speechSynthesis.speak(utter);
+  <script>
+    const TRANSLATIONS = {
+      en: {
+        title: "The Ger Protocol",
+        subtitle: "Official Field Protocol · Juulchin Travel",
+        heading: "Before you step inside",
+        desc: "A 30-second field guide to the customs of a Mongolian ger — five simple rules, one respectful visit.",
+        button: "Begin the walkthrough",
+        meta: "5 steps · about 30 seconds"
+      },
+      mn: {
+        title: "Гэрийн Дэг Журам",
+        subtitle: "Албан ёсны гарын авлага · Жуулчин Трэвел",
+        heading: "Та гэрт орохоосоо өмнө",
+        desc: "Монгол гэрийн ёс заншлын 30 секундын гарын авлага — таван энгийн дүрэм, нэг хүндэтгэлтэй зочлолт.",
+        button: "Заавартай танилцах",
+        meta: "5 алхам · ойролцоогоор 30 секунд"
+      },
+      zh: {
+        title: "蒙古包礼仪指南",
+        subtitle: "官方实用指南 · Juulchin Travel",
+        heading: "进入蒙古包之前",
+        desc: "30秒快速了解蒙古包传统习俗 — 五项简单规则，一次充满尊重拜访。",
+        button: "开始了解",
+        meta: "5个步骤 · 约需30秒"
+      },
+      ja: {
+        title: "ゲル訪問マナーガイド",
+        subtitle: "公式フィールドガイド · Juulchin Travel",
+        heading: "ゲル（包）に入る前に",
+        desc: "モンゴルのゲルでのマナーを学ぶ30秒のガイド — 5つの簡単なルールで敬意ある訪問を。",
+        button: "ガイドを開始する",
+        meta: "5つのステップ · 約30秒"
+      },
+      ko: {
+        title: "게르 방문 에티켓 Guide",
+        subtitle: "공식 현장 가이드 · Juulchin Travel",
+        heading: "게르에 들어서기 전에",
+        desc: "몽골 게르의 전통 예절을 배우는 30초 가이드 — 5가지 간단한 규칙, 존중하는 방문.",
+        button: "가이드 시작하기",
+        meta: "5단계 · 약 30초 소요"
+      },
+      ru: {
+        title: "Протокол Посещения Юрты",
+        subtitle: "Официальный гид · Juulchin Travel",
+        heading: "Прежде чем войти в юрту",
+        desc: "30-секундный гид по традициям монгольской юрты — пять простых правил для уважительного визита.",
+        button: "Начать ознакомление",
+        meta: "5 шагов · около 30 секунд"
       }
     };
-    audio.addEventListener('error', speakFallback);
-    audio.play().catch(speakFallback);
-  });
-});
 
-/* --- DIAGRAM INTERACTIONS --- */
-document.querySelectorAll('.diagram-block').forEach(block => {
-  const chips = block.querySelectorAll('.diagram-chip');
-  const caption = block.querySelector('.diagram-caption');
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('chip-active'));
-      chip.classList.add('chip-active');
-
-      block.querySelectorAll('.diagram-part').forEach(part => {
-        part.style.filter = '';
-      });
-      const target = document.getElementById(chip.dataset.target);
-      if (target) target.style.filter = 'drop-shadow(0 0 5px rgba(203,138,62,0.7))';
-
-      if (caption) {
-        // Look up translation for active chip data if available
-        const key = chip.dataset.i18n ? `${chip.dataset.i18n}_desc` : null;
-        if (key && translations[currentLang] && translations[currentLang][key]) {
-          caption.innerHTML = translations[currentLang][key];
-        } else if (chip.dataset.caption) {
-          caption.textContent = chip.dataset.caption;
-        }
-      }
-    });
-  });
-});
-
-/* --- SCREEN NAVIGATION --- */
-const screenOrder = ['welcome', 1, 2, 3, 4, 5, 'complete'];
-let current = 0;
-
-const welcomeEl   = document.querySelector('[data-screen="welcome"]');
-const completeEl  = document.querySelector('[data-screen="complete"]');
-const stepEls     = Array.from(document.querySelectorAll('[data-screen="step"]'));
-const allScreens  = [welcomeEl, ...stepEls, completeEl];
-
-const progressWrap  = document.getElementById('progressWrap');
-const progressLabel = document.getElementById('progressLabel');
-const progressBar   = document.getElementById('progressBar');
-const bottomNav      = document.getElementById('bottomNav');
-const backBtn        = document.getElementById('backBtn');
-const nextBtn        = document.getElementById('nextBtn');
-const slats           = Array.from(document.querySelectorAll('.slat'));
-
-function render(direction){
-  const key = screenOrder[current];
-  const isStep = typeof key === 'number';
-
-  progressWrap.classList.toggle('hidden', !isStep);
-  bottomNav.classList.toggle('hidden', key === 'welcome' || key === 'complete');
-
-  if (isStep){
-    const lang = currentLang;
-    const prefix = (translations[lang] && translations[lang]['step_prefix']) || 'Step';
-    const ofWord = (translations[lang] && translations[lang]['step_of']) || 'of';
-    const finishBtn = (translations[lang] && translations[lang]['nav_finish']) || 'Finish';
-    const nextBtnText = (translations[lang] && translations[lang]['nav_next']) || 'Next';
-
-    progressLabel.textContent = `${prefix} ${key} ${ofWord} 5`;
-    progressBar.setAttribute('aria-valuenow', key);
-    slats.forEach(s => {
-      const n = Number(s.dataset.slat);
-      s.classList.toggle('filled', n < key);
-      s.classList.toggle('current', n === key);
-    });
-    backBtn.disabled = false;
-    backBtn.style.visibility = 'visible';
-    nextBtn.textContent = key === 5 ? finishBtn : nextBtnText;
-  }
-
-  if (key === 'complete') {
-    const now = new Date();
-    const dateStr = now.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-    const timeStr = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-    const siteBit = CONFIG.siteLabel ? `${CONFIG.siteLabel} · ` : '';
-    const reviewedLabel = (translations[currentLang] && translations[currentLang]['reviewed_label']) || '✓ Reviewed';
-    document.getElementById('visitStamp').textContent = `${reviewedLabel} · ${siteBit}${dateStr}, ${timeStr}`;
-  }
-
-  allScreens.forEach(el => {
-    const elKey = el.dataset.screen === 'step' ? Number(el.dataset.step) : el.dataset.screen;
-    if (elKey === key){
-      el.style.position = '';
-      el.setAttribute('data-state', direction === 'back' ? 'enter-back' : 'enter');
-      void el.offsetWidth;
-      requestAnimationFrame(() => el.setAttribute('data-state', 'active'));
-    } else {
-      el.setAttribute('data-state', direction === 'back' ? 'exit-back' : 'exit');
+    function changeLanguage(langKey) {
+      const data = TRANSLATIONS[langKey] || TRANSLATIONS.en;
+      document.getElementById('appTitle').innerText = data.title;
+      document.getElementById('appSubtitle').innerText = data.subtitle;
+      document.getElementById('heroHeading').innerText = data.heading;
+      document.getElementById('heroDesc').innerText = data.desc;
+      document.getElementById('startBtn').innerText = data.button;
+      document.getElementById('metaText').innerText = data.meta;
+      document.documentElement.lang = langKey;
     }
-  });
-}
-
-function goNext(){
-  if (current < screenOrder.length - 1){
-    current++;
-    render('forward');
-  }
-}
-function goBack(){
-  if (current > 0){
-    current--;
-    render('back');
-  }
-}
-
-document.getElementById('beginBtn').addEventListener('click', goNext);
-document.getElementById('restartBtn').addEventListener('click', () => {
-  current = 0;
-  render('back');
-});
-nextBtn.addEventListener('click', goNext);
-backBtn.addEventListener('click', goBack);
-
-// Load translation file & initialize
-loadTranslations();
-render('forward');
-</script>
+  </script>
 </body>
 </html>
